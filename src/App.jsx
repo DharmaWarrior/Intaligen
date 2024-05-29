@@ -7,6 +7,8 @@ import Register from "./components/Register";
 import Labors from "./Labors";
 import Dashboard from "./components/Dashboard";
 import Productionchartsnew from "./components/Productionchartsnew";
+import Items from "./Items";
+
 
 
 
@@ -87,10 +89,11 @@ export default function App() {
               <Route path="/labors" element={<Labors />} />
               <Route path="/dash" element={<Dashboard />} />
               <Route path="/masterDataDashboard" element={<Productionchartsnew/>} />
-              {/* <Route path="/partners" element={<Partners />} />
+              <Route path="*" element={<Error />} />
               <Route path="/items" element={<Items />} />
-              <Route path="/categories" element={<Categories />} />
-              <Route path="*" element={<Error />} /> */}
+              {/* <Route path="/categories" element={<Categories />} />
+              <Route path="/partners" element={<Partners />} />
+              */}
             </Routes>
           ) : (
             <div className="flex justify-center items-center flex-col flex-grow">
