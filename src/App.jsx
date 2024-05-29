@@ -4,7 +4,8 @@ import { React, useEffect, useContext, useState } from "react";
 import { LoginContext } from "./components/ContextProvider/Context";
 import Login from "./components/Login";
 import Register from "./components/Register";
-import Dashboard from "./components/Dashboard";
+// import Labors from "./Labors";
+// // import Dashboard from "./components/Dashboard";
 
 
 
@@ -81,9 +82,9 @@ export default function App() {
           data ? (
             <Routes>
               <Route path="/" element={<Login />} />
-              {/* <Route path="/register" element={<Register />} />
+              <Route path="/register" element={<Register />} />
+              {/* <Route path="/labors" element={<Labors />} />
               <Route path="/dash" element={<Dashboard />} />
-              <Route path="/labors" element={<Labors />} />
               <Route path="/items" element={<Items />} />
               <Route path="/masterDataDashboard" element={<Productionchartsnew/>} />
               <Route path="/partners" element={<Partners />} />
@@ -97,7 +98,7 @@ export default function App() {
             </div>
           )
         }
-      </div>
+      </div> 
     </div>
   );
 }
