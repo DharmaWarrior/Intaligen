@@ -4,7 +4,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import validator from 'validator';
 
-const Register = () => {
+export default function Register() {
   const [passShow, setPassShow] = useState(false);
   const [cpassShow, setCPassShow] = useState(false);
   const navigate = useNavigate();
@@ -219,5 +219,3 @@ const Register = () => {
       </>
   );
 }
-
-export default Register;

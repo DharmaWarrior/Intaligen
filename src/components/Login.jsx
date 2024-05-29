@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import validator from 'validator';
 
 
-const Login = () => {
+export default function Login() {
     const { logindata, setLoginData } = useContext(LoginContext);
     const [passShow, setPassShow] = useState(false);
     const [inpval, setInpval] = useState({
@@ -160,5 +160,3 @@ const Login = () => {
         </>
     );
 }
-
-export default Login;

@@ -1,7 +1,7 @@
 import React from 'react'
-import Tableitems, { SelectColumnFilter } from './components/Tableitems' 
+// import Tableitems, { SelectColumnFilter } from './components/Tableitems' 
 
-const Labors = () => {
+export default function Labors() {
     // Your component logic goes here
 
     return (
@@ -10,6 +10,4 @@ const Labors = () => {
             <h1>edr</h1>
         </div>
     );
-};
-
-export default Labors;
+}

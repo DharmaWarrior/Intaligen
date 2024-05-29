@@ -4,8 +4,8 @@ import { React, useEffect, useContext, useState } from "react";
 import { LoginContext } from "./components/ContextProvider/Context";
 import Login from "./components/Login";
 import Register from "./components/Register";
-// import Labors from "./Labors";
-// // import Dashboard from "./components/Dashboard";
+import Labors from "./Labors";
+import Dashboard from "./components/Dashboard";
 
 
 
@@ -83,9 +83,9 @@ export default function App() {
             <Routes>
               <Route path="/" element={<Login />} />
               <Route path="/register" element={<Register />} />
-              {/* <Route path="/labors" element={<Labors />} />
+              <Route path="/labors" element={<Labors />} />
               <Route path="/dash" element={<Dashboard />} />
-              <Route path="/items" element={<Items />} />
+              {/* <Route path="/items" element={<Items />} />
               <Route path="/masterDataDashboard" element={<Productionchartsnew/>} />
               <Route path="/partners" element={<Partners />} />
               <Route path="/categories" element={<Categories />} />

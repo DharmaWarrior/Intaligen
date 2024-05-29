@@ -3,7 +3,7 @@ import { BiChevronLeft } from 'react-icons/bi';
 import SidebarData from './SidebarData';
 import { LoginContext } from './ContextProvider/Context';
 
-const Sidebar = () => {
+export default function Sidebar() {
     const { logindata } = useContext(LoginContext);
     if (logindata.ValidUserOne){
         return (
@@ -17,4 +17,3 @@ const Sidebar = () => {
     }
 }
 
-export default Sidebar;
