@@ -1,7 +1,7 @@
 import { RxDashboard } from 'react-icons/rx';
 import { MdInsights } from 'react-icons/md';
 import { RiCouponLine } from 'react-icons/ri';
-import { FiUser, FiLogout } from 'react-icons/fi';
+import { FiUser } from 'react-icons/fi';
 import { AiOutlineMessage } from 'react-icons/ai';
 import { BsFolder, BsWallet2 } from 'react-icons/bs';
 

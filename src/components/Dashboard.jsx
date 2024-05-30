@@ -38,7 +38,7 @@ export default function Dashboard() {
     
     let token = localStorage.getItem("usersdatatoken");
 
-    const res = await fetch("/userdashboard", {
+    const res = await fetch("/api/userdashboard", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

@@ -9,7 +9,6 @@ export default function Sidebar() {
         return (
             <div className="sidebar-container h-[90%] overflow-y-auto font-sans top-0 left-0">
                 <SidebarData />
-                
             </div>
         );
     } else {

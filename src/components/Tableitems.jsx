@@ -4,11 +4,8 @@ import { ChevronDoubleLeftIcon, ChevronLeftIcon, ChevronRightIcon, ChevronDouble
 import { Button, PageButton } from '../shared/Button'
 
 // Define a default UI for filtering
-function GlobalFilter({
-  preGlobalFilteredRows,
-  globalFilter,
-  setGlobalFilter,
-}) {
+function GlobalFilter({preGlobalFilteredRows,globalFilter,setGlobalFilter}) {
+
   const count = preGlobalFilteredRows.length
   const [value, setValue] = React.useState(globalFilter)
   const onChange = useAsyncDebounce(value => {
@@ -20,7 +17,7 @@ function GlobalFilter({
       <span className="text-gray-700">Search: </span>
       <input
         type="text"
-        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
         value={value || ""}
         onChange={e => {
           setValue(e.target.value);
@@ -34,9 +31,7 @@ function GlobalFilter({
 
 // This is a custom filter UI for selecting
 // a unique option from a list
-export function SelectColumnFilter({
-  column: { filterValue, setFilter, preFilteredRows, id, render },
-}) {
+export function SelectColumnFilter({column: { filterValue, setFilter, preFilteredRows, id, render }}) {
   // Calculate the options for filtering
   // using the preFilteredRows
   const options = React.useMemo(() => {
@@ -109,6 +104,7 @@ export default function Tableitems({ columns, data }) {
   return (
     <>
       {/* global search and filter */}
+      
     <div className='flex flex-row mb-5 mt-5'> 
     <div className='ml-2 mr-10'>
     <GlobalFilter

@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import useState from 'react';
 import Avatar from '@mui/material/Avatar';
 import { LoginContext } from './ContextProvider/Context';
 import Menu from '@mui/material/Menu';

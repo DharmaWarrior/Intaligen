@@ -4,6 +4,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import { LoginContext } from './ContextProvider/Context';
 import 'react-toastify/dist/ReactToastify.css';
 import validator from 'validator';
+import { Button } from "./../../components/ui/button"
+
 
 
 export default function Login() {
@@ -73,7 +75,8 @@ export default function Login() {
             });
         }
         else {
-            const data = await fetch("/login", {
+            console.log("before api call")
+            const data = await fetch("/api/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -83,10 +86,12 @@ export default function Login() {
                 })
             });
 
+            console.log("after api call")
             const resone = await data.json();
             const tokenVar = resone.token;
 
-            const data2 = await fetch("/checkAuthentication", {
+            console.log("before authentication api call")
+            const data2 = await fetch("/api/checkAuthentication", {
                 method: "GET",
                 headers: {
                     "Authorization": "Bearer " + tokenVar,
@@ -117,7 +122,7 @@ export default function Login() {
                     <div className="form_heading mb-10">
                         <h1 className="text-3xl font-sans text-gray-900">Login to Intaligen</h1>
                     </div>
-
+                    <Button>Button</Button>
                     <form className="w-full" onSubmit={loginuser}>
                         <div className="form_input">
                             <label htmlFor="email" className="block font-sans font-semibold text-blue-900 text-sm mb-2">Email</label>

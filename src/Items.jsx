@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import Sidebar from "./components/Sidebar";
-
+import Tableitems from './components/Tableitems';
 import { LoginContext } from './components/ContextProvider/Context';
 import { FaPencilAlt, FaCheck, FaTimes } from 'react-icons/fa';
 import ImportIcon from '@mui/icons-material/ImportExport';
@@ -20,8 +20,7 @@ export default function Items() {
     const fetchData = async () => {
       try {
         let token = localStorage.getItem("usersdatatoken");
-        console.log(token);
-        const response = await fetch("/ListItems", {
+        const response = await fetch("/api/ListItems", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -68,7 +67,7 @@ export default function Items() {
   
     const handleFormSubmit = async (formData) => {
       try {
-        const response = await fetch("/AddItem", {
+        const response = await fetch("/api/AddItem", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -109,18 +108,18 @@ export default function Items() {
       { "Header": "Rate", "accessor": "rate" },
       {
         "Header": "Edit",
-        "Cell": ({ row }) => (
-          <div className="flex items-center">
-            {editModes[row.index] ? (
-              <>
-                <FaCheck className="text-green-500 mr-2 cursor-pointer" onClick={() => handleEditClick(row.index)} />
-                <FaTimes className="text-red-500 cursor-pointer" onClick={() => handleEditClick(row.index)} />
-              </>
-            ) : (
-              <FaPencilAlt className="cursor-pointer" onClick={() => handleEditClick(row.index)} />
-            )}
-          </div>
-        )
+        // "Cell": ({ row }) => (
+        //   <div className="flex items-center">
+        //     {editModes[row.index] ? (
+        //       <>
+        //         <FaCheck className="text-green-500 mr-2 cursor-pointer" onClick={() => handleEditClick(row.index)} />
+        //         <FaTimes className="text-red-500 cursor-pointer" onClick={() => handleEditClick(row.index)} />
+        //       </>
+        //     ) : (
+        //       <FaPencilAlt className="cursor-pointer" onClick={() => handleEditClick(row.index)} />
+        //     )}
+        //   </div>
+        // )
       }
     ], [editModes]);
   
@@ -152,9 +151,9 @@ export default function Items() {
               </Tooltip>
             </div>
           </div>
-          {/* <div className="ml-15 flex flex-col mt-5">
+          <div className="ml-15 flex flex-col mt-5">
             <Tableitems columns={columns} data={data} />
-          </div> */}
+          </div>
         </div>
   
         <AddItemForm open={open} handleClose={handleClose} handleFormSubmit={handleFormSubmit} fetchData={fetchData} />
