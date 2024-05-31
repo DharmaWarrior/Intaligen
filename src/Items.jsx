@@ -9,6 +9,7 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import AddItemForm from './components/AddItemForm';
 import { toast } from 'react-toastify';
+import TableItemss from './components/TableItemss';
 
 export default function Items() {
     const { logindata } = useContext(LoginContext);
@@ -20,6 +21,10 @@ export default function Items() {
     const fetchData = async () => {
       try {
         let token = localStorage.getItem("usersdatatoken");
+        if(!token) {
+          console.log("Token not found");
+        }
+        
         const response = await fetch("/api/ListItems", {
           method: "POST",
           headers: {
@@ -46,9 +51,9 @@ export default function Items() {
       }
     };
   
-    useEffect(() => {
-      fetchData();
-    }, []);
+    // useEffect(() => {
+    //   fetchData();
+    // }, []);
   
     const handleEditClick = (rowIndex) => {
       setEditModes(prevEditModes => ({
@@ -97,35 +102,35 @@ export default function Items() {
       }
     };
   
-    const columns = React.useMemo(() => [
-      { "Header": "Registration Date", "accessor": "regdate" },
-      { "Header": "Raw Flag", "accessor": "raw_flag" },
-      { "Header": "Data ID", "accessor": "data_id" },
-      { "Header": "Code", "accessor": "code" },
-      { "Header": "Name", "accessor": "name" },
-      { "Header": "Unit", "accessor": "unit" },
-      { "Header": "ID", "accessor": "id" },
-      { "Header": "Rate", "accessor": "rate" },
-      {
-        "Header": "Edit",
-        // "Cell": ({ row }) => (
-        //   <div className="flex items-center">
-        //     {editModes[row.index] ? (
-        //       <>
-        //         <FaCheck className="text-green-500 mr-2 cursor-pointer" onClick={() => handleEditClick(row.index)} />
-        //         <FaTimes className="text-red-500 cursor-pointer" onClick={() => handleEditClick(row.index)} />
-        //       </>
-        //     ) : (
-        //       <FaPencilAlt className="cursor-pointer" onClick={() => handleEditClick(row.index)} />
-        //     )}
-        //   </div>
-        // )
-      }
-    ], [editModes]);
+    // const columns = React.useMemo(() => [
+    //   { "Header": "Registration Date", "accessor": "regdate" },
+    //   { "Header": "Raw Flag", "accessor": "raw_flag" },
+    //   { "Header": "Data ID", "accessor": "data_id" },
+    //   { "Header": "Code", "accessor": "code" },
+    //   { "Header": "Name", "accessor": "name" },
+    //   { "Header": "Unit", "accessor": "unit" },
+    //   { "Header": "ID", "accessor": "id" },
+    //   { "Header": "Rate", "accessor": "rate" },
+    //   {
+    //     "Header": "Edit",
+    //     // "Cell": ({ row }) => (
+    //     //   <div className="flex items-center">
+    //     //     {editModes[row.index] ? (
+    //     //       <>
+    //     //         <FaCheck className="text-green-500 mr-2 cursor-pointer" onClick={() => handleEditClick(row.index)} />
+    //     //         <FaTimes className="text-red-500 cursor-pointer" onClick={() => handleEditClick(row.index)} />
+    //     //       </>
+    //     //     ) : (
+    //     //       <FaPencilAlt className="cursor-pointer" onClick={() => handleEditClick(row.index)} />
+    //     //     )}
+    //     //   </div>
+    //     // )
+    //   }
+    // ], [editModes]);
   
-    if (loading) {
-      return <div>Loading...</div>;
-    }
+    // if (loading) {
+    //   return <div>Loading...</div>;
+    // }
   
     return (
       <div className="w-full h-[90vh] mt-0 flex flex-col">
@@ -152,7 +157,7 @@ export default function Items() {
             </div>
           </div>
           <div className="ml-15 flex flex-col mt-5">
-            <Tableitems columns={columns} data={data} />
+            <TableItemss />
           </div>
         </div>
   

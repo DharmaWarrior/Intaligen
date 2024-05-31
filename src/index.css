@@ -67,10 +67,10 @@
   }
 
   @layer base {
-    * {
-      @apply border-border;
+    .sidebar-container{
+      @apply bg-gradient-to-b from-purple-400 to-teal-600 w-[20%]  p-4 border transition-all duration-500 border-solid border-blue-500 absolute mt-20 ml-0
     }
-    body {
-      @apply bg-background text-foreground;
+    .sidebar{
+        @apply flex items-center h-[120%] mt-1 p-4 rounded-lg cursor-pointer transition-all duration-300 hover:bg-black
     }
   }

@@ -8,6 +8,7 @@ import Labors from "./Labors";
 import Dashboard from "./components/Dashboard";
 import Productionchartsnew from "./components/Productionchartsnew";
 import Items from "./Items";
+// import './customcss.css'
 
 
 
@@ -82,6 +83,7 @@ export default function App() {
    
       <div className=" mt-20 flex flex-col justify-center items-center flex-grow">
         {
+          //adding sidebar here in future
           data ? (
             <Routes>
               <Route path="/" element={<Login />} />

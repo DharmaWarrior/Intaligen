@@ -4,7 +4,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import { LoginContext } from './ContextProvider/Context';
 import 'react-toastify/dist/ReactToastify.css';
 import validator from 'validator';
-import { Button } from "./../../components/ui/button"
 
 
 
@@ -122,7 +121,6 @@ export default function Login() {
                     <div className="form_heading mb-10">
                         <h1 className="text-3xl font-sans text-gray-900">Login to Intaligen</h1>
                     </div>
-                    <Button>Button</Button>
                     <form className="w-full" onSubmit={loginuser}>
                         <div className="form_input">
                             <label htmlFor="email" className="block font-sans font-semibold text-blue-900 text-sm mb-2">Email</label>
