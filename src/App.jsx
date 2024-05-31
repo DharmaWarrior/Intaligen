@@ -8,7 +8,8 @@ import Labors from "./Labors";
 import Dashboard from "./components/Dashboard";
 import Productionchartsnew from "./components/Productionchartsnew";
 import Items from "./Items";
-// import './customcss.css'
+import ProductInfo from "./ProductInfo";
+
 
 
 
@@ -93,6 +94,7 @@ export default function App() {
               <Route path="/masterDataDashboard" element={<Productionchartsnew/>} />
               <Route path="*" element={<Error />} />
               <Route path="/items" element={<Items />} />
+              <Route path="/product/:id" element={<ProductInfo />} />
               {/* <Route path="/categories" element={<Categories />} />
               <Route path="/partners" element={<Partners />} />
               */}

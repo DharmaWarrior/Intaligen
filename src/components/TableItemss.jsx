@@ -12,6 +12,7 @@ import {
   } from "./../../components/ui/table"
 import { LoginContext } from './ContextProvider/Context';
 import { FaPencilAlt, FaCheck, FaTimes } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
   
 
@@ -73,24 +74,24 @@ export default function TableItemss() {
     } else {
       setEditableRowData({});
     }
-  };
+  };  
 
   const handleSaveClick = async (rowIndex) => {
     const formattedData = {
-        "edit_ids[]": [editableRowData.id],
-        "edit_codes[]": [editableRowData.code],
+        "edit_ids[]": [`${editableRowData.id}`],
+        "edit_codes[]": [`${editableRowData.code}`],
         "edit_names[]": [editableRowData.name],
-        "edit_rates[]": [editableRowData.rate],
+        "edit_rates[]": [`${editableRowData.rate}`],
         "edit_units[]": [editableRowData.unit],
-        "edit_hsn_codes[]": [editableRowData.hsn_code],
-        "edit_cost_prices[]": [editableRowData.cost_price],
-        "edit_sale_prices[]": [editableRowData.sale_price],
-        "edit_taxes[]": [editableRowData.tax],
-        "edit_bom_flags[]": [editableRowData.bom_flag],
-        "edit_min_levels[]": [editableRowData.min_level],
-        "edit_max_levels[]": [editableRowData.max_level]
+        "edit_hsn_codes[]": ["xya"],
+        "edit_cost_prices[]": ["506"],
+        "edit_sale_prices[]": ["58"],
+        "edit_taxes[]": ["11"],
+        "edit_bom_flags[]": ["NO"],
+        "edit_min_levels[]": ["0"],
+        "edit_max_levels[]": ["0"]
     };
-    console.log(rowIndex);
+    console.log(formattedData);
 
     try {
         let token = localStorage.getItem("usersdatatoken");
@@ -103,12 +104,17 @@ export default function TableItemss() {
             body: JSON.stringify(formattedData)
         });
 
-        if (response.message === "Item aruni ka itm Changed!") {
-            fetchData();
-            handleEditClick(rowIndex); // Exit edit mode
+        if (response.status === 302) {
+          setData((prevData) => {
+            return prevData.map((item) =>
+              item.id === editableRowData.id ? { ...editableRowData } : item
+            );
+          });
+          handleEditClick(rowIndex); // Exit edit mode
+
         } else {
             const errorData = await response.json();
-            alert((errorData.message));
+            alert("Error" + (errorData.message));
         }
     } catch (error) {
         alert('Error updating data: ' + error);
@@ -192,7 +198,7 @@ export default function TableItemss() {
               placeholder="Search..."
               value={searchTerm}
               onChange={handleSearchInputChange}
-              className="px-4 py-2 border rounded-lg"
+              className="px-4 py-1.5 border rounded-lg"
           />
           <Button onClick={handleSearch}>Search</Button>
         </div>
@@ -213,6 +219,7 @@ export default function TableItemss() {
                             <TableCell className="font-medium w-[100px]">
                               {editModes[row.id] ? (
                                 <input
+                                  className="border-2 border-yellow-500"
                                   type="text"
                                   value={editableRowData.regdate}
                                   onChange={(e) => handleInputChange(e, 'regdate')}
@@ -224,6 +231,7 @@ export default function TableItemss() {
                             <TableCell className="font-medium w-[100px]">
                               {editModes[row.id] ? (
                                 <input
+                                  className="border-2 border-yellow-500"
                                   type="text"
                                   value={editableRowData.raw_flag}
                                   onChange={(e) => handleInputChange(e, 'raw_flag')}
@@ -235,6 +243,7 @@ export default function TableItemss() {
                             <TableCell className="font-medium w-[100px]">
                               {editModes[row.id] ? (
                                 <input
+                                  className="border-2 border-yellow-500"
                                   type="text"
                                   value={editableRowData.data_id}
                                   onChange={(e) => handleInputChange(e, 'data_id')}
@@ -246,6 +255,7 @@ export default function TableItemss() {
                             <TableCell className="font-medium w-[100px]">
                               {editModes[row.id] ? (
                                 <input
+                                  className="border-2 border-yellow-500"
                                   type="text"
                                   value={editableRowData.code}
                                   onChange={(e) => handleInputChange(e, 'code')}
@@ -257,6 +267,7 @@ export default function TableItemss() {
                             <TableCell className="font-medium w-[100px]">
                               {editModes[row.id] ? (
                                 <input
+                                  className="border-2 border-yellow-500"
                                   type="text"
                                   value={editableRowData.name}
                                   onChange={(e) => handleInputChange(e, 'name')}
@@ -268,6 +279,7 @@ export default function TableItemss() {
                             <TableCell className="font-medium w-[100px]">
                               {editModes[row.id] ? (
                                 <input
+                                  className="border-2 border-yellow-500"
                                   type="text"
                                   value={editableRowData.unit}
                                   onChange={(e) => handleInputChange(e, 'unit')}
@@ -279,17 +291,21 @@ export default function TableItemss() {
                             <TableCell className="font-medium w-[100px]">
                               {editModes[row.id] ? (
                                 <input
+                                  className="border-2 border-yellow-500"
                                   type="text"
                                   value={editableRowData.id}
                                   onChange={(e) => handleInputChange(e, 'id')}
                                 />
                               ) : (
-                                row.id
+                                <Link to={`/product/${row.id}`} className="text-blue-500 hover:underline">
+                                  {row.id}
+                                </Link>
                               )}
                             </TableCell>
                             <TableCell className="font-medium w-[100px]">
                               {editModes[row.id] ? (
                                 <input
+                                  className="border-2 border-yellow-500"
                                   type="text"
                                   value={editableRowData.rate}
                                   onChange={(e) => handleInputChange(e, 'rate')}

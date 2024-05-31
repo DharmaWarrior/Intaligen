@@ -59,7 +59,7 @@ export default function Dashboard() {
   //     "age": "30"
   //   }
   // };
-    console.log(data.message);
+    
     if (data.message === "Internal Server Error") {
       console.log("User not valid");
       // history("/");
