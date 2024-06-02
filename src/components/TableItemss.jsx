@@ -132,13 +132,7 @@ export default function TableItemss() {
     });
   };
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
+  
 
   const handleSearchInputChange = (e) => {
     setSearchTerm(e.target.value);
