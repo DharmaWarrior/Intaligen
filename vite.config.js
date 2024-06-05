@@ -8,7 +8,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "https://ig-dummy.onrender.com", // Replace with your API URL
+        target: "http://13.232.138.184:5000", // Replace with your API URL
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ""),
       },

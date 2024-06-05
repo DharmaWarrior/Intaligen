@@ -9,6 +9,7 @@ import Dashboard from "./components/Dashboard";
 import Productionchartsnew from "./components/Productionchartsnew";
 import Items from "./Items";
 import ProductInfo from "./ProductInfo";
+import Categories from "./Categories";
 
 
 
@@ -95,8 +96,8 @@ export default function App() {
               <Route path="*" element={<Error />} />
               <Route path="/items" element={<Items />} />
               <Route path="/product/:id" element={<ProductInfo />} />
-              {/* <Route path="/categories" element={<Categories />} />
-              <Route path="/partners" element={<Partners />} />
+              <Route path="/categories" element={<Categories />} />
+              {/* <Route path="/partners" element={<Partners />} />
               */}
             </Routes>
           ) : (

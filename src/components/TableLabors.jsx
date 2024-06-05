@@ -33,21 +33,17 @@ export default function TableItemss() {
   const fetchData = async () => {
     try {
         let token = localStorage.getItem("usersdatatoken");
-        const response = await fetch("/api/ListItems", {
-            method: "POST",
+        const response = await fetch("/api/labors", {
+            method: "GET",
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": "Bearer " + token,
             },
-            body: JSON.stringify({
-                "filters": [],
-                "filter_type": ""
-            })
         });
 
         if (response.ok) {
             const result = await response.json();
-            setData(result.items);
+            setData(result.labors);
             setLoading(false);
         } else {
             alert('Failed to fetch data');
@@ -80,23 +76,15 @@ export default function TableItemss() {
   const handleSaveClick = async (rowIndex) => {
     const formattedData = {
         "edit_ids[]": [`${editableRowData.id}`],
-        "edit_codes[]": [`${editableRowData.code}`],
         "edit_names[]": [editableRowData.name],
-        "edit_rates[]": [`${editableRowData.rate}`],
-        "edit_units[]": [editableRowData.unit],
-        "edit_hsn_codes[]": ["xya"],
-        "edit_cost_prices[]": ["506"],
-        "edit_sale_prices[]": ["58"],
-        "edit_taxes[]": ["11"],
-        "edit_bom_flags[]": ["NO"],
-        "edit_min_levels[]": ["0"],
-        "edit_max_levels[]": ["0"]
+        "edit_salaries[]": [`${editableRowData.salary}`],
+        "edit_codes[]": [editableRowData.code]
     };
     console.log(formattedData);
 
     try {
         let token = localStorage.getItem("usersdatatoken");
-        const response = await fetch(`/api/edit_items`, {
+        const response = await fetch(`/api/editlabor`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -144,12 +132,13 @@ export default function TableItemss() {
   };
 
   const columns = React.useMemo(() => [
+    { "Header": "Salary", "accessor": "salary" },
+    { "Header": "Status", "accessor": "status" },
     { "Header": "Code", "accessor": "code" },
     { "Header": "Name", "accessor": "name" },
-    { "Header": "Unit", "accessor": "unit" },
-    { "Header": "Rate", "accessor": "rate" },
-    { "Header": "Registration Date", "accessor": "regdate" },
-    { "Header": "Raw Flag", "accessor": "raw_flag" },
+    { "Header": "Contract_Mode", "accessor": "contract_mode" },
+    { "Header": "gender", "accessor": "gender" },
+    { "Header": "regdate", "accessor": "regdate" },
     {
       "Header": "Edit",
       // "Cell": ({ row }) => (
@@ -199,6 +188,23 @@ export default function TableItemss() {
                         {data.map((row) => (
                           <TableRow key={row.id}>
                             <TableCell className="font-medium w-[100px]">
+                            {row.salary}
+                            </TableCell>
+                            <TableCell className="font-medium w-[100px]">
+                              {editModes[row.id] ? (
+                                <select
+                                  className="border-2 border-blue-500"
+                                  value={editableRowData.status}
+                                  onChange={(e) => handleInputChange(e, 'raw_flag')}
+                                >
+                                  <option value="Active">Active</option>
+                                  <option value="Not-Active">Not-Active</option>
+                                </select>
+                              ) : (
+                                row.status
+                              )}
+                            </TableCell>
+                            <TableCell className="font-medium w-[100px]">
                               {editModes[row.id] ? (
                                 <input
                                   className="border-2 border-blue-500 w-15"
@@ -231,11 +237,11 @@ export default function TableItemss() {
                                 <input
                                   className="border-2 border-blue-500"
                                   type="text"
-                                  value={editableRowData.unit}
-                                  onChange={(e) => handleInputChange(e, 'unit')}
+                                  value={editableRowData.contract_mode}
+                                  onChange={(e) => handleInputChange(e, 'contract_mode')}
                                 />
                               ) : (
-                                row.unit
+                                row.contract_mode
                               )}
                             </TableCell>
                             <TableCell className="font-medium w-[100px]">
@@ -243,32 +249,25 @@ export default function TableItemss() {
                                 <input
                                   className="border-2 border-blue-500"
                                   type="text"
-                                  value={editableRowData.rate}
-                                  onChange={(e) => handleInputChange(e, 'rate')}
+                                  value={editableRowData.gender}
+                                  onChange={(e) => handleInputChange(e, 'gender')}
                                 />
                               ) : (
-                                row.rate
+                                row.gender
                               )}
-                            </TableCell>
-                            <TableCell className="font-medium w-[100px]">
-                            {row.regdate}
                             </TableCell>
                             <TableCell className="font-medium w-[100px]">
                               {editModes[row.id] ? (
-                                <select
+                                <input
                                   className="border-2 border-blue-500"
-                                  value={editableRowData.raw_flag}
-                                  onChange={(e) => handleInputChange(e, 'raw_flag')}
-                                >
-                                  <option value="yes">Yes</option>
-                                  <option value="no">No</option>
-                                </select>
+                                  type="text"
+                                  value={editableRowData.regdate}
+                                  onChange={(e) => handleInputChange(e, 'regdate')}
+                                />
                               ) : (
-                                row.raw_flag
+                                row.regdate
                               )}
                             </TableCell>
-                            
-                            
                             <TableCell className="font-medium w-[100px]">
                               <div className="flex items-center">
                                 {editModes[row.id] ? (

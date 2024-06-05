@@ -10,6 +10,7 @@ import Tooltip from '@mui/material/Tooltip';
 import AddItemForm from './components/AddItemForm';
 import { toast } from 'react-toastify';
 import TableItemss from './components/TableItemss';
+import MasterTable from './components/MasterTable';
 
 export default function Items() {
     const { logindata } = useContext(LoginContext);
@@ -40,6 +41,7 @@ export default function Items() {
         if (response.ok) {
           const result = await response.json();
           setData(result.items);
+          // console.log(data);
           setLoading(false);
         } else {
           console.error('Failed to fetch data');
@@ -51,9 +53,9 @@ export default function Items() {
       }
     };
   
-    // useEffect(() => {
-    //   fetchData();
-    // }, []);
+    useEffect(() => {
+      fetchData();
+    }, []);
   
     const handleEditClick = (rowIndex) => {
       setEditModes(prevEditModes => ({
@@ -68,6 +70,52 @@ export default function Items() {
   
     const handleClose = () => {
       setOpen(false);
+    };
+
+    const EditdataApi = async (editableRowData) => {
+      
+      const formattedData = {
+          "edit_ids[]": [`${editableRowData.id}`],
+          "edit_codes[]": [`${editableRowData.code}`],
+          "edit_names[]": [editableRowData.name],
+          "edit_rates[]": [`${editableRowData.rate}`],
+          "edit_units[]": [editableRowData.unit],
+          "edit_hsn_codes[]": ["xya"],
+          "edit_cost_prices[]": ["506"],
+          "edit_sale_prices[]": ["58"],
+          "edit_taxes[]": ["11"],
+          "edit_bom_flags[]": ["NO"],
+          "edit_min_levels[]": ["0"],
+          "edit_max_levels[]": ["0"]
+      };
+      console.log(formattedData);
+  
+      try {
+          let token = localStorage.getItem("usersdatatoken");
+          const response = await fetch(`/api/edit_items`, {
+              method: "POST",
+              headers: {
+                  "Content-Type": "application/json",
+                  "Authorization": "Bearer " + token,
+              },
+              body: JSON.stringify(formattedData)
+          });
+  
+          if (response.status === 302) {
+            setData((prevData) => {
+              return prevData.map((item) =>
+                item.id === editableRowData.id ? { ...editableRowData } : item
+              );
+            });
+            // handleEditClick(rowIndex); // Exit edit mode
+  
+          } else {
+              const errorData = await response.json();
+              alert("Error" + (errorData.message));
+          }
+      } catch (error) {
+          alert('Error updating data: ' + error);
+      }
     };
   
     const handleFormSubmit = async (formData) => {
@@ -101,36 +149,48 @@ export default function Items() {
         toast.error("Error!!", { position: "top-center" });
       }
     };
+    
+
+    const fetchSearch = async (searchTerm) => {
+      try {
+        let token = localStorage.getItem("usersdatatoken");
+        if(!token) {
+          console.log("Token not found");
+        }
+        
+        const response = await fetch("/api/searchitem", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + token,
+          },
+          body: JSON.stringify({
+            "name": `${searchTerm}`
+          })
+        });
   
-    // const columns = React.useMemo(() => [
-    //   { "Header": "Registration Date", "accessor": "regdate" },
-    //   { "Header": "Raw Flag", "accessor": "raw_flag" },
-    //   { "Header": "Data ID", "accessor": "data_id" },
-    //   { "Header": "Code", "accessor": "code" },
-    //   { "Header": "Name", "accessor": "name" },
-    //   { "Header": "Unit", "accessor": "unit" },
-    //   { "Header": "ID", "accessor": "id" },
-    //   { "Header": "Rate", "accessor": "rate" },
-    //   {
-    //     "Header": "Edit",
-    //     // "Cell": ({ row }) => (
-    //     //   <div className="flex items-center">
-    //     //     {editModes[row.index] ? (
-    //     //       <>
-    //     //         <FaCheck className="text-green-500 mr-2 cursor-pointer" onClick={() => handleEditClick(row.index)} />
-    //     //         <FaTimes className="text-red-500 cursor-pointer" onClick={() => handleEditClick(row.index)} />
-    //     //       </>
-    //     //     ) : (
-    //     //       <FaPencilAlt className="cursor-pointer" onClick={() => handleEditClick(row.index)} />
-    //     //     )}
-    //     //   </div>
-    //     // )
-    //   }
-    // ], [editModes]);
-  
-    // if (loading) {
-    //   return <div>Loading...</div>;
-    // }
+        if (response.status === 200) {
+          const result = await response.json();
+          setData(result);
+          setLoading(false);
+        } else {
+          alert('Failed to fetch data');
+          setLoading(false);
+        }
+      } catch (error) {
+        alert('Error fetching data: ' + error);
+        setLoading(false);
+      }
+    }
+
+    const columns = React.useMemo(() => [
+      { "Header": "Code", "accessor": "code" , "type": "link" , "url": "/product/" , "url_append": `id`, "editable" : "true"},
+      { "Header": "Name", "accessor": "name" , "type": "link" , "url": "/product/" , "url_append": `id`, "editable" : "true"},
+      { "Header": "Unit", "accessor": "unit" , "type": "text" , "editable" : "true"},
+      { "Header": "Rate", "accessor": "rate" , "type": "number" , "editable" : "true"},
+      { "Header": "Registration Date", "accessor": "regdate" , "type": "string" , "editable" : "false"},
+      { "Header": "Raw Flag", "accessor": "raw_flag" , "type": "select", "options": [{"name": "YES", "value": "YES"}, {"name": "NO", "value": "NO"}] , "editable" : "true"},
+    ], [editModes]);
   
     return (
       <div className="w-full h-[90vh] mt-0 flex flex-col">
@@ -157,7 +217,8 @@ export default function Items() {
             </div>
           </div>
           <div className="ml-15 flex flex-col mt-5">
-            <TableItemss />
+            {/* <TableItemss /> */}
+            <MasterTable columns={columns} data={data} setData={setData} fetchSearch={fetchSearch} EditdataApi={EditdataApi}/>
           </div>
         </div>
   

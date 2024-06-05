@@ -1,120 +1,180 @@
-import React from 'react'
-import Tableitems, { SelectColumnFilter } from './components/Tableitems' 
-import Sidebar from "./components/Sidebar"
+import React, { useState, useEffect, useContext } from 'react';
+import Sidebar from "./components/Sidebar";
+import Tableitems from './components/Tableitems';
+import { LoginContext } from './components/ContextProvider/Context';
+import { FaPencilAlt, FaCheck, FaTimes } from 'react-icons/fa';
+import ImportIcon from '@mui/icons-material/ImportExport';
+import PlusIcon from '@mui/icons-material/Add';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
+import AddCategoryForm from './components/AddCategoryForm';
+import { toast } from 'react-toastify';
+import TableItemss from './components/TableItemss';
+import MasterTable from './components/MasterTable';
 
-
-const getData = () => {
-    // const data = null;
-    const data = [
-      {
-        name: 'Jane Cooper',
-        email: 'jane.cooper@example.com',
-        title: 'Regional Paradigm Technician',
-        department: 'Optimization',
-        status: 'Active',
-        role: 'Admin',
-        age: 27,
-        imgUrl: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
-      },
-      {
-        name: 'Cody Fisher',
-        email: 'cody.fisher@example.com',
-        title: 'Product Directives Officer',
-        department: 'Intranet',
-        status: 'Active',
-        role: 'Owner',
-        age: 43,
-        imgUrl: 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
-      },
-      {
-        name: 'Esther Howard',
-        email: 'esther.howard@example.com',
-        title: 'Forward Response Developer',
-        department: 'Directives',
-        status: 'Active',
-        role: 'Member',
-        age: 32,
-        imgUrl: 'https://images.unsplash.com/photo-1520813792240-56fc4a3765a7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
-      },
-      {
-        name: 'Jenny Wilson',
-        email: 'jenny.wilson@example.com',
-        title: 'Central Security Manager',
-        department: 'Program',
-        status: 'Active',
-        role: 'Member',
-        age: 29,
-        imgUrl: 'https://images.unsplash.com/photo-1498551172505-8ee7ad69f235?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
-      },
-      {
-        name: 'Kristin Watson',
-        email: 'kristin.watson@example.com',
-        title: 'Lean Implementation Liaison',
-        department: 'Mobility',
-        status: 'Active',
-        role: 'Admin',
-        age: 36,
-        imgUrl: 'https://images.unsplash.com/photo-1532417344469-368f9ae6d187?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
-      },
-      {
-        name: 'Cameron Williamson',
-        email: 'cameron.williamson@example.com',
-        title: 'Internal Applications Engineer',
-        department: 'Security',
-        status: 'Active',
-        role: 'Member',
-        age: 24,
-        imgUrl: 'https://images.unsplash.com/photo-1566492031773-4f4e44671857?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
-      },
-    ]
-    return [...data, ...data, ...data]
-  }
-
-
-
-export default function Labors() {
+export default function Items() {
+    const { logindata } = useContext(LoginContext);
+    const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [editModes, setEditModes] = useState({});
+    const [open, setOpen] = useState(false);
+  
+    const fetchData = async () => {
+      try {
+        let token = localStorage.getItem("usersdatatoken");
+        if(!token) {
+          console.log("Token not found");
+        }
+        
+        const response = await fetch("/api/labors", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + token,
+          },
+        });
+  
+        if (response.ok) {
+          const result = await response.json();
+          setData(result.labors);
+          // console.log(data);
+          setLoading(false);
+        } else {
+          console.error('Failed to fetch data');
+          setLoading(false);
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        setLoading(false);
+      }
+    };
+  
+    useEffect(() => {
+      fetchData();
+    }, []);
+  
+    const handleEditClick = (rowIndex) => {
+      setEditModes(prevEditModes => ({
+        ...prevEditModes,
+        [rowIndex]: !prevEditModes[rowIndex]
+      }));
+    };
+  
+    const handleClickOpen = () => {
+      setOpen(true);
+    };
+  
+    const handleClose = () => {
+      setOpen(false);
+    };
+  
+    const handleFormSubmit = async (formData) => {
+      try {
+        const response = await fetch("/api/AddItem", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + localStorage.getItem("usersdatatoken"),
+          },
+          body: JSON.stringify({
+            "p_code": formData.code,
+            "p_name": formData.itemName,
+            "p_rate": formData.jobRate,
+            "p_unit": formData.fundamentalUnit,
+            "p_flag": formData.bom ? "YES" : "NO",
+            "pf_cost_price": formData.costPrice,
+            "pf_sale_price": formData.salePrice,
+            "pf_tax": formData.taxPercentage,
+            "pf_hsn": formData.hsnCode
+          })
+        });
+        const res = await response.json();
+        if (res.message === "iteminfo") {
+          toast.success("Item added.", { position: "top-center" });
+          fetchData(); // Re-fetch the data to update the list
+        } else {
+          toast.info(res.message, { position: "top-center" });
+        }
+      } catch (error) {
+        toast.error("Error!!", { position: "top-center" });
+      }
+    };
     
+
+    const fetchSearch = async (searchTerm) => {
+      try {
+        let token = localStorage.getItem("usersdatatoken");
+        if(!token) {
+          console.log("Token not found");
+        }
+        
+        const response = await fetch("/api/labors/search", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + token,
+          },
+          body: JSON.stringify({
+            "name": `${searchTerm}`,
+          })
+        });
+  
+        if (response.status === 200) {
+          const result = await response.json();
+          setData(result);
+          setLoading(false);
+        } else {
+          alert('Failed to fetch data');
+          setLoading(false);
+        }
+      } catch (error) {
+        alert('Error fetching data: ' + error);
+        setLoading(false);
+      }
+      console.log(searchTerm);
+    }
+
     const columns = React.useMemo(() => [
-        {
-          Header: "Name",
-          accessor: 'name',
-        },
-        {
-          Header: "Title",
-          accessor: 'title',
-        },
-        {
-          Header: "Status",
-          accessor: 'status',
-        },
-        {
-          Header: "Age",
-          accessor: 'age',
-        },
-        {
-          Header: "Role",
-          accessor: 'role',
-          Filter: SelectColumnFilter,  // new
-          filter: 'includes',
-        },
-      ], [])
-
-      const data = React.useMemo(() => getData(), [])
-
+      { "Header": "Salary", "accessor": "salary" , "type": "text" , "url": "/product/" , "url_append": `id`, "editable" : "true"},
+      { "Header": "Status", "accessor": "status" , "type": "text" , "url": "/product/" , "url_append": `id`, "editable" : "true"},
+      { "Header": "Code", "accessor": "code" , "type": "link" , "editable" : "true"},
+      { "Header": "Name", "accessor": "name" , "type": "link" , "editable" : "true"},
+      { "Header": "regdate", "accessor": "contract_mode" , "type": "number" , "editable" : "true"},
+      { "Header": "Contract_Mode", "accessor": "regdate" , "type": "string" , "editable" : "true"},
+      { "Header": "Gender", "accessor": "raw_flag" , "type": "select", "options": [{"name": "YES", "value": "YES"}, {"name": "NO", "value": "NO"}] , "editable" : "true"},
+    ], [editModes]);
+  
     return (
-        // Your JSX code goes here
-        <div className="w-full h-[90vh] mt-0 flex flex-col">
-            <Sidebar/>
-            <div className="absolute right-0 w-[80%] h-[90%] overflow-y-auto px-10 py-10">
-                <h1 className='text-4xl font-sans'>LIST OF RESOURCES</h1>
-                <div className="ml-15 flex flex-col mt-5"> 
-                    <div className='flex flex-row'>
-                        <button  className="mr-5 w-48 mt-1 font-sans btn bg-gradient-to-r from-purple-400 to-teal-600 text-white font-semibold py-3 px-4 rounded-lg focus:outline-none focus:shadow-outline">Add new resource</button>
-                        <button  className="mr-5 w-48 mt-1 font-sans btn bg-gradient-to-r from-teal-600 to-purple-400 text-white font-semibold py-3 px-4 rounded-lg focus:outline-none focus:shadow-outline">Import from Excel</button>
-                    </div>
-                    {/* <Tableitems columns={columns} data={data}/> */}
-                </div>
+      <div className="w-full h-[90vh] mt-0 flex flex-col">
+        <Sidebar />
+        <div className="h-[90%] overflow-y-auto absolute right-0 w-[80%] px-10 py-10">
+          <div className='flex flex-row'>
+            <h1 className='text-4xl font-sans'>LIST OF CATEGORIES</h1>
+            <div className='absolute right-10'>
+              <Tooltip title="Add new item">
+                <IconButton onClick={handleClickOpen}>
+                  <PlusIcon className='text-custom-green' fontSize="large" />
+                </IconButton>
+              </Tooltip>
+              <Tooltip title="Add new item">
+                <IconButton>
+                  <ImportIcon className='text-custom-green' fontSize="large" />
+                </IconButton>
+              </Tooltip>
+              <Tooltip title="Add new item">
+                <IconButton>
+                  <ImportIcon className='text-custom-green' fontSize="large" />
+                </IconButton>
+              </Tooltip>
             </div>
+          </div>
+          <div className="ml-15 flex flex-col mt-5">
+            {/* <TableItemss /> */}
+            <MasterTable columns={columns} data={data} setData={setData} fetchSearch={fetchSearch}/>
+          </div>
         </div>
+  
+        <AddCategoryForm open={open} handleClose={handleClose} handleFormSubmit={handleFormSubmit} fetchData={fetchData} />
+      </div>
     );
-}
+  }
