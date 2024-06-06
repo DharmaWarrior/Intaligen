@@ -4,13 +4,14 @@ import Dialog from './Dialog';
 
 const FinanceCard = ({ heading, inventoryData, itemId }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [financeData, setFinanceData] = useState(inventoryData);
 
   const handleEdit = () => {
     setIsDialogOpen(true);
   };
 
   const handleSave = (newData) => {
-    setFinanceData(newData);
+    setIsDialogOpen(false);
     // Perform additional actions if necessary, like updating state in a parent component
   };
 
@@ -23,7 +24,7 @@ const FinanceCard = ({ heading, inventoryData, itemId }) => {
             <CallToAction onEdit={handleEdit} />
           </div>
           <Content
-            inventoryData = {inventoryData}
+            financeData = {financeData}
           />
         </div>
       </div>
@@ -32,7 +33,8 @@ const FinanceCard = ({ heading, inventoryData, itemId }) => {
         onClose={() => setIsDialogOpen(false)}
         onSave={handleSave}
         itemId={itemId}
-        inventoryData={inventoryData}
+        financeData={financeData}
+        setFinanceData={setFinanceData}
       />
     </div>
   );
@@ -53,24 +55,24 @@ const CallToAction = ({ onEdit }) => {
   );
 };
 
-const Content = ({ inventoryData }) => {
+const Content = ({ financeData }) => {
   return (
     <div className="space-y-1 mt-5">
       <div className="flex justify-between bg-gray-100 py-2 px-4 rounded">
         <p className="text-gray-600">HSN:</p>
-        <p className="text-gray-800">{inventoryData.consumption_mode || 'NA'}</p>
+        <p className="text-gray-800">{financeData.hsn_code || 'NA'}</p>
       </div>
       <div className="flex justify-between bg-white py-2 px-4 rounded">
         <p className="text-gray-600">Cost Price:</p>
-        <p className="text-gray-800">{inventoryData.consumption_mode || 'NA'}</p>
+        <p className="text-gray-800">{financeData.cost_price || 'NA'}</p>
       </div>
       <div className="flex justify-between bg-gray-100 py-2 px-4 rounded">
         <p className="text-gray-600">Sale Price:</p>
-        <p className="text-gray-800">{inventoryData.consumption_mode || 'NA'}</p>
+        <p className="text-gray-800">{financeData.sale_price || 'NA'}</p>
       </div>
       <div className="flex justify-between bg-gray-100 py-2 px-4 rounded">
         <p className="text-gray-600">Tax (%):</p>
-        <p className="text-gray-800">{inventoryData.consumption_mode || 'NA'}</p>
+        <p className="text-gray-800">{financeData.tax || 'NA'}</p>
       </div>
     </div>
   );

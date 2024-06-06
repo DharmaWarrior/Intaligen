@@ -11,6 +11,55 @@ import InventoryCard from './cards/InventoryCard';
 import FinanceCard from './cards/FinanceCard';
 import BOMDialog from './cards/BOMDialog';
 
+
+const styles = {
+  dialogContent: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '10px',
+  },
+  selectedCategories: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    gap: '5px',
+  },
+  button: {
+    display: 'flex',
+    alignItems: 'center',
+    padding: '5px 10px',
+    backgroundColor: '#8BC34A', // Soothing green color
+    color: '#FFF',
+    borderRadius: '5px',
+    cursor: 'pointer',
+    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+    transition: 'all 0.3s ease',
+  },
+  buttonHover: {
+    backgroundColor: '#7CB342', // Slightly darker green for hover
+    boxShadow: '0 6px 8px rgba(0, 0, 0, 0.15)',
+  },
+  crossButton: {
+    marginLeft: '5px',
+    color: '#FF0000',
+    cursor: 'pointer',
+    transition: 'color 0.3s ease',
+  },
+  crossButtonHover: {
+    color: '#D00000',
+  },
+};
+
+const DefaultCategories = [
+  { name: 'QWERTY', value: 1 },
+  { name: 'SEMI-FINISHED', value: 2 },
+  { name: 'EXPORT', value: 3 },
+  { name: 'RAW MATERIAL', value: 4 },
+  { name: 'PACKING MATERIAL', value: 5 },
+  { name: 'MACHINE', value: 6 },
+  { name: 'RAJASTHAN', value: 7 },
+  { name: 'ABC', value: 15 },
+];
+
 export default function ProductInfo() {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
@@ -23,18 +72,13 @@ export default function ProductInfo() {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [categoriesToAdd, setCategoriesToAdd] = useState([]);
   const [Dproduct, setDProduct] = useState(null);
+  const [isBOMDialogOpen, setIsBOMDialogOpen] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [units, setUnits] = useState([]);
+  const [newUnit, setNewUnit] = useState({ unit_name: '', conversion_factor: '', unit_type: '' });
+  const [availableCategories, setAvailableCategories] = useState(DefaultCategories);
 
-  const handleSave = (updatedProduct) => {
-    setDProduct(updatedProduct);
-    setitemHeading(updatedProduct.ITEM.name)
-    (updatedProduct.ITEM.raw_flag === 'NO') ? setShowBOM("block") : setShowBOM("hidden");
-    
-  };
-
-  const handleEdit = () => {
-    setIsDialogOpen(true);
-  };
+  
 
   const fetchProduct = async () => {
     
@@ -88,6 +132,52 @@ export default function ProductInfo() {
     }
   };
 
+  const handleSave = (updatedProduct) => {
+    setDProduct(updatedProduct);
+    setitemHeading(updatedProduct.ITEM.name)
+    (updatedProduct.ITEM.raw_flag === 'NO') ? setShowBOM("block") : setShowBOM("hidden");
+    
+  };
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+    setSelectedCategories([]);
+    setAvailableCategories(DefaultCategories);
+  };
+
+  const handleEdit = () => {
+    setIsBOMDialogOpen(true);
+  };
+
+  const handleOpenDialog = () => {
+    setOpenDialog(true);
+  };
+
+
+  const handleDeleteUnit = async (unitId) => {
+    try {
+      let token = localStorage.getItem("usersdatatoken");
+      const response = await fetch(`/api/delete_unit`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + token,
+        },
+        body: JSON.stringify({
+          "delete_unit_id" :`${unitId}`
+        }
+      )
+      });
+
+      if (response.status === 200) {
+        setUnits(units.filter(unit => unit.id !== unitId));
+      } else {
+        console.error('Failed to delete unit');
+      }
+    } catch (error) {
+      console.error('Error deleting unit', error);
+    }
+  };
 
 
   const handleDelete = async (category) => {
@@ -109,7 +199,7 @@ export default function ProductInfo() {
       });
 
       if (response.status === 200) {
-        setCategories(prevCategories => prevCategories.filter(cat => cat.id !== category.id));
+        fetchProduct();
       } else {
         console.error('Failed to delete the category');
       }
@@ -118,66 +208,78 @@ export default function ProductInfo() {
     }
   };
 
-  const handleOpenDialog = () => {
-    setOpenDialog(true);
-  };
-
-  const handleCloseDialog = () => {
-    setOpenDialog(false);
-  };
-
-
-  const handleCategorySelect = (category) => {
-    setSelectedCategories(prev => 
-      prev.includes(category) 
-        ? prev.filter(cat => cat !== category) 
-        : [...prev, category]
-    );
-  };
   
-  const styles = {
-    dialogContent: {
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-    },
-    selectedCategories: {
-      marginLeft: '1rem',
-      display: 'flex',
-      flexDirection: 'column',
-    },
-  };
-
-  const DefaultCategories = [
-    { id: 1, name: 'Category 1' },
-    { id: 2, name: 'Category 2' },
-    { id: 3, name: 'Category 3' },
-    { id: 4, name: 'Category 4' },
-    // Add more categories as needed
-  ];
-
-
-  const handleSaveCategories = async () => {
+  const handleAddUnit = async () => {
     try {
-      const response = await fetch('/api/add_categories_to_item', {
+      let token = localStorage.getItem("usersdatatoken");
+      const response = await fetch('/api/createconversion', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + token,
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + token,
         },
-        body: JSON.stringify({ categories: selectedCategories }),
+        body: JSON.stringify({
+            "itemId":product.ITEM.id,
+            "toUnit":`${newUnit.unit_name}`,
+            "conversionFactor":newUnit.conversion_factor,
+            "toUnitType":`${newUnit.unit_type}`
+        }),
       });
-
-      if (response.status === 200) {
-        const addedCategories = await response.json();
-        setCategoriesToAdd(addedCategories);
+      if (response.status === 302) {
+        fetchProduct();
+        setIsDialogOpen(false);
+        setNewUnit({ unit_name: '', conversion_factor: '', unit_type: '' });
       } else {
-        console.error('Failed to add categories');
+        console.error('Failed to add unit');
       }
     } catch (error) {
-      console.error('Error adding categories:', error);
+      console.error('Error adding unit', error);
     }
   };
+  
+  const handleSaveBOM = async (bomData) => {
+    // fetchProduct();
+    setIsBOMDialogOpen(false);
+  };
+  
+
+  const handleCategorySelect = (category) => {
+    setSelectedCategories([...selectedCategories, category]);
+    setAvailableCategories(availableCategories.filter((item) => item.value !== category.value));
+  };
+
+  const handleCategoryRemove = (category) => {
+    setSelectedCategories(selectedCategories.filter((item) => item.value !== category.value));
+    setAvailableCategories([...availableCategories, category]);
+  };
+
+  const handleSaveCategories = async () => {
+
+    try {
+      let token = localStorage.getItem("usersdatatoken");
+      const response = await fetch(`/api/add_category_to_item`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + token,
+        },
+        body: JSON.stringify({
+          "add_category_item_id":product.ITEM.id,
+          "add_category_id_list":selectedCategories.map((category) => category.value.toString()),
+        }
+      )
+      });
+      if (response.status === 200) {
+        fetchProduct();
+        handleCloseDialog();
+      } else {
+        console.error('Failed to save categories');
+      }
+    } catch (error) {
+      console.error('Error saving categories', error);
+    }
+  };
+
 
   useEffect(() => {
     fetchProduct();
@@ -255,24 +357,26 @@ export default function ProductInfo() {
                       <TableBody>
                         {product.BOM_DATA.map((item) => (
                           <TableRow key={item.id} className="bg-white py-1 px-2 rounded ">
-                            <TableCell>{item.child_item.code}</TableCell>
+                            <TableCell>{item.child_item.code ? item.child_item.code : 'NA'}</TableCell>
                             <TableCell>{item.child_item.name}</TableCell>
                             <TableCell>{item.child_item_qty}</TableCell>
                             <TableCell>{item.child_item.unit}</TableCell>
                             <TableCell>{item.margin}</TableCell>
                             <TableCell>{item.child_item.rate}</TableCell>
-                            <TableCell>{item.child_item.itemfinance.cost_price}</TableCell>
+                            <TableCell>{item.child_item.itemfinance ? item.child_item.itemfinance.cost_price : ''}</TableCell>
                           </TableRow>
                         ))}
                       </TableBody>
                     </Table>
                   </div>
                   <BOMDialog
-                    isOpen={isDialogOpen}
-                    onClose={() => setIsDialogOpen(false)}
-                    onSave={handleSave}
+                    isOpen={isBOMDialogOpen}
+                    onClose={() => setIsBOMDialogOpen(false)}
+                    onSave={handleSaveBOM}
                     itemId={product.ITEM.id}
                     product={product}
+                    setProduct={setProduct}
+                    fetchProduct={fetchProduct}
                   />
                 </div>                
               </div>
@@ -293,7 +397,7 @@ export default function ProductInfo() {
               <div>
                 <FinanceCard
                   heading="Finance"
-                  inventoryData={product.ITEM.iteminventory}
+                  inventoryData={product.itemfinance}
                   itemId={product.ITEM.id}
                 />
               </div>
@@ -303,30 +407,93 @@ export default function ProductInfo() {
               
               {/* Units*/}
               <div className="hero bg-white p-5 shadow-lg rounded-xl border border-gray-200 pt-2">
-                <div className="hero-content ">
+                <div className="hero-content">
                   <div className="space-y-auto mt-1">
                     <div className="flex justify-between items-center">
                       <h1 className="text-3xl font-small text-gray-800">Units</h1>
                       <button
-                          
-                          className="bg-teal-500 hover:bg-teal-600 text-white focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 rounded-md p-1 pl-4 pr-4"
-                        >
-                          +
+                        className="bg-teal-500 hover:bg-teal-600 text-white focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 rounded-md p-1 pl-4 pr-4"
+                        onClick={() => setIsDialogOpen(true)}
+                      >
+                        +
                       </button>
                     </div>
-                    <div className='mt-5'>
-                      <Table>
-                        <TableHeader>
-                            <TableRow className="bg-white-800 px-2 rounded ">
-                              <TableHead className="text-gray-600">Unit</TableHead>
-                              <TableHead className="text-gray-600">Conversion Factor</TableHead>
-                              <TableHead className="text-gray-600">Type</TableHead>
-                            </TableRow>
-                        </TableHeader>
-                      </Table>
-                    </div>
+                    <Table>
+                      <TableHeader>
+                        <TableRow className="bg-white-800 px-2 rounded">
+                          <TableHead className="text-gray-600">Unit</TableHead>
+                          <TableHead className="text-gray-600">Conversion Factor</TableHead>
+                          <TableHead className="text-gray-600">Type</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {product.units.map((unit) => (
+                          <TableRow key={unit.id} className="bg-white-800 py-1 px-2 rounded">
+                            <TableCell>{unit.unit_name}</TableCell>
+                            <TableCell>{unit.conversion_factor}</TableCell>
+                            <TableCell>{unit.unit_type}</TableCell>
+                            <TableCell>
+                              <button
+                                className="bg-red-600 hover:bg-red-700 text-white focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 rounded-md p-1"                                
+                                onClick={() => handleDeleteUnit(unit.id)}
+                              >
+                                ×
+                              </button>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
                   </div>
                 </div>
+                {isDialogOpen && (
+                  <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
+                    <div className="bg-white p-5 rounded-lg shadow-lg">
+                      <h2 className="text-xl mb-4">Add Units</h2>
+                      <div className="mb-4">
+                        <label className="block text-gray-700">Unit Name</label>
+                        <input
+                          type="text"
+                          className="border rounded w-full py-2 px-3"
+                          value={newUnit.unit_name}
+                          onChange={(e) => setNewUnit({ ...newUnit, unit_name: e.target.value })}
+                        />
+                      </div>
+                      <div className="mb-4">
+                        <label className="block text-gray-700">Conversion Factor</label>
+                        <input
+                          type="text"
+                          className="border rounded w-full py-2 px-3"
+                          value={newUnit.conversion_factor}
+                          onChange={(e) => setNewUnit({ ...newUnit, conversion_factor: e.target.value })}
+                        />
+                      </div>
+                      <div className="mb-4">
+                        <label className="block text-gray-700">Unit Type</label>
+                        <input
+                          type="text"
+                          className="border rounded w-full py-2 px-3"
+                          value={newUnit.unit_type}
+                          onChange={(e) => setNewUnit({ ...newUnit, unit_type: e.target.value })}
+                        />
+                      </div>
+                      <div className="flex justify-end">
+                        <button
+                          className="bg-gray-500 hover:bg-gray-600 text-white rounded-md p-2 mr-2"
+                          onClick={() => setIsDialogOpen(false)}
+                        >
+                          Cancel
+                        </button>
+                        <button
+                          className="bg-teal-500 hover:bg-teal-600 text-white rounded-md p-2"
+                          onClick={handleAddUnit}
+                        >
+                          Save
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
               {/* Categories */}
               <div className="hero bg-white p-5 shadow-lg rounded-xl border border-gray-200 pt-2">
@@ -343,52 +510,59 @@ export default function ProductInfo() {
                     </div>
                     <div className="mt-4 space-y-2">
                       {product.item_categories.map((category, index) => (
-                        <div key={index} className="flex items-center  bg-white-100 p-2 rounded-md shadow-sm">
-                          <span className="text-white text-sm font-medium px-4 py-2 bg-blue-500 hover:bg-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 cursor-default">
+                        <div key={index} className="flex items-center bg-white-100 p-2 rounded-md shadow-sm">
+                          <span className="text-white text-sm font-medium px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-opacity-50 cursor-default"
+                                style={{
+                                  background: 'linear-gradient(145deg, #6a85b6, #bac8e0)',
+                                  boxShadow: '5px 5px 10px #3a4a67, -5px -5px 10px #d0e1ff'
+                                }}>
                             {product.categories[category.category_id][1]}
                           </span>
-                          <button 
-                            onClick={() => handleDelete(category)} 
+                          <button
+                            onClick={() => handleDelete(category)}
                             className="text-red-500 hover:text-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 rounded-md p-1"
                           >
                             ✕
                           </button>
                         </div>
                       ))}
-                        {categoriesToAdd.map((category, index) => (
-                          <div key={index} className="flex items-center  bg-white-100 p-2 rounded-md shadow-sm">
-                            <span className="text-white text-sm font-medium px-4 py-2 bg-blue-500 hover:bg-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 cursor-default">
-                              {category.category_id}
-                            </span>
-                            <button 
-                              onClick={() => handleDelete(category)} 
-                              className="text-red-500 hover:text-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 rounded-md p-1"
-                            >
-                              ✕
-                            </button>
-                          </div>
-                        ))}
                     </div>
                   </div>
                 </div>
                 <Dialog open={openDialog} onClose={handleCloseDialog}>
                   <DialogTitle>Select Categories</DialogTitle>
                   <DialogContent style={styles.dialogContent}>
-                    <div className="flex flex-row gap-4">
-                      <Dropdown label="Select Categories">
-                        {DefaultCategories.map((category) => (
-                          <Dropdown.Item key={category.id} onClick={() => handleCategorySelect(category.name)}>
+                    <div className="flex flex-col gap-4">
+                      <select
+                        onChange={(e) => handleCategorySelect(JSON.parse(e.target.value))}
+                        value=""
+                        className="border rounded w-full py-2 px-3"
+                      >
+                        <option value="" disabled>Select Category</option>
+                        {availableCategories.map((category) => (
+                          <option key={category.value} value={JSON.stringify(category)}>
                             {category.name}
-                          </Dropdown.Item>
+                          </option>
                         ))}
-                      </Dropdown>
-                      <Typography style={styles.selectedCategories}>
-                        {selectedCategories.join(', ')}
-                      </Typography>
+                      </select>
+                      <div style={styles.selectedCategories}>
+                        {selectedCategories.map((category) => (
+                          <div key={category.value} style={styles.button}>
+                            {category.name}
+                            <span
+                              onClick={() => handleCategoryRemove(category)}
+                              style={styles.crossButton}
+                            >
+                              ✕
+                            </span>
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   </DialogContent>
                   <DialogActions>
-                    <Button onClick={handleSaveCategories}>Save</Button>
+                    <Button onClick={handleCloseDialog}>Cancel</Button>
+                    <Button onClick={handleSaveCategories} color="primary">Save</Button>
                   </DialogActions>
                 </Dialog>
               </div>

@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { Table, TableBody, TableCell, TableHeader, TableHead, TableRow } from './../../components/ui/table';
 import { FaTimes } from 'react-icons/fa';
+import Search from './../components/Search';
 
-const Dialog = ({ isOpen, onClose, onSave, itemId, product }) => {
+const Dialog = ({ isOpen, onClose, onSave, product,setProduct ,fetchProduct }) => {
   const [formData, setFormData] = useState({
     hsn_code: '',
     cost_price: '',
     sale_price: '',
-    tax: '',
+    process_name: product.ITEM.boms[0].bom_name,
     search: '',
   });
   const [bomData, setBomData] = useState(product.BOM_DATA);
@@ -59,24 +60,39 @@ const Dialog = ({ isOpen, onClose, onSave, itemId, product }) => {
 
   const handleSelectItem = (item) => {
     setSearchResults([]);
-    console.log('Selected item:', item);
+    const newItem = {
+      id: item.id,
+      child_item: { name: item.name, unit: item.unit },
+      child_item_qty: item.qty,
+      margin: item.margin,
+    };
+    setBomData((prev) => [...prev, newItem]);
+  };
+
+  const handleBomDataChange = (id, field, value) => {
+    setBomData((prev) =>
+      prev.map((item) =>
+        item.id === id ? { ...item, [field]: value } : item
+      )
+    );
   };
 
   const handleSubmit = async () => {
+    
+    console.log('Saving data:', bomData);
     const dataToSend = {
-      "item_id": itemId,
-      "hsn_code": formData.hsn_code,
-      "cost_price": formData.cost_price,
-      "sale_price": formData.sale_price,
-      "tax": formData.tax,
+      "chart_id": product.ITEM.id,
+      "add_items_check": "YES",
+      "bom_name": formData.process_name,
+      "items_ids[]": bomData.map((item) => item.id.toString()),
+      "items_qtys[]": bomData.map((item) => item.child_item_qty.toString()),
+      "item_units[]": bomData.map((item) => item.child_item.unit),
+      "item_margins[]": bomData.map((item) => item.margin.toString()),
     };
 
     try {
       let token = localStorage.getItem("usersdatatoken");
-      const url = '/api/edit_finance_info';
-      console.log('Saving data to:', url);
-
-      const response = await fetch(url, {
+      const response = await fetch('/api/add_bom_items', {
         method: 'POST',
         headers: {
           "Content-Type": "application/json",
@@ -86,7 +102,8 @@ const Dialog = ({ isOpen, onClose, onSave, itemId, product }) => {
       });
 
       if (response.status === 200) {
-        onSave(formData);
+        // onSave(formData);
+        setProduct({ ...product, BOM_DATA: bomData });
         onClose();
       } else {
         console.error('Failed to save data', response.status);
@@ -108,7 +125,7 @@ const Dialog = ({ isOpen, onClose, onSave, itemId, product }) => {
             <input
               type="text"
               name="hsn_code"
-              value={formData.hsn_code}
+              value={formData.process_name}
               onChange={handleChange}
               className="border border-gray-300 p-2 rounded w-full"
             />
@@ -126,10 +143,39 @@ const Dialog = ({ isOpen, onClose, onSave, itemId, product }) => {
             <TableBody>
               {bomData.map((item) => (
                 <TableRow key={item.id} className="bg-white py-1 px-2 rounded">
-                  <TableCell>{item.child_item.name}</TableCell>
-                  <TableCell>{item.child_item_qty}</TableCell>
-                  <TableCell>{item.child_item.unit}</TableCell>
-                  <TableCell>{item.margin}</TableCell>
+                  <TableCell>
+                  {item.child_item.name}
+                  </TableCell>
+                  <TableCell>
+                    <input
+                      type="number"
+                      value={item.child_item_qty}
+                      onChange={(e) =>
+                        handleBomDataChange(item.id, 'child_item_qty', e.target.value)
+                      }
+                      className="border border-gray-300 p-1 rounded w-full"
+                    />
+                  </TableCell>
+                  <TableCell>
+                    <input
+                      type="text"
+                      value={item.child_item.unit}
+                      onChange={(e) =>
+                        handleBomDataChange(item.id, 'child_item.unit', e.target.value)
+                      }
+                      className="border border-gray-300 p-1 rounded w-full"
+                    />
+                  </TableCell>
+                  <TableCell>
+                    <input
+                      type="number"
+                      value={item.margin}
+                      onChange={(e) =>
+                        handleBomDataChange(item.id, 'margin', e.target.value)
+                      }
+                      className="border border-gray-300 p-1 rounded w-full"
+                    />
+                  </TableCell>
                   <TableCell>
                     <FaTimes
                       className="text-red-500 cursor-pointer"
@@ -140,29 +186,7 @@ const Dialog = ({ isOpen, onClose, onSave, itemId, product }) => {
               ))}
             </TableBody>
           </Table>
-          <div>
-            <label className="block text-gray-600">Search:</label>
-            <input
-              type="text"
-              name="search"
-              value={formData.search}
-              onChange={handleChange}
-              className="border border-gray-300 p-2 rounded w-full"
-            />
-            {searchResults.length > 0 && (
-              <div className="border border-gray-300 rounded mt-2 max-h-48 overflow-y-auto">
-                {searchResults.map((item) => (
-                  <div
-                    key={item.id}
-                    onClick={() => handleSelectItem(item)}
-                    className="p-2 hover:bg-gray-200 cursor-pointer"
-                  >
-                    {item.name}
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
+          <Search onSelect={handleSelectItem} />
         </div>
         <div className="flex justify-end space-x-3 mt-4">
           <button onClick={onClose} className="px-4 py-2 bg-gray-300 rounded">Cancel</button>
