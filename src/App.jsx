@@ -10,6 +10,8 @@ import Productionchartsnew from "./components/Productionchartsnew";
 import Items from "./Items";
 import ProductInfo from "./ProductInfo";
 import Categories from "./Categories";
+import Partners from "./Partners";
+import Orders from "./Orders";
 
 
 
@@ -97,8 +99,9 @@ export default function App() {
               <Route path="/items" element={<Items />} />
               <Route path="/product/:id" element={<ProductInfo />} />
               <Route path="/categories" element={<Categories />} />
-              {/* <Route path="/partners" element={<Partners />} />
-              */}
+              <Route path="/partners" element={<Partners />} />
+              <Route path="/orders" element={<Orders />} />
+             
             </Routes>
           ) : (
             <div className="flex justify-center items-center flex-col flex-grow">

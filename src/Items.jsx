@@ -1,16 +1,14 @@
 import React, { useState, useEffect, useContext } from 'react';
 import Sidebar from "./components/Sidebar";
-import Tableitems from './components/Tableitems';
 import { LoginContext } from './components/ContextProvider/Context';
 import { FaPencilAlt, FaCheck, FaTimes } from 'react-icons/fa';
 import ImportIcon from '@mui/icons-material/ImportExport';
 import PlusIcon from '@mui/icons-material/Add';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
-import AddItemForm from './components/AddItemForm';
 import { toast } from 'react-toastify';
-import TableItemss from './components/TableItemss';
 import MasterTable from './components/MasterTable';
+import AddForm from './components/AddForm';
 
 export default function Items() {
     const { logindata } = useContext(LoginContext);
@@ -18,6 +16,7 @@ export default function Items() {
     const [loading, setLoading] = useState(true);
     const [editModes, setEditModes] = useState({});
     const [open, setOpen] = useState(false);
+    const [formType, setFormType] = useState('');
   
     const fetchData = async () => {
       try {
@@ -64,7 +63,8 @@ export default function Items() {
       }));
     };
   
-    const handleClickOpen = () => {
+    const handleOpen = (type) => {
+      setFormType(type);
       setOpen(true);
     };
   
@@ -191,6 +191,18 @@ export default function Items() {
       { "Header": "Registration Date", "accessor": "regdate" , "type": "string" , "editable" : "false"},
       { "Header": "Raw Flag", "accessor": "raw_flag" , "type": "select", "options": [{"name": "YES", "value": "YES"}, {"name": "NO", "value": "NO"}] , "editable" : "true"},
     ], [editModes]);
+
+    const itemFields = [
+      { name: 'itemName', label: 'Item Name *', type: 'text', required: true },
+      { name: 'jobRate', label: 'Job Rate', type: 'text' },
+      { name: 'code', label: 'Code', type: 'text' },
+      { name: 'costPrice', label: 'Cost Price', type: 'number' },
+      { name: 'fundamentalUnit', label: 'Fundamental Unit *', type: 'text', required: true },
+      { name: 'salePrice', label: 'Sale Price', type: 'number' },
+      { name: 'taxPercentage', label: 'Tax Percentage', type: 'number' },
+      { name: 'hsnCode', label: 'HSN Code', type: 'text' },
+      { name: 'bom', label: 'BOM', type: 'checkbox', fullWidth: true },
+    ];
   
     return (
       <div className="w-full h-[90vh] mt-0 flex flex-col">
@@ -200,7 +212,7 @@ export default function Items() {
             <h1 className='text-4xl font-sans'>LIST OF ITEMS</h1>
             <div className='absolute right-10'>
               <Tooltip title="Add new item">
-                <IconButton onClick={handleClickOpen}>
+                <IconButton onClick={() => handleOpen('item')}>
                   <PlusIcon className='text-custom-green' fontSize="large" />
                 </IconButton>
               </Tooltip>
@@ -217,12 +229,20 @@ export default function Items() {
             </div>
           </div>
           <div className="ml-15 flex flex-col mt-5">
-            {/* <TableItemss /> */}
             <MasterTable columns={columns} data={data} setData={setData} fetchSearch={fetchSearch} EditdataApi={EditdataApi}/>
           </div>
         </div>
   
-        <AddItemForm open={open} handleClose={handleClose} handleFormSubmit={handleFormSubmit} fetchData={fetchData} />
+        {formType === 'item' && (
+        <AddForm
+          open={open}
+          handleClose={handleClose}
+          handleFormSubmit={handleFormSubmit}
+          fetchData={fetchData}
+          formFields={itemFields}
+          title="Add New Item"
+        />
+      )}
       </div>
     );
   }

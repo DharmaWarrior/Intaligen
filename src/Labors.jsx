@@ -1,16 +1,14 @@
 import React, { useState, useEffect, useContext } from 'react';
 import Sidebar from "./components/Sidebar";
-import Tableitems from './components/Tableitems';
 import { LoginContext } from './components/ContextProvider/Context';
 import { FaPencilAlt, FaCheck, FaTimes } from 'react-icons/fa';
 import ImportIcon from '@mui/icons-material/ImportExport';
 import PlusIcon from '@mui/icons-material/Add';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
-import AddCategoryForm from './components/AddCategoryForm';
 import { toast } from 'react-toastify';
-import TableItemss from './components/TableItemss';
 import MasterTable from './components/MasterTable';
+import AddForm from './components/AddForm';
 
 export default function Items() {
     const { logindata } = useContext(LoginContext);
@@ -18,6 +16,7 @@ export default function Items() {
     const [loading, setLoading] = useState(true);
     const [editModes, setEditModes] = useState({});
     const [open, setOpen] = useState(false);
+    const [formType, setFormType] = useState('');
   
     const fetchData = async () => {
       try {
@@ -60,7 +59,8 @@ export default function Items() {
       }));
     };
   
-    const handleClickOpen = () => {
+    const handleOpen = (type) => {
+      setFormType(type);
       setOpen(true);
     };
   
@@ -143,16 +143,23 @@ export default function Items() {
       { "Header": "Contract_Mode", "accessor": "regdate" , "type": "string" , "editable" : "true"},
       { "Header": "Gender", "accessor": "raw_flag" , "type": "select", "options": [{"name": "YES", "value": "YES"}, {"name": "NO", "value": "NO"}] , "editable" : "true"},
     ], [editModes]);
+
+    const laborFields = [
+      { name: 'Labor_Name', label: 'Labor Name *', type: 'text', required: true },
+      { name: 'Labor_Salary', label: 'Labor Salary', type: 'text' },
+      { name: 'Labor_Code', label: 'Labor Code', type: 'text' },
+      { name: 'Labor_Type', label: 'Labor Type', type: 'text' },
+    ];
   
     return (
       <div className="w-full h-[90vh] mt-0 flex flex-col">
         <Sidebar />
         <div className="h-[90%] overflow-y-auto absolute right-0 w-[80%] px-10 py-10">
           <div className='flex flex-row'>
-            <h1 className='text-4xl font-sans'>LIST OF CATEGORIES</h1>
+            <h1 className='text-4xl font-sans'>LIST OF LABOURS</h1>
             <div className='absolute right-10'>
               <Tooltip title="Add new item">
-                <IconButton onClick={handleClickOpen}>
+                <IconButton onClick={() => handleOpen('labor')}>
                   <PlusIcon className='text-custom-green' fontSize="large" />
                 </IconButton>
               </Tooltip>
@@ -169,12 +176,20 @@ export default function Items() {
             </div>
           </div>
           <div className="ml-15 flex flex-col mt-5">
-            {/* <TableItemss /> */}
             <MasterTable columns={columns} data={data} setData={setData} fetchSearch={fetchSearch}/>
           </div>
         </div>
   
-        <AddCategoryForm open={open} handleClose={handleClose} handleFormSubmit={handleFormSubmit} fetchData={fetchData} />
+        {formType === 'labor' && (
+        <AddForm
+          open={open}
+          handleClose={handleClose}
+          handleFormSubmit={handleFormSubmit}
+          fetchData={fetchData}
+          formFields={laborFields}
+          title="Add New Labor"
+        />
+      )}
       </div>
     );
   }
