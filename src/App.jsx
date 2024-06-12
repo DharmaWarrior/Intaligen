@@ -12,6 +12,8 @@ import ProductInfo from "./ProductInfo";
 import Categories from "./Categories";
 import Partners from "./Partners";
 import Orders from "./Orders";
+import Flow from "./ProductionDept";
+import DetailsPage from "./components/DetailsPage";
 
 
 
@@ -101,6 +103,8 @@ export default function App() {
               <Route path="/categories" element={<Categories />} />
               <Route path="/partners" element={<Partners />} />
               <Route path="/orders" element={<Orders />} />
+              <Route path="/workstation_console" element={<Flow />} />
+              <Route path="/details" element={<DetailsPage />} />
              
             </Routes>
           ) : (

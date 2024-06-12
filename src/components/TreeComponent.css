@@ -1,0 +1,50 @@
+/* App.css */
+body, html, #root {
+  height: 100%;
+  margin: 0;
+}
+
+.tree-component {
+  height: 100vh;
+}
+
+.scrollable-area {
+  max-height: 400px; /* Adjust as needed */
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.card {
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.table {
+  margin-top: 10px;
+}
+
+.table h3 {
+  margin: 0;
+}
+
+.capacity {
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+button {
+  margin-top: 10px;
+  padding: 5px 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}

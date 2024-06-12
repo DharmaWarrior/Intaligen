@@ -1,0 +1,30 @@
+.Rightsidebar {
+    position: fixed;
+    top: 81px;
+    overflow-y: auto;
+    right: 0;
+    width: 0;
+    height: 100%;
+    background-color: #fff;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding: 60px 0 20px 20px;
+    opacity: 0;
+    z-index: 1000;
+  }
+  
+  .Rightsidebar.open {
+    width: 450px;
+    opacity: 1;
+  }
+  
+  .close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+  }

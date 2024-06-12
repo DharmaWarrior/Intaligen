@@ -1,0 +1,164 @@
+.custom-node {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+  }
+  
+  .circle-container {
+    position: relative;
+    width: 120px;
+    height: 120px;
+  }
+  
+  .circle-content1 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 50%;
+    color: rgb(6, 6, 6);
+  }
+  
+  .circle-background {
+    fill: none;
+    stroke: #aea5a5;
+    stroke-linecap: round;
+    opacity: 0.2;
+  }
+  
+  .circle-progress {
+    fill: none;
+    stroke: #AB47BC;
+    transform: rotate(-90deg);
+    transform-origin: 50% 50%;
+    stroke-linecap: round;
+  }
+  
+  .circle-progress-received {
+    fill: none;
+    stroke: #00897B;
+    transform: rotate(-90deg);
+    transform-origin: 50% 50%;
+    stroke-linecap: round;
+  }
+  
+  .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0px;
+  }
+  
+  .icon span {
+    margin-left: 4px;
+  }
+  
+  .label1 {
+    margin-top: 1px;
+    color: black;
+  }
+  
+  .tooltip {
+    visibility: hidden;
+    width: 210px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    text-align: left;
+    border-radius: 6px;
+    padding: 10px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -100px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  
+  .custom-node:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+  }
+  
+  .tooltip-content {
+    color: white;
+    font-size: 12px;
+  }
+  
+  .tooltip-content h3 {
+    margin-top: 0;
+    margin-bottom: 5px;
+    font-size: 14px;
+    text-align: center;
+  }
+  
+  .tooltip-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 10px;
+  }
+  
+  .tooltip-content th,
+  .tooltip-content td {
+    border: 1px solid #ddd;
+    padding: 4px;
+    text-align: center;
+  }
+  
+  .tooltip-content th {
+    background-color: #444;
+  }
+  
+  .tooltip-content td {
+    background-color: #222;
+  }
+  
+  .tooltip-content input {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    text-align: center;
+    width: 50px; /* Adjust the width as needed */
+  }
+  
+  .connected-rectangle {
+    visibility: hidden;
+    width: 150px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    text-align: left;
+    border-radius: 6px;
+    padding: 10px;
+    position: absolute;
+    z-index: 1;
+    top: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  
+  .custom-node:hover .connected-rectangle {
+    visibility: visible;
+    opacity: 1;
+  }
+  
+  .connected-rectangle h4 {
+    margin-top: 0;
+    margin-bottom: 5px;
+    font-size: 14px;
+    text-align: center;
+  }
+  
+  .adjustment-info {
+    font-size: 12px;
+  }
+  
