@@ -2,31 +2,23 @@ import React, { useState, useEffect } from 'react';
 import { Handle } from 'reactflow';
 import { User, Cog } from 'lucide-react';
 import './CustomNode.css';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "./../components/ui/tooltip";
-
 
 function CustomNode({ data }) {
-  const { label, userValue, gearValue, capacity, totalCapacity, jobData = [], resourceData = [], alloted, received } = data;
-  const [editableJobData, setEditableJobData] = useState(jobData);
-  const [isEditing, setIsEditing] = useState(Array(jobData.length).fill(false));
+  const { label, userValue, gearValue, capacity, totalCapacity, MainTable = [], resourceData = [], received } = data;
+  const [editableJobData, setEditableJobData] = useState(MainTable);
+  const [isEditing, setIsEditing] = useState(Array(MainTable.length).fill(false));
   const [updatedUserValue, setUpdatedUserValue] = useState(userValue);
-  const [updatedReceivedValue, setUpdatedReceivedValue] = useState(received);
   const [showTooltip, setShowTooltip] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
-    setEditableJobData(jobData);
-    setIsEditing(Array(jobData.length).fill(false));
-  }, [jobData]);
+    setEditableJobData(MainTable);
+    setIsEditing(Array(MainTable.length).fill(false));
+  }, [MainTable]);
 
   useEffect(() => {
     setUpdatedUserValue(userValue);
-    setUpdatedReceivedValue(received);
-  }, [userValue, received]);
+  }, [userValue]);
 
   const handleEditClick = (index) => {
     const newIsEditing = [...isEditing];
@@ -34,23 +26,51 @@ function CustomNode({ data }) {
     setIsEditing(newIsEditing);
   };
 
+  const handleSaveClick = async (index) => {
+    const jobToUpdate = editableJobData[index];
+    console.log('Saving changes for job:', MainTable[index], index);
+    
+    try {
+      let token = localStorage.getItem("usersdatatoken");
+      const response = await fetch("/api/editjobtoworkstation", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'authorization': 'Bearer ' + token,
+        },
+        body: JSON.stringify({
+          ws_job_edit_id: jobToUpdate.pass_id, // Replace with your actual ID field
+          qty_allot: jobToUpdate.allocated,
+          difference: jobToUpdate.allocated - oldAllocated, // Calculate difference
+        }),
+      });
+  
+      if (!response.ok) {
+        throw new Error('Failed to save changes');
+      }
+  
+      // Assuming successful response means the edit was saved
+      const updatedJobData = [...editableJobData];
+      setIsEditing(Array(MainTable.length).fill(false)); // Reset editing state
+      setEditableJobData(updatedJobData); // Update state if needed based on response
+    } catch (error) {
+      console.error('Error saving changes:', error);
+      // Handle error scenario as needed
+    }
+  };
+  
+
   const handleJobChange = (index, field, value) => {
     const newJobData = [...editableJobData];
     newJobData[index][field] = value;
     setEditableJobData(newJobData);
   };
 
-  const JobRate_alloted = jobData.reduce((sum, job) => sum + job.allotedJobRate, 0);
-  const JobRate_received = jobData.reduce((sum, job) => sum + job.receivedJobRate, 0);
-  const ResourceCost_alloted = resourceData.reduce((sum, job) => sum + job.allotedResourceCost, 0);
-
-  const capacityPercentage = (JobRate_alloted / ResourceCost_alloted) * 100;
-  const receivedCapacityPercentage = (JobRate_received / ResourceCost_alloted) * 100;
-
+  const capacityPercentage = (capacity / totalCapacity) * 100;
   const radius = 45;
   const circumference = 2 * Math.PI * radius;
   const offset = circumference - (capacityPercentage / 100) * circumference;
-  const receivedOffset = circumference - (receivedCapacityPercentage / 100) * circumference;
+  const receivedOffset = circumference - (capacityPercentage / 100) * circumference;
 
   const handleMouseEnter = () => {
     setShowTooltip(true);
@@ -60,8 +80,12 @@ function CustomNode({ data }) {
     setShowTooltip(false);
   };
 
+  const handleTooltipClick = (e) => {
+    e.stopPropagation(); // Prevents the click from bubbling up to handleNodeClick
+  };
+
   return (
-    <div className="custom-node" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onClick={handleMouseEnter}>
+    <div className="custom-node" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
       <Handle type="target" position="top" />
 
       <div className="circle-container">
@@ -97,7 +121,7 @@ function CustomNode({ data }) {
             r={radius}
             strokeWidth="4"
             strokeDasharray={circumference}
-            strokeDashoffset={offset}
+            strokeDashoffset={offset ? offset : 0}
             transform="rotate(-90 60 60)"  // Adjust rotation
           />
           <circle
@@ -107,7 +131,7 @@ function CustomNode({ data }) {
             r={radius + 10}
             strokeWidth="4"
             strokeDasharray={circumference + 2 * Math.PI * 10} // Adjust for the new circumference
-            strokeDashoffset={receivedOffset}
+            strokeDashoffset={receivedOffset ? receivedOffset : 0}
             transform="rotate(-70 60 60)"  // Adjust rotation
           />
         </svg>
@@ -118,53 +142,56 @@ function CustomNode({ data }) {
 
       {showTooltip && label !== 'Primary Work Station' && (
         <>
-          <div className="tooltip">
+          <div className="tooltip" onClick={handleTooltipClick}>
             <div className="tooltip-content">
               <h3>Job</h3>
-              <table>
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Allocated</th>
-                    <th>Received</th>
-                    <th>Edit</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {editableJobData.map((job, index) => (
-                    <tr key={index}>
-                      <td>{job.name}{' (KGS)'}</td>
-                      <td>
-                        {isEditing[index] ? (
-                          <input
-                            type="number"
-                            value={job.allocated}
-                            onChange={(e) => handleJobChange(index, 'allocated', e.target.value)}
-                          />
-                        ) : (
-                          job.allocated
-                        )}
-                      </td>
-                      <td>
-                        {isEditing[index] ? (
-                          <input
-                            type="number"
-                            value={job.received}
-                            onChange={(e) => handleJobChange(index, 'received', e.target.value)}
-                          />
-                        ) : (
-                          job.received
-                        )}
-                      </td>
-                      <td>
-                        <button onClick={() => handleEditClick(index)}>
-                          {isEditing[index] ? 'Save' : 'Edit'}
-                        </button>
-                      </td>
+              <div className="job-table-container">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Allocated</th>
+                      <th>Received</th>
+                      <th>Edit</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {editableJobData.map((job, index) => (
+                      <tr key={index}>
+                        <td>{job.name} ({job.unit})</td>
+                        <td>
+                          {isEditing[index] ? (
+                            <input
+                              type="number"
+                              value={job.allocated}
+                              onChange={(e) => handleJobChange(index, 'allocated', e.target.value)}
+                            />
+                          ) : (
+                            job.allocated
+                          )}
+                        </td>
+                        <td>{job.received}</td>
+                        <td>
+                          {isEditing[index] ? (
+                            <button onClick={() => handleSaveClick(index)}>Save</button>
+                          ) : (
+                            <button onClick={() => handleEditClick(index)}>Edit</button>
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <div className="job-actions">
+                <input
+                  type="text"
+                  placeholder="Search..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+                <button>Add</button>
+              </div>
               <h3>Resources</h3>
               <table>
                 <thead>
