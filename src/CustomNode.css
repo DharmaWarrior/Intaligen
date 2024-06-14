@@ -50,6 +50,57 @@
     stroke-linecap: round;
   }
   
+  .search-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 8px;
+  }
+  
+  .search-label {
+    color: #ffc107; /* Change to desired color */
+    margin-bottom: 8px; /* Add space between label and input */
+  }
+  
+  .search-input {
+    border: 1px solid #d1d5db;
+    padding: 8px;
+    border-radius: 4px;
+    width: 100%;
+    focus:outline-none;
+    focus:ring;
+    focus:border-blue-300;
+  }
+  
+  .search-results {
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    margin-top: 8px;
+    max-height: 12rem;
+    overflow-y: auto;
+  }
+  
+  .search-result-item {
+    padding: 8px;
+    cursor: pointer;
+  }
+  
+  .search-result-item:hover {
+    background-color: #f3f4f6;
+  }
+  
+  .job-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    color: #fff;
+  }
+  
+  /* Additional styles to adjust Button spacing */
+  .m-10px {
+    margin: 10px;
+  }
+
   .icon {
     display: flex;
     align-items: center;

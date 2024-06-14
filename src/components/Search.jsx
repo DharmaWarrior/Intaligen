@@ -44,21 +44,21 @@ const Search = ({ onSelect }) => {
   };
 
   return (
-    <div>
-      <label className="block text-gray-600">Search:</label>
+    <div className="search-container">
+      <label className="search-label">Search:</label>
       <input
         type="text"
         value={query}
         onChange={(e) => handleSearch(e.target.value)}
-        className="border border-gray-300 p-2 rounded w-full"
+        className="search-input"
       />
       {searchResults.length > 0 && (
-        <div className="border border-gray-300 rounded mt-2 max-h-48 overflow-y-auto">
+        <div className="search-results">
           {searchResults.map((item) => (
             <div
               key={item.id}
               onClick={() => handleSelect(item)}
-              className="p-2 hover:bg-gray-200 cursor-pointer"
+              className="search-result-item"
             >
               {item.name}
             </div>

@@ -168,7 +168,7 @@
             "inventory_id": null,
             "item_id": 48,
             "wip_inventory_id": null,
-            "qty_allot": 1570.0,
+            "qty_allot": 1349.0,
             "reject_inventory_id": null,
             "qty_recv": 0.0,
             "qty_wip": 0.0,
@@ -182,6 +182,44 @@
                 "id": 48,
                 "name": "Jay ka item 2",
                 "unit": "dxy"
+            },
+            "workstation": {
+                "id": 1,
+                "data_id": 1,
+                "category_config": "{\"item_categories\": {\"filter_type\": \"inclusive\", \"filters_array\": [1]}}",
+                "name": "VEDANT AGRAWAL_J3VU4NZYT5_primary_ws",
+                "primary_flag": "YES",
+                "database": {
+                    "id": 1,
+                    "name": "VEDANT AGRAWAL_J3VU4NZYT5",
+                    "key": "YLKS04NS2W",
+                    "regdate": "2023-11-18",
+                    "status": "Active"
+                }
+            }
+        },
+        {
+            "date_allot": "2024-06-01",
+            "workstation_id": 1,
+            "data_id": 1,
+            "id": 140,
+            "inventory_id": null,
+            "item_id": 19,
+            "wip_inventory_id": null,
+            "qty_allot": 0.0,
+            "reject_inventory_id": null,
+            "qty_recv": 0.0,
+            "qty_wip": 0.0,
+            "qty_reject": 0.0,
+            "item": {
+                "rate": 231.0,
+                "regdate": "2024-02-05",
+                "raw_flag": "NO",
+                "data_id": 1,
+                "code": "CP002E",
+                "id": 19,
+                "name": "COAL POWDERR",
+                "unit": "KGG"
             },
             "workstation": {
                 "id": 1,
@@ -220,37 +258,31 @@
             "note": "WS1",
             "chart_items": [
                 [
-                    129,
-                    "Jay ka item 2",
-                    30.0,
-                    "dxy",
-                    0,
-                    48
-                ],
-                [
                     130,
                     "jaygodara45",
                     20.0,
                     "46",
                     0,
                     50
+                ],
+                [
+                    129,
+                    "Jay ka item 2",
+                    251.0,
+                    "dxy",
+                    0,
+                    48
+                ],
+                [
+                    139,
+                    "COAL POWDERR",
+                    4.0,
+                    "KGG",
+                    0,
+                    19
                 ]
             ],
             "ws_jobs": [
-                {
-                    "date_allot": "2024-06-01",
-                    "workstation_id": 2,
-                    "data_id": 1,
-                    "id": 129,
-                    "inventory_id": 477,
-                    "item_id": 48,
-                    "wip_inventory_id": 479,
-                    "qty_allot": 30.0,
-                    "reject_inventory_id": 480,
-                    "qty_recv": 12.0,
-                    "qty_wip": 23.0,
-                    "qty_reject": 1.0
-                },
                 {
                     "date_allot": "2024-06-01",
                     "workstation_id": 2,
@@ -264,6 +296,34 @@
                     "qty_recv": 34.0,
                     "qty_wip": 43.0,
                     "qty_reject": 2.0
+                },
+                {
+                    "date_allot": "2024-06-01",
+                    "workstation_id": 2,
+                    "data_id": 1,
+                    "id": 129,
+                    "inventory_id": 477,
+                    "item_id": 48,
+                    "wip_inventory_id": 479,
+                    "qty_allot": 251.0,
+                    "reject_inventory_id": 480,
+                    "qty_recv": 12.0,
+                    "qty_wip": 23.0,
+                    "qty_reject": 1.0
+                },
+                {
+                    "date_allot": "2024-06-01",
+                    "workstation_id": 2,
+                    "data_id": 1,
+                    "id": 139,
+                    "inventory_id": 498,
+                    "item_id": 19,
+                    "wip_inventory_id": null,
+                    "qty_allot": 4.0,
+                    "reject_inventory_id": null,
+                    "qty_recv": 0.0,
+                    "qty_wip": 0.0,
+                    "qty_reject": 0.0
                 }
             ],
             "chart_resources": []
@@ -327,19 +387,23 @@
             },
             "totals": {
                 "50": 20.0,
-                "48": 1600.0
+                "48": 1600.0,
+                "19": 4.0
             },
             "recv_totals": {
                 "50": 34.0,
-                "48": 12.0
+                "48": 12.0,
+                "19": 0
             },
             "wip_totals": {
                 "50": 43.0,
-                "48": 23.0
+                "48": 23.0,
+                "19": 0.0
             },
             "reject_totals": {
                 "50": 2.0,
-                "48": 1.0
+                "48": 1.0,
+                "19": 0.0
             },
             "material_issues": [
                 {
@@ -373,7 +437,7 @@
             ],
             "material_estimates": {
                 "50": 0.0,
-                "48": 1570.0
+                "48": 1349.0
             },
             "material_estimate_totals": {
                 "50": 20.0,
@@ -395,7 +459,7 @@
                 "50": 1.0,
                 "48": 0.0
             },
-            "job_work_totals": 160460.0,
+            "job_work_totals": 161384.0,
             "capacity_totals": 995.0,
             "ws_date": "\"2024-06-01\"",
             "jobs": [
@@ -431,7 +495,7 @@
                     "inventory_id": null,
                     "item_id": 48,
                     "wip_inventory_id": null,
-                    "qty_allot": 1570.0,
+                    "qty_allot": 1349.0,
                     "reject_inventory_id": null,
                     "qty_recv": 0.0,
                     "qty_wip": 0.0,
@@ -445,6 +509,30 @@
                         "id": 48,
                         "name": "Jay ka item 2",
                         "unit": "dxy"
+                    }
+                },
+                {
+                    "date_allot": "2024-06-01",
+                    "workstation_id": 1,
+                    "data_id": 1,
+                    "id": 140,
+                    "inventory_id": null,
+                    "item_id": 19,
+                    "wip_inventory_id": null,
+                    "qty_allot": 0.0,
+                    "reject_inventory_id": null,
+                    "qty_recv": 0.0,
+                    "qty_wip": 0.0,
+                    "qty_reject": 0.0,
+                    "item": {
+                        "rate": 231.0,
+                        "regdate": "2024-02-05",
+                        "raw_flag": "NO",
+                        "data_id": 1,
+                        "code": "CP002E",
+                        "id": 19,
+                        "name": "COAL POWDERR",
+                        "unit": "KGG"
                     }
                 }
             ],
@@ -526,20 +614,24 @@
                         }
                     },
                     "totals": {
-                        "48": 30.0,
-                        "50": 20.0
+                        "50": 20.0,
+                        "48": 251.0,
+                        "19": 4.0
                     },
                     "recv_totals": {
+                        "50": 34.0,
                         "48": 12.0,
-                        "50": 34.0
+                        "19": 0
                     },
                     "wip_totals": {
+                        "50": 43.0,
                         "48": 23.0,
-                        "50": 43.0
+                        "19": 0.0
                     },
                     "reject_totals": {
+                        "50": 2.0,
                         "48": 1.0,
-                        "50": 2.0
+                        "19": 0.0
                     },
                     "material_issues": [
                         {
@@ -573,15 +665,15 @@
                     ],
                     "material_estimates": {
                         "50": 20.0,
-                        "48": 30.0
+                        "48": 251.0
                     },
                     "material_estimate_totals": {
                         "50": 20.0,
-                        "48": 30.0
+                        "48": 251.0
                     },
                     "material_estimate_totals_from_recv": {
                         "50": 20.0,
-                        "48": 30.0
+                        "48": 251.0
                     },
                     "material_issue_totals": {
                         "50": 43.0,
@@ -595,34 +687,10 @@
                         "50": 1.0,
                         "48": 0.0
                     },
-                    "job_work_totals": 3460.0,
+                    "job_work_totals": 26484.0,
                     "capacity_totals": 360.0,
                     "ws_date": "\"2024-06-01\"",
                     "jobs": [
-                        {
-                            "date_allot": "2024-06-01",
-                            "workstation_id": 2,
-                            "data_id": 1,
-                            "id": 129,
-                            "inventory_id": 477,
-                            "item_id": 48,
-                            "wip_inventory_id": 479,
-                            "qty_allot": 30.0,
-                            "reject_inventory_id": 480,
-                            "qty_recv": 12.0,
-                            "qty_wip": 23.0,
-                            "qty_reject": 1.0,
-                            "item": {
-                                "rate": 100.0,
-                                "regdate": "2024-05-25",
-                                "raw_flag": "YES",
-                                "data_id": 1,
-                                "code": "NA",
-                                "id": 48,
-                                "name": "Jay ka item 2",
-                                "unit": "dxy"
-                            }
-                        },
                         {
                             "date_allot": "2024-06-01",
                             "workstation_id": 2,
@@ -645,6 +713,54 @@
                                 "id": 50,
                                 "name": "jaygodara45",
                                 "unit": "46"
+                            }
+                        },
+                        {
+                            "date_allot": "2024-06-01",
+                            "workstation_id": 2,
+                            "data_id": 1,
+                            "id": 129,
+                            "inventory_id": 477,
+                            "item_id": 48,
+                            "wip_inventory_id": 479,
+                            "qty_allot": 251.0,
+                            "reject_inventory_id": 480,
+                            "qty_recv": 12.0,
+                            "qty_wip": 23.0,
+                            "qty_reject": 1.0,
+                            "item": {
+                                "rate": 100.0,
+                                "regdate": "2024-05-25",
+                                "raw_flag": "YES",
+                                "data_id": 1,
+                                "code": "NA",
+                                "id": 48,
+                                "name": "Jay ka item 2",
+                                "unit": "dxy"
+                            }
+                        },
+                        {
+                            "date_allot": "2024-06-01",
+                            "workstation_id": 2,
+                            "data_id": 1,
+                            "id": 139,
+                            "inventory_id": 498,
+                            "item_id": 19,
+                            "wip_inventory_id": null,
+                            "qty_allot": 4.0,
+                            "reject_inventory_id": null,
+                            "qty_recv": 0.0,
+                            "qty_wip": 0.0,
+                            "qty_reject": 0.0,
+                            "item": {
+                                "rate": 231.0,
+                                "regdate": "2024-02-05",
+                                "raw_flag": "NO",
+                                "data_id": 1,
+                                "code": "CP002E",
+                                "id": 19,
+                                "name": "COAL POWDERR",
+                                "unit": "KGG"
                             }
                         }
                     ],

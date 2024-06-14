@@ -32,6 +32,7 @@ const generateJobData = (wsdetails) => {
       receivedJobRate: 0,
       unit: itemUnit,
       pass_id: passing_id,
+      ws_date: wsdetails.ws_date,
     };
   });
 };
@@ -80,6 +81,7 @@ const fetchWorkstations = async (setNodes, setEdges) => {
         },
         position: { x: 225 * (index + 1), y: 420 },
         type: 'customNode',
+        ws_date: details.ws_date,
       }));
 
       const adjustmentNode = {
@@ -183,6 +185,7 @@ function Flow() {
         },
         position: { x: node.position.x + 125 * (index + 1), y: node.position.y + 220 },
         type: 'customNode',
+        ws_date: childDetails.ws_date,
       })) : [];
   
       const childEdges = childNodes.map(childNode => ({
