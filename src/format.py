@@ -126,6 +126,44 @@
             "date_allot": "2024-06-01",
             "workstation_id": 1,
             "data_id": 1,
+            "id": 147,
+            "inventory_id": null,
+            "item_id": 6,
+            "wip_inventory_id": null,
+            "qty_allot": 10.0,
+            "reject_inventory_id": null,
+            "qty_recv": 0.0,
+            "qty_wip": 0.0,
+            "qty_reject": 0.0,
+            "item": {
+                "rate": 4.0,
+                "regdate": "2024-01-04",
+                "raw_flag": "YES",
+                "data_id": 1,
+                "code": "9345",
+                "id": 6,
+                "name": "Vedant product",
+                "unit": "dz"
+            },
+            "workstation": {
+                "data_id": 1,
+                "id": 1,
+                "primary_flag": "YES",
+                "category_config": "{\"item_categories\": {\"filter_type\": \"inclusive\", \"filters_array\": [1]}}",
+                "name": "VEDANT AGRAWAL_J3VU4NZYT5_primary_ws",
+                "database": {
+                    "id": 1,
+                    "name": "VEDANT AGRAWAL_J3VU4NZYT5",
+                    "key": "YLKS04NS2W",
+                    "regdate": "2023-11-18",
+                    "status": "Active"
+                }
+            }
+        },
+        {
+            "date_allot": "2024-06-01",
+            "workstation_id": 1,
+            "data_id": 1,
             "id": 125,
             "inventory_id": null,
             "item_id": 50,
@@ -146,11 +184,11 @@
                 "unit": "46"
             },
             "workstation": {
-                "id": 1,
                 "data_id": 1,
+                "id": 1,
+                "primary_flag": "YES",
                 "category_config": "{\"item_categories\": {\"filter_type\": \"inclusive\", \"filters_array\": [1]}}",
                 "name": "VEDANT AGRAWAL_J3VU4NZYT5_primary_ws",
-                "primary_flag": "YES",
                 "database": {
                     "id": 1,
                     "name": "VEDANT AGRAWAL_J3VU4NZYT5",
@@ -164,31 +202,69 @@
             "date_allot": "2024-06-01",
             "workstation_id": 1,
             "data_id": 1,
-            "id": 120,
+            "id": 152,
             "inventory_id": null,
-            "item_id": 48,
+            "item_id": 2,
             "wip_inventory_id": null,
-            "qty_allot": 1349.0,
+            "qty_allot": 0.0,
             "reject_inventory_id": null,
             "qty_recv": 0.0,
             "qty_wip": 0.0,
             "qty_reject": 0.0,
             "item": {
-                "rate": 100.0,
-                "regdate": "2024-05-25",
-                "raw_flag": "YES",
+                "rate": 12.0,
+                "regdate": "2023-11-18",
+                "raw_flag": "NO",
                 "data_id": 1,
-                "code": "NA",
-                "id": 48,
-                "name": "Jay ka item 2",
-                "unit": "dxy"
+                "code": "FG001",
+                "id": 2,
+                "name": "FG Item 1 bs",
+                "unit": "dozend"
             },
             "workstation": {
-                "id": 1,
                 "data_id": 1,
+                "id": 1,
+                "primary_flag": "YES",
                 "category_config": "{\"item_categories\": {\"filter_type\": \"inclusive\", \"filters_array\": [1]}}",
                 "name": "VEDANT AGRAWAL_J3VU4NZYT5_primary_ws",
+                "database": {
+                    "id": 1,
+                    "name": "VEDANT AGRAWAL_J3VU4NZYT5",
+                    "key": "YLKS04NS2W",
+                    "regdate": "2023-11-18",
+                    "status": "Active"
+                }
+            }
+        },
+        {
+            "date_allot": "2024-06-01",
+            "workstation_id": 1,
+            "data_id": 1,
+            "id": 150,
+            "inventory_id": null,
+            "item_id": 68,
+            "wip_inventory_id": null,
+            "qty_allot": 5.0,
+            "reject_inventory_id": null,
+            "qty_recv": 0.0,
+            "qty_wip": 0.0,
+            "qty_reject": 0.0,
+            "item": {
+                "rate": 45.0,
+                "regdate": "2024-05-31",
+                "raw_flag": "NO",
+                "data_id": 1,
+                "code": "jjnjsd",
+                "id": 68,
+                "name": "hey",
+                "unit": "kg"
+            },
+            "workstation": {
+                "data_id": 1,
+                "id": 1,
                 "primary_flag": "YES",
+                "category_config": "{\"item_categories\": {\"filter_type\": \"inclusive\", \"filters_array\": [1]}}",
+                "name": "VEDANT AGRAWAL_J3VU4NZYT5_primary_ws",
                 "database": {
                     "id": 1,
                     "name": "VEDANT AGRAWAL_J3VU4NZYT5",
@@ -206,7 +282,7 @@
             "inventory_id": null,
             "item_id": 19,
             "wip_inventory_id": null,
-            "qty_allot": 0.0,
+            "qty_allot": 59.0,
             "reject_inventory_id": null,
             "qty_recv": 0.0,
             "qty_wip": 0.0,
@@ -222,11 +298,163 @@
                 "unit": "KGG"
             },
             "workstation": {
-                "id": 1,
                 "data_id": 1,
+                "id": 1,
+                "primary_flag": "YES",
                 "category_config": "{\"item_categories\": {\"filter_type\": \"inclusive\", \"filters_array\": [1]}}",
                 "name": "VEDANT AGRAWAL_J3VU4NZYT5_primary_ws",
+                "database": {
+                    "id": 1,
+                    "name": "VEDANT AGRAWAL_J3VU4NZYT5",
+                    "key": "YLKS04NS2W",
+                    "regdate": "2023-11-18",
+                    "status": "Active"
+                }
+            }
+        },
+        {
+            "date_allot": "2024-06-01",
+            "workstation_id": 1,
+            "data_id": 1,
+            "id": 120,
+            "inventory_id": null,
+            "item_id": 48,
+            "wip_inventory_id": null,
+            "qty_allot": 1345.0,
+            "reject_inventory_id": null,
+            "qty_recv": 0.0,
+            "qty_wip": 0.0,
+            "qty_reject": 0.0,
+            "item": {
+                "rate": 100.0,
+                "regdate": "2024-05-25",
+                "raw_flag": "YES",
+                "data_id": 1,
+                "code": "NA",
+                "id": 48,
+                "name": "Jay ka item 2",
+                "unit": "dxy"
+            },
+            "workstation": {
+                "data_id": 1,
+                "id": 1,
                 "primary_flag": "YES",
+                "category_config": "{\"item_categories\": {\"filter_type\": \"inclusive\", \"filters_array\": [1]}}",
+                "name": "VEDANT AGRAWAL_J3VU4NZYT5_primary_ws",
+                "database": {
+                    "id": 1,
+                    "name": "VEDANT AGRAWAL_J3VU4NZYT5",
+                    "key": "YLKS04NS2W",
+                    "regdate": "2023-11-18",
+                    "status": "Active"
+                }
+            }
+        },
+        {
+            "date_allot": "2024-06-01",
+            "workstation_id": 1,
+            "data_id": 1,
+            "id": 156,
+            "inventory_id": null,
+            "item_id": 12,
+            "wip_inventory_id": null,
+            "qty_allot": 8.0,
+            "reject_inventory_id": null,
+            "qty_recv": 0.0,
+            "qty_wip": 0.0,
+            "qty_reject": 0.0,
+            "item": {
+                "rate": 12.0,
+                "regdate": "2024-01-04",
+                "raw_flag": "YES",
+                "data_id": 1,
+                "code": "9350",
+                "id": 12,
+                "name": "Vedant HsssE Item5",
+                "unit": "dz"
+            },
+            "workstation": {
+                "data_id": 1,
+                "id": 1,
+                "primary_flag": "YES",
+                "category_config": "{\"item_categories\": {\"filter_type\": \"inclusive\", \"filters_array\": [1]}}",
+                "name": "VEDANT AGRAWAL_J3VU4NZYT5_primary_ws",
+                "database": {
+                    "id": 1,
+                    "name": "VEDANT AGRAWAL_J3VU4NZYT5",
+                    "key": "YLKS04NS2W",
+                    "regdate": "2023-11-18",
+                    "status": "Active"
+                }
+            }
+        },
+        {
+            "date_allot": "2024-06-01",
+            "workstation_id": 1,
+            "data_id": 1,
+            "id": 142,
+            "inventory_id": null,
+            "item_id": 18,
+            "wip_inventory_id": null,
+            "qty_allot": 40.0,
+            "reject_inventory_id": null,
+            "qty_recv": 0.0,
+            "qty_wip": 0.0,
+            "qty_reject": 0.0,
+            "item": {
+                "rate": 0.0,
+                "regdate": "2024-02-05",
+                "raw_flag": "NO",
+                "data_id": 1,
+                "code": "JP0011",
+                "id": 18,
+                "name": "JOSH POWDER",
+                "unit": "KG"
+            },
+            "workstation": {
+                "data_id": 1,
+                "id": 1,
+                "primary_flag": "YES",
+                "category_config": "{\"item_categories\": {\"filter_type\": \"inclusive\", \"filters_array\": [1]}}",
+                "name": "VEDANT AGRAWAL_J3VU4NZYT5_primary_ws",
+                "database": {
+                    "id": 1,
+                    "name": "VEDANT AGRAWAL_J3VU4NZYT5",
+                    "key": "YLKS04NS2W",
+                    "regdate": "2023-11-18",
+                    "status": "Active"
+                }
+            }
+        },
+        {
+            "date_allot": "2024-06-01",
+            "workstation_id": 1,
+            "data_id": 1,
+            "id": 144,
+            "inventory_id": null,
+            "item_id": 16,
+            "wip_inventory_id": null,
+            "qty_allot": 0.0,
+            "reject_inventory_id": null,
+            "qty_recv": 0.0,
+            "qty_wip": 0.0,
+            "qty_reject": 0.0,
+            "item": {
+                "rate": 5.0,
+                "regdate": "2024-02-05",
+                "raw_flag": "NO",
+                "data_id": 1,
+                "code": "NA",
+                "id": 16,
+                "name": "DHOP 1.1 INCH BUNDLED",
+                "unit": "KGS"
+            },
+            "workstation": {
+                "data_id": 1,
+                "id": 1,
+                "primary_flag": "YES",
+                "category_config": "{\"item_categories\": {\"filter_type\": \"inclusive\", \"filters_array\": [1]}}",
+                "name": "VEDANT AGRAWAL_J3VU4NZYT5_primary_ws",
                 "database": {
                     "id": 1,
                     "name": "VEDANT AGRAWAL_J3VU4NZYT5",
@@ -239,11 +467,11 @@
     ],
     "workstation_resources": [],
     "workstation": {
-        "id": 1,
         "data_id": 1,
+        "id": 1,
+        "primary_flag": "YES",
         "category_config": "{\"item_categories\": {\"filter_type\": \"inclusive\", \"filters_array\": [1]}}",
         "name": "VEDANT AGRAWAL_J3VU4NZYT5_primary_ws",
-        "primary_flag": "YES",
         "database": {
             "id": 1,
             "name": "VEDANT AGRAWAL_J3VU4NZYT5",
@@ -258,28 +486,28 @@
             "note": "WS1",
             "chart_items": [
                 [
-                    130,
-                    "jaygodara45",
-                    20.0,
-                    "46",
+                    151,
+                    "FG Item 1 bs",
+                    6.0,
+                    "dozend",
                     0,
-                    50
+                    2
                 ],
                 [
-                    129,
+                    154,
                     "Jay ka item 2",
-                    251.0,
+                    255.0,
                     "dxy",
                     0,
                     48
                 ],
                 [
-                    139,
-                    "COAL POWDERR",
-                    4.0,
-                    "KGG",
+                    129,
+                    "Jay ka item 2",
+                    255.0,
+                    "dxy",
                     0,
-                    19
+                    48
                 ]
             ],
             "ws_jobs": [
@@ -287,15 +515,29 @@
                     "date_allot": "2024-06-01",
                     "workstation_id": 2,
                     "data_id": 1,
-                    "id": 130,
-                    "inventory_id": 478,
-                    "item_id": 50,
-                    "wip_inventory_id": 481,
-                    "qty_allot": 20.0,
-                    "reject_inventory_id": 482,
-                    "qty_recv": 34.0,
-                    "qty_wip": 43.0,
-                    "qty_reject": 2.0
+                    "id": 151,
+                    "inventory_id": 519,
+                    "item_id": 2,
+                    "wip_inventory_id": null,
+                    "qty_allot": 6.0,
+                    "reject_inventory_id": null,
+                    "qty_recv": 0.0,
+                    "qty_wip": 0.0,
+                    "qty_reject": 0.0
+                },
+                {
+                    "date_allot": "2024-06-01",
+                    "workstation_id": 2,
+                    "data_id": 1,
+                    "id": 154,
+                    "inventory_id": 527,
+                    "item_id": 48,
+                    "wip_inventory_id": null,
+                    "qty_allot": 4.0,
+                    "reject_inventory_id": null,
+                    "qty_recv": 0.0,
+                    "qty_wip": 0.0,
+                    "qty_reject": 0.0
                 },
                 {
                     "date_allot": "2024-06-01",
@@ -310,23 +552,30 @@
                     "qty_recv": 12.0,
                     "qty_wip": 23.0,
                     "qty_reject": 1.0
-                },
-                {
-                    "date_allot": "2024-06-01",
-                    "workstation_id": 2,
-                    "data_id": 1,
-                    "id": 139,
-                    "inventory_id": 498,
-                    "item_id": 19,
-                    "wip_inventory_id": null,
-                    "qty_allot": 4.0,
-                    "reject_inventory_id": null,
-                    "qty_recv": 0.0,
-                    "qty_wip": 0.0,
-                    "qty_reject": 0.0
                 }
             ],
-            "chart_resources": []
+            "chart_resources": [
+                {
+                    "id": 86,
+                    "resource_id": 1,
+                    "time_lost": 0.0,
+                    "contract_mode": "PAYROLL",
+                    "time_allot": 11.0,
+                    "workstation_id": 2,
+                    "date_allot": "2024-06-01",
+                    "data_id": 1
+                },
+                {
+                    "id": 89,
+                    "resource_id": 5,
+                    "time_lost": 0.0,
+                    "contract_mode": "PAYROLL",
+                    "time_allot": 4.0,
+                    "workstation_id": 2,
+                    "date_allot": "2024-06-01",
+                    "data_id": 1
+                }
+            ]
         },
         "9": {
             "date": "\"2024-06-01\"",
@@ -372,11 +621,11 @@
     "jobs_breakup": {
         "1": {
             "workstation": {
-                "id": 1,
                 "data_id": 1,
+                "id": 1,
+                "primary_flag": "YES",
                 "category_config": "{\"item_categories\": {\"filter_type\": \"inclusive\", \"filters_array\": [1]}}",
                 "name": "VEDANT AGRAWAL_J3VU4NZYT5_primary_ws",
-                "primary_flag": "YES",
                 "database": {
                     "id": 1,
                     "name": "VEDANT AGRAWAL_J3VU4NZYT5",
@@ -386,24 +635,48 @@
                 }
             },
             "totals": {
-                "50": 20.0,
+                "6": 10.0,
+                "50": 0.0,
+                "2": 6.0,
+                "68": 5.0,
+                "19": 59.0,
                 "48": 1600.0,
-                "19": 4.0
+                "12": 8.0,
+                "18": 40.0,
+                "16": 0.0
             },
             "recv_totals": {
-                "50": 34.0,
+                "6": 0,
+                "50": 0,
+                "2": 0,
+                "68": 0,
+                "19": 0,
                 "48": 12.0,
-                "19": 0
+                "12": 0,
+                "18": 0,
+                "16": 0
             },
             "wip_totals": {
-                "50": 43.0,
+                "6": 0.0,
+                "50": 0.0,
+                "2": 0.0,
+                "68": 0.0,
+                "19": 0.0,
                 "48": 23.0,
-                "19": 0.0
+                "12": 0.0,
+                "18": 0.0,
+                "16": 0.0
             },
             "reject_totals": {
-                "50": 2.0,
+                "6": 0.0,
+                "50": 0.0,
+                "2": 0.0,
+                "68": 0.0,
+                "19": 0.0,
                 "48": 1.0,
-                "19": 0.0
+                "12": 0.0,
+                "18": 0.0,
+                "16": 0.0
             },
             "material_issues": [
                 {
@@ -418,7 +691,17 @@
                     "id": 89,
                     "reject_qty": 0.0,
                     "data_id": 1,
-                    "reject_inventory_id": null
+                    "reject_inventory_id": null,
+                    "item": {
+                        "rate": 23.0,
+                        "regdate": "2024-05-25",
+                        "raw_flag": "NO",
+                        "data_id": 1,
+                        "code": "na",
+                        "id": 50,
+                        "name": "jaygodara45",
+                        "unit": "46"
+                    }
                 },
                 {
                     "workstation_id": 1,
@@ -432,37 +715,221 @@
                     "id": 91,
                     "reject_qty": 0.0,
                     "data_id": 1,
-                    "reject_inventory_id": null
+                    "reject_inventory_id": null,
+                    "item": {
+                        "rate": 100.0,
+                        "regdate": "2024-05-25",
+                        "raw_flag": "YES",
+                        "data_id": 1,
+                        "code": "NA",
+                        "id": 48,
+                        "name": "Jay ka item 2",
+                        "unit": "dxy"
+                    }
+                },
+                {
+                    "workstation_id": 1,
+                    "item_id": 51,
+                    "issue_qty": 0.0,
+                    "return_qty": 0.0,
+                    "date_issue": "2024-06-01",
+                    "inventory_id": 501,
+                    "wip_flag": "NO",
+                    "item_unit": "dxs",
+                    "id": 94,
+                    "reject_qty": 0.0,
+                    "data_id": 1,
+                    "reject_inventory_id": null,
+                    "item": {
+                        "rate": 0.0,
+                        "regdate": "2024-05-25",
+                        "raw_flag": "NO",
+                        "data_id": 1,
+                        "code": "abc",
+                        "id": 51,
+                        "name": "Jay ka item 6",
+                        "unit": "dxs"
+                    }
+                },
+                {
+                    "workstation_id": 1,
+                    "item_id": 17,
+                    "issue_qty": 0.0,
+                    "return_qty": 0.0,
+                    "date_issue": "2024-06-01",
+                    "inventory_id": 504,
+                    "wip_flag": "NO",
+                    "item_unit": "KGS",
+                    "id": 96,
+                    "reject_qty": 0.0,
+                    "data_id": 1,
+                    "reject_inventory_id": null,
+                    "item": {
+                        "rate": 5.0,
+                        "regdate": "2024-02-05",
+                        "raw_flag": "NO",
+                        "data_id": 1,
+                        "code": "NA",
+                        "id": 17,
+                        "name": "DHOOPBatti 1.1 INCH PRODUCED",
+                        "unit": "KGS"
+                    }
+                },
+                {
+                    "workstation_id": 1,
+                    "item_id": 4,
+                    "issue_qty": 0.0,
+                    "return_qty": 0.0,
+                    "date_issue": "2024-06-01",
+                    "inventory_id": 523,
+                    "wip_flag": "NO",
+                    "item_unit": "kgs",
+                    "id": 102,
+                    "reject_qty": 0.0,
+                    "data_id": 1,
+                    "reject_inventory_id": null,
+                    "item": {
+                        "rate": 11.0,
+                        "regdate": "2023-11-20",
+                        "raw_flag": "NO",
+                        "data_id": 1,
+                        "code": "rm1",
+                        "id": 4,
+                        "name": "rm item 1",
+                        "unit": "kgs"
+                    }
+                },
+                {
+                    "workstation_id": 1,
+                    "item_id": 3,
+                    "issue_qty": 0.0,
+                    "return_qty": 0.0,
+                    "date_issue": "2024-06-01",
+                    "inventory_id": 524,
+                    "wip_flag": "NO",
+                    "item_unit": "pcs",
+                    "id": 103,
+                    "reject_qty": 0.0,
+                    "data_id": 1,
+                    "reject_inventory_id": null,
+                    "item": {
+                        "rate": 0.0,
+                        "regdate": "2023-11-20",
+                        "raw_flag": "NO",
+                        "data_id": 1,
+                        "code": "sf1",
+                        "id": 3,
+                        "name": "Sabka Product",
+                        "unit": "pcs"
+                    }
+                },
+                {
+                    "workstation_id": 1,
+                    "item_id": 2,
+                    "issue_qty": 0.0,
+                    "return_qty": 0.0,
+                    "date_issue": "2024-06-01",
+                    "inventory_id": 525,
+                    "wip_flag": "YES",
+                    "item_unit": "dozend",
+                    "id": 104,
+                    "reject_qty": 0.0,
+                    "data_id": 1,
+                    "reject_inventory_id": null,
+                    "item": {
+                        "rate": 12.0,
+                        "regdate": "2023-11-18",
+                        "raw_flag": "NO",
+                        "data_id": 1,
+                        "code": "FG001",
+                        "id": 2,
+                        "name": "FG Item 1 bs",
+                        "unit": "dozend"
+                    }
                 }
             ],
             "material_estimates": {
+                "4": 0.0,
+                "3": 0.0,
+                "51": 1616.0,
+                "17": 0.0,
                 "50": 0.0,
-                "48": 1349.0
+                "48": 1345.0,
+                "2": 0.0
             },
             "material_estimate_totals": {
-                "50": 20.0,
-                "48": 1600.0
+                "4": 3.1500000000000004,
+                "3": 75.60000000000001,
+                "51": 1616.0,
+                "17": 0.0,
+                "50": 0.0,
+                "48": 1600.0,
+                "2": 6.0
             },
             "material_estimate_totals_from_recv": {
-                "50": 20.0,
-                "48": 1600.0
+                "4": 0.0,
+                "3": 0.0,
+                "51": 0.0,
+                "17": 0.0,
+                "50": 0.0,
+                "48": 1600.0,
+                "2": 6.0
             },
             "material_issue_totals": {
-                "50": 43.0,
-                "48": 0.0
+                "50": 0.0,
+                "48": 0.0,
+                "51": 0.0,
+                "17": 0.0,
+                "4": 0.0,
+                "3": 0.0,
+                "2": 0.0
             },
             "material_return_totals": {
-                "50": 4.0,
-                "48": 0.0
+                "50": 0.0,
+                "48": 0.0,
+                "51": 0.0,
+                "17": 0.0,
+                "4": 0.0,
+                "3": 0.0,
+                "2": 0.0
             },
             "material_reject_totals": {
-                "50": 1.0,
-                "48": 0.0
+                "50": 0.0,
+                "48": 0.0,
+                "51": 0.0,
+                "17": 0.0,
+                "4": 0.0,
+                "3": 0.0,
+                "2": 0.0
             },
-            "job_work_totals": 161384.0,
-            "capacity_totals": 995.0,
+            "job_work_totals": 174062.0,
+            "capacity_totals": 1050.0,
             "ws_date": "\"2024-06-01\"",
             "jobs": [
+                {
+                    "date_allot": "2024-06-01",
+                    "workstation_id": 1,
+                    "data_id": 1,
+                    "id": 147,
+                    "inventory_id": null,
+                    "item_id": 6,
+                    "wip_inventory_id": null,
+                    "qty_allot": 10.0,
+                    "reject_inventory_id": null,
+                    "qty_recv": 0.0,
+                    "qty_wip": 0.0,
+                    "qty_reject": 0.0,
+                    "item": {
+                        "rate": 4.0,
+                        "regdate": "2024-01-04",
+                        "raw_flag": "YES",
+                        "data_id": 1,
+                        "code": "9345",
+                        "id": 6,
+                        "name": "Vedant product",
+                        "unit": "dz"
+                    }
+                },
                 {
                     "date_allot": "2024-06-01",
                     "workstation_id": 1,
@@ -491,11 +958,83 @@
                     "date_allot": "2024-06-01",
                     "workstation_id": 1,
                     "data_id": 1,
+                    "id": 152,
+                    "inventory_id": null,
+                    "item_id": 2,
+                    "wip_inventory_id": null,
+                    "qty_allot": 0.0,
+                    "reject_inventory_id": null,
+                    "qty_recv": 0.0,
+                    "qty_wip": 0.0,
+                    "qty_reject": 0.0,
+                    "item": {
+                        "rate": 12.0,
+                        "regdate": "2023-11-18",
+                        "raw_flag": "NO",
+                        "data_id": 1,
+                        "code": "FG001",
+                        "id": 2,
+                        "name": "FG Item 1 bs",
+                        "unit": "dozend"
+                    }
+                },
+                {
+                    "date_allot": "2024-06-01",
+                    "workstation_id": 1,
+                    "data_id": 1,
+                    "id": 150,
+                    "inventory_id": null,
+                    "item_id": 68,
+                    "wip_inventory_id": null,
+                    "qty_allot": 5.0,
+                    "reject_inventory_id": null,
+                    "qty_recv": 0.0,
+                    "qty_wip": 0.0,
+                    "qty_reject": 0.0,
+                    "item": {
+                        "rate": 45.0,
+                        "regdate": "2024-05-31",
+                        "raw_flag": "NO",
+                        "data_id": 1,
+                        "code": "jjnjsd",
+                        "id": 68,
+                        "name": "hey",
+                        "unit": "kg"
+                    }
+                },
+                {
+                    "date_allot": "2024-06-01",
+                    "workstation_id": 1,
+                    "data_id": 1,
+                    "id": 140,
+                    "inventory_id": null,
+                    "item_id": 19,
+                    "wip_inventory_id": null,
+                    "qty_allot": 59.0,
+                    "reject_inventory_id": null,
+                    "qty_recv": 0.0,
+                    "qty_wip": 0.0,
+                    "qty_reject": 0.0,
+                    "item": {
+                        "rate": 231.0,
+                        "regdate": "2024-02-05",
+                        "raw_flag": "NO",
+                        "data_id": 1,
+                        "code": "CP002E",
+                        "id": 19,
+                        "name": "COAL POWDERR",
+                        "unit": "KGG"
+                    }
+                },
+                {
+                    "date_allot": "2024-06-01",
+                    "workstation_id": 1,
+                    "data_id": 1,
                     "id": 120,
                     "inventory_id": null,
                     "item_id": 48,
                     "wip_inventory_id": null,
-                    "qty_allot": 1349.0,
+                    "qty_allot": 1345.0,
                     "reject_inventory_id": null,
                     "qty_recv": 0.0,
                     "qty_wip": 0.0,
@@ -515,9 +1054,57 @@
                     "date_allot": "2024-06-01",
                     "workstation_id": 1,
                     "data_id": 1,
-                    "id": 140,
+                    "id": 156,
                     "inventory_id": null,
-                    "item_id": 19,
+                    "item_id": 12,
+                    "wip_inventory_id": null,
+                    "qty_allot": 8.0,
+                    "reject_inventory_id": null,
+                    "qty_recv": 0.0,
+                    "qty_wip": 0.0,
+                    "qty_reject": 0.0,
+                    "item": {
+                        "rate": 12.0,
+                        "regdate": "2024-01-04",
+                        "raw_flag": "YES",
+                        "data_id": 1,
+                        "code": "9350",
+                        "id": 12,
+                        "name": "Vedant HsssE Item5",
+                        "unit": "dz"
+                    }
+                },
+                {
+                    "date_allot": "2024-06-01",
+                    "workstation_id": 1,
+                    "data_id": 1,
+                    "id": 142,
+                    "inventory_id": null,
+                    "item_id": 18,
+                    "wip_inventory_id": null,
+                    "qty_allot": 40.0,
+                    "reject_inventory_id": null,
+                    "qty_recv": 0.0,
+                    "qty_wip": 0.0,
+                    "qty_reject": 0.0,
+                    "item": {
+                        "rate": 0.0,
+                        "regdate": "2024-02-05",
+                        "raw_flag": "NO",
+                        "data_id": 1,
+                        "code": "JP0011",
+                        "id": 18,
+                        "name": "JOSH POWDER",
+                        "unit": "KG"
+                    }
+                },
+                {
+                    "date_allot": "2024-06-01",
+                    "workstation_id": 1,
+                    "data_id": 1,
+                    "id": 144,
+                    "inventory_id": null,
+                    "item_id": 16,
                     "wip_inventory_id": null,
                     "qty_allot": 0.0,
                     "reject_inventory_id": null,
@@ -525,38 +1112,59 @@
                     "qty_wip": 0.0,
                     "qty_reject": 0.0,
                     "item": {
-                        "rate": 231.0,
+                        "rate": 5.0,
                         "regdate": "2024-02-05",
                         "raw_flag": "NO",
                         "data_id": 1,
-                        "code": "CP002E",
-                        "id": 19,
-                        "name": "COAL POWDERR",
-                        "unit": "KGG"
+                        "code": "NA",
+                        "id": 16,
+                        "name": "DHOP 1.1 INCH BUNDLED",
+                        "unit": "KGS"
                     }
                 }
             ],
-            "resources": [],
-            "child_resources": [
+            "resources": [
                 {
-                    "id": 76,
-                    "resource_id": 4,
+                    "id": 86,
+                    "resource_id": 1,
                     "time_lost": 0.0,
                     "contract_mode": "PAYROLL",
-                    "time_allot": 8.0,
-                    "workstation_id": 6,
+                    "time_allot": 11.0,
+                    "workstation_id": 2,
                     "date_allot": "2024-06-01",
-                    "data_id": 1
+                    "data_id": 1,
+                    "resource": {
+                        "code": "NA",
+                        "name": "Labor 11",
+                        "salary": 50.0,
+                        "status": "Active",
+                        "contract_mode": "PAYROLL",
+                        "id": 1,
+                        "gender": "Male",
+                        "regdate": "2023-11-19",
+                        "data_id": 1
+                    }
                 },
                 {
-                    "id": 77,
-                    "resource_id": 2,
+                    "id": 89,
+                    "resource_id": 5,
                     "time_lost": 0.0,
                     "contract_mode": "PAYROLL",
-                    "time_allot": 8.0,
-                    "workstation_id": 6,
+                    "time_allot": 4.0,
+                    "workstation_id": 2,
                     "date_allot": "2024-06-01",
-                    "data_id": 1
+                    "data_id": 1,
+                    "resource": {
+                        "code": "PW001",
+                        "name": "SALIM",
+                        "salary": 45.0,
+                        "status": "Active",
+                        "contract_mode": "PAYROLL",
+                        "id": 5,
+                        "gender": "WORKER",
+                        "regdate": "2024-02-05",
+                        "data_id": 1
+                    }
                 },
                 {
                     "id": 58,
@@ -566,17 +1174,18 @@
                     "time_allot": 8.0,
                     "workstation_id": 10,
                     "date_allot": "2024-06-01",
-                    "data_id": 1
-                },
-                {
-                    "id": 59,
-                    "resource_id": 5,
-                    "time_lost": 0.0,
-                    "contract_mode": "CONTRACT",
-                    "time_allot": 7.0,
-                    "workstation_id": 10,
-                    "date_allot": "2024-06-01",
-                    "data_id": 1
+                    "data_id": 1,
+                    "resource": {
+                        "code": "NA",
+                        "name": "labor 2",
+                        "salary": 20.0,
+                        "status": "Active",
+                        "contract_mode": "PAYROLL",
+                        "id": 2,
+                        "gender": "Male",
+                        "regdate": "2023-11-21",
+                        "data_id": 1
+                    }
                 },
                 {
                     "id": 60,
@@ -586,7 +1195,104 @@
                     "time_allot": 8.0,
                     "workstation_id": 15,
                     "date_allot": "2024-06-01",
-                    "data_id": 1
+                    "data_id": 1,
+                    "resource": {
+                        "code": "NA",
+                        "name": "labor 2",
+                        "salary": 20.0,
+                        "status": "Active",
+                        "contract_mode": "PAYROLL",
+                        "id": 2,
+                        "gender": "Male",
+                        "regdate": "2023-11-21",
+                        "data_id": 1
+                    }
+                }
+            ],
+            "child_resources": [
+                {
+                    "id": 86,
+                    "resource_id": 1,
+                    "time_lost": 0.0,
+                    "contract_mode": "PAYROLL",
+                    "time_allot": 11.0,
+                    "workstation_id": 2,
+                    "date_allot": "2024-06-01",
+                    "data_id": 1,
+                    "resource": {
+                        "code": "NA",
+                        "name": "Labor 11",
+                        "salary": 50.0,
+                        "status": "Active",
+                        "contract_mode": "PAYROLL",
+                        "id": 1,
+                        "gender": "Male",
+                        "regdate": "2023-11-19",
+                        "data_id": 1
+                    }
+                },
+                {
+                    "id": 89,
+                    "resource_id": 5,
+                    "time_lost": 0.0,
+                    "contract_mode": "PAYROLL",
+                    "time_allot": 4.0,
+                    "workstation_id": 2,
+                    "date_allot": "2024-06-01",
+                    "data_id": 1,
+                    "resource": {
+                        "code": "PW001",
+                        "name": "SALIM",
+                        "salary": 45.0,
+                        "status": "Active",
+                        "contract_mode": "PAYROLL",
+                        "id": 5,
+                        "gender": "WORKER",
+                        "regdate": "2024-02-05",
+                        "data_id": 1
+                    }
+                },
+                {
+                    "id": 58,
+                    "resource_id": 2,
+                    "time_lost": 0.0,
+                    "contract_mode": "PAYROLL",
+                    "time_allot": 8.0,
+                    "workstation_id": 10,
+                    "date_allot": "2024-06-01",
+                    "data_id": 1,
+                    "resource": {
+                        "code": "NA",
+                        "name": "labor 2",
+                        "salary": 20.0,
+                        "status": "Active",
+                        "contract_mode": "PAYROLL",
+                        "id": 2,
+                        "gender": "Male",
+                        "regdate": "2023-11-21",
+                        "data_id": 1
+                    }
+                },
+                {
+                    "id": 60,
+                    "resource_id": 2,
+                    "time_lost": 0.0,
+                    "contract_mode": "CONTRACT",
+                    "time_allot": 8.0,
+                    "workstation_id": 15,
+                    "date_allot": "2024-06-01",
+                    "data_id": 1,
+                    "resource": {
+                        "code": "NA",
+                        "name": "labor 2",
+                        "salary": 20.0,
+                        "status": "Active",
+                        "contract_mode": "PAYROLL",
+                        "id": 2,
+                        "gender": "Male",
+                        "regdate": "2023-11-21",
+                        "data_id": 1
+                    }
                 }
             ],
             "category_config": {
@@ -614,40 +1320,22 @@
                         }
                     },
                     "totals": {
-                        "50": 20.0,
-                        "48": 251.0,
-                        "19": 4.0
+                        "2": 6.0,
+                        "48": 255.0
                     },
                     "recv_totals": {
-                        "50": 34.0,
-                        "48": 12.0,
-                        "19": 0
+                        "2": 0,
+                        "48": 12.0
                     },
                     "wip_totals": {
-                        "50": 43.0,
-                        "48": 23.0,
-                        "19": 0.0
+                        "2": 0.0,
+                        "48": 23.0
                     },
                     "reject_totals": {
-                        "50": 2.0,
-                        "48": 1.0,
-                        "19": 0.0
+                        "2": 0.0,
+                        "48": 1.0
                     },
                     "material_issues": [
-                        {
-                            "workstation_id": 2,
-                            "item_id": 50,
-                            "issue_qty": 43.0,
-                            "return_qty": 4.0,
-                            "date_issue": "2024-06-01",
-                            "inventory_id": 484,
-                            "wip_flag": "YES",
-                            "item_unit": "46",
-                            "id": 86,
-                            "reject_qty": 1.0,
-                            "data_id": 1,
-                            "reject_inventory_id": 485
-                        },
                         {
                             "workstation_id": 2,
                             "item_id": 48,
@@ -660,59 +1348,177 @@
                             "id": 90,
                             "reject_qty": 0.0,
                             "data_id": 1,
-                            "reject_inventory_id": null
+                            "reject_inventory_id": null,
+                            "item": {
+                                "rate": 100.0,
+                                "regdate": "2024-05-25",
+                                "raw_flag": "YES",
+                                "data_id": 1,
+                                "code": "NA",
+                                "id": 48,
+                                "name": "Jay ka item 2",
+                                "unit": "dxy"
+                            }
+                        },
+                        {
+                            "workstation_id": 2,
+                            "item_id": 4,
+                            "issue_qty": 0.0,
+                            "return_qty": 0.0,
+                            "date_issue": "2024-06-01",
+                            "inventory_id": 520,
+                            "wip_flag": "NO",
+                            "item_unit": "kgs",
+                            "id": 99,
+                            "reject_qty": 0.0,
+                            "data_id": 1,
+                            "reject_inventory_id": null,
+                            "item": {
+                                "rate": 11.0,
+                                "regdate": "2023-11-20",
+                                "raw_flag": "NO",
+                                "data_id": 1,
+                                "code": "rm1",
+                                "id": 4,
+                                "name": "rm item 1",
+                                "unit": "kgs"
+                            }
+                        },
+                        {
+                            "workstation_id": 2,
+                            "item_id": 3,
+                            "issue_qty": 0.0,
+                            "return_qty": 0.0,
+                            "date_issue": "2024-06-01",
+                            "inventory_id": 521,
+                            "wip_flag": "NO",
+                            "item_unit": "pcs",
+                            "id": 100,
+                            "reject_qty": 0.0,
+                            "data_id": 1,
+                            "reject_inventory_id": null,
+                            "item": {
+                                "rate": 0.0,
+                                "regdate": "2023-11-20",
+                                "raw_flag": "NO",
+                                "data_id": 1,
+                                "code": "sf1",
+                                "id": 3,
+                                "name": "Sabka Product",
+                                "unit": "pcs"
+                            }
+                        },
+                        {
+                            "workstation_id": 2,
+                            "item_id": 2,
+                            "issue_qty": 0.0,
+                            "return_qty": 0.0,
+                            "date_issue": "2024-06-01",
+                            "inventory_id": 522,
+                            "wip_flag": "YES",
+                            "item_unit": "dozend",
+                            "id": 101,
+                            "reject_qty": 0.0,
+                            "data_id": 1,
+                            "reject_inventory_id": null,
+                            "item": {
+                                "rate": 12.0,
+                                "regdate": "2023-11-18",
+                                "raw_flag": "NO",
+                                "data_id": 1,
+                                "code": "FG001",
+                                "id": 2,
+                                "name": "FG Item 1 bs",
+                                "unit": "dozend"
+                            }
                         }
                     ],
                     "material_estimates": {
-                        "50": 20.0,
-                        "48": 251.0
+                        "4": 3.1500000000000004,
+                        "3": 75.60000000000001,
+                        "48": 255.0,
+                        "2": 6.0
                     },
                     "material_estimate_totals": {
-                        "50": 20.0,
-                        "48": 251.0
+                        "4": 3.1500000000000004,
+                        "3": 75.60000000000001,
+                        "48": 255.0,
+                        "2": 6.0
                     },
                     "material_estimate_totals_from_recv": {
-                        "50": 20.0,
-                        "48": 251.0
+                        "4": 0.0,
+                        "3": 0.0,
+                        "48": 255.0,
+                        "2": 6.0
                     },
                     "material_issue_totals": {
-                        "50": 43.0,
-                        "48": 0.0
+                        "48": 0.0,
+                        "4": 0.0,
+                        "3": 0.0,
+                        "2": 0.0
                     },
                     "material_return_totals": {
-                        "50": 4.0,
-                        "48": 0.0
+                        "48": 0.0,
+                        "4": 0.0,
+                        "3": 0.0,
+                        "2": 0.0
                     },
                     "material_reject_totals": {
-                        "50": 1.0,
-                        "48": 0.0
+                        "48": 0.0,
+                        "4": 0.0,
+                        "3": 0.0,
+                        "2": 0.0
                     },
-                    "job_work_totals": 26484.0,
-                    "capacity_totals": 360.0,
+                    "job_work_totals": 25572.0,
+                    "capacity_totals": 730.0,
                     "ws_date": "\"2024-06-01\"",
                     "jobs": [
                         {
                             "date_allot": "2024-06-01",
                             "workstation_id": 2,
                             "data_id": 1,
-                            "id": 130,
-                            "inventory_id": 478,
-                            "item_id": 50,
-                            "wip_inventory_id": 481,
-                            "qty_allot": 20.0,
-                            "reject_inventory_id": 482,
-                            "qty_recv": 34.0,
-                            "qty_wip": 43.0,
-                            "qty_reject": 2.0,
+                            "id": 151,
+                            "inventory_id": 519,
+                            "item_id": 2,
+                            "wip_inventory_id": null,
+                            "qty_allot": 6.0,
+                            "reject_inventory_id": null,
+                            "qty_recv": 0.0,
+                            "qty_wip": 0.0,
+                            "qty_reject": 0.0,
                             "item": {
-                                "rate": 23.0,
-                                "regdate": "2024-05-25",
+                                "rate": 12.0,
+                                "regdate": "2023-11-18",
                                 "raw_flag": "NO",
                                 "data_id": 1,
-                                "code": "na",
-                                "id": 50,
-                                "name": "jaygodara45",
-                                "unit": "46"
+                                "code": "FG001",
+                                "id": 2,
+                                "name": "FG Item 1 bs",
+                                "unit": "dozend"
+                            }
+                        },
+                        {
+                            "date_allot": "2024-06-01",
+                            "workstation_id": 2,
+                            "data_id": 1,
+                            "id": 154,
+                            "inventory_id": 527,
+                            "item_id": 48,
+                            "wip_inventory_id": null,
+                            "qty_allot": 4.0,
+                            "reject_inventory_id": null,
+                            "qty_recv": 0.0,
+                            "qty_wip": 0.0,
+                            "qty_reject": 0.0,
+                            "item": {
+                                "rate": 100.0,
+                                "regdate": "2024-05-25",
+                                "raw_flag": "YES",
+                                "data_id": 1,
+                                "code": "NA",
+                                "id": 48,
+                                "name": "Jay ka item 2",
+                                "unit": "dxy"
                             }
                         },
                         {
@@ -738,53 +1544,94 @@
                                 "name": "Jay ka item 2",
                                 "unit": "dxy"
                             }
+                        }
+                    ],
+                    "resources": [
+                        {
+                            "id": 86,
+                            "resource_id": 1,
+                            "time_lost": 0.0,
+                            "contract_mode": "PAYROLL",
+                            "time_allot": 11.0,
+                            "workstation_id": 2,
+                            "date_allot": "2024-06-01",
+                            "data_id": 1,
+                            "resource": {
+                                "code": "NA",
+                                "name": "Labor 11",
+                                "salary": 50.0,
+                                "status": "Active",
+                                "contract_mode": "PAYROLL",
+                                "id": 1,
+                                "gender": "Male",
+                                "regdate": "2023-11-19",
+                                "data_id": 1
+                            }
                         },
                         {
-                            "date_allot": "2024-06-01",
+                            "id": 89,
+                            "resource_id": 5,
+                            "time_lost": 0.0,
+                            "contract_mode": "PAYROLL",
+                            "time_allot": 4.0,
                             "workstation_id": 2,
+                            "date_allot": "2024-06-01",
                             "data_id": 1,
-                            "id": 139,
-                            "inventory_id": 498,
-                            "item_id": 19,
-                            "wip_inventory_id": null,
-                            "qty_allot": 4.0,
-                            "reject_inventory_id": null,
-                            "qty_recv": 0.0,
-                            "qty_wip": 0.0,
-                            "qty_reject": 0.0,
-                            "item": {
-                                "rate": 231.0,
+                            "resource": {
+                                "code": "PW001",
+                                "name": "SALIM",
+                                "salary": 45.0,
+                                "status": "Active",
+                                "contract_mode": "PAYROLL",
+                                "id": 5,
+                                "gender": "WORKER",
                                 "regdate": "2024-02-05",
-                                "raw_flag": "NO",
-                                "data_id": 1,
-                                "code": "CP002E",
-                                "id": 19,
-                                "name": "COAL POWDERR",
-                                "unit": "KGG"
+                                "data_id": 1
                             }
                         }
                     ],
-                    "resources": [],
                     "child_resources": [
                         {
-                            "id": 76,
-                            "resource_id": 4,
+                            "id": 86,
+                            "resource_id": 1,
                             "time_lost": 0.0,
                             "contract_mode": "PAYROLL",
-                            "time_allot": 8.0,
-                            "workstation_id": 6,
+                            "time_allot": 11.0,
+                            "workstation_id": 2,
                             "date_allot": "2024-06-01",
-                            "data_id": 1
+                            "data_id": 1,
+                            "resource": {
+                                "code": "NA",
+                                "name": "Labor 11",
+                                "salary": 50.0,
+                                "status": "Active",
+                                "contract_mode": "PAYROLL",
+                                "id": 1,
+                                "gender": "Male",
+                                "regdate": "2023-11-19",
+                                "data_id": 1
+                            }
                         },
                         {
-                            "id": 77,
-                            "resource_id": 2,
+                            "id": 89,
+                            "resource_id": 5,
                             "time_lost": 0.0,
                             "contract_mode": "PAYROLL",
-                            "time_allot": 8.0,
-                            "workstation_id": 6,
+                            "time_allot": 4.0,
+                            "workstation_id": 2,
                             "date_allot": "2024-06-01",
-                            "data_id": 1
+                            "data_id": 1,
+                            "resource": {
+                                "code": "PW001",
+                                "name": "SALIM",
+                                "salary": 45.0,
+                                "status": "Active",
+                                "contract_mode": "PAYROLL",
+                                "id": 5,
+                                "gender": "WORKER",
+                                "regdate": "2024-02-05",
+                                "data_id": 1
+                            }
                         }
                     ],
                     "category_config": {},
@@ -816,53 +1663,11 @@
                             "material_return_totals": {},
                             "material_reject_totals": {},
                             "job_work_totals": 0,
-                            "capacity_totals": 360.0,
+                            "capacity_totals": 0,
                             "ws_date": "\"2024-06-01\"",
                             "jobs": [],
-                            "resources": [
-                                {
-                                    "id": 76,
-                                    "resource_id": 4,
-                                    "time_lost": 0.0,
-                                    "contract_mode": "PAYROLL",
-                                    "time_allot": 8.0,
-                                    "workstation_id": 6,
-                                    "date_allot": "2024-06-01",
-                                    "data_id": 1
-                                },
-                                {
-                                    "id": 77,
-                                    "resource_id": 2,
-                                    "time_lost": 0.0,
-                                    "contract_mode": "PAYROLL",
-                                    "time_allot": 8.0,
-                                    "workstation_id": 6,
-                                    "date_allot": "2024-06-01",
-                                    "data_id": 1
-                                }
-                            ],
-                            "child_resources": [
-                                {
-                                    "id": 76,
-                                    "resource_id": 4,
-                                    "time_lost": 0.0,
-                                    "contract_mode": "PAYROLL",
-                                    "time_allot": 8.0,
-                                    "workstation_id": 6,
-                                    "date_allot": "2024-06-01",
-                                    "data_id": 1
-                                },
-                                {
-                                    "id": 77,
-                                    "resource_id": 2,
-                                    "time_lost": 0.0,
-                                    "contract_mode": "PAYROLL",
-                                    "time_allot": 8.0,
-                                    "workstation_id": 6,
-                                    "date_allot": "2024-06-01",
-                                    "data_id": 1
-                                }
-                            ],
+                            "resources": [],
+                            "child_resources": [],
                             "category_config": {
                                 "item_categories": {
                                     "filter_type": "inclusive",
@@ -1007,11 +1812,10 @@
                     "material_return_totals": {},
                     "material_reject_totals": {},
                     "job_work_totals": 0,
-                    "capacity_totals": 635.0,
+                    "capacity_totals": 320.0,
                     "ws_date": "\"2024-06-01\"",
                     "jobs": [],
-                    "resources": [],
-                    "child_resources": [
+                    "resources": [
                         {
                             "id": 58,
                             "resource_id": 2,
@@ -1020,17 +1824,18 @@
                             "time_allot": 8.0,
                             "workstation_id": 10,
                             "date_allot": "2024-06-01",
-                            "data_id": 1
-                        },
-                        {
-                            "id": 59,
-                            "resource_id": 5,
-                            "time_lost": 0.0,
-                            "contract_mode": "CONTRACT",
-                            "time_allot": 7.0,
-                            "workstation_id": 10,
-                            "date_allot": "2024-06-01",
-                            "data_id": 1
+                            "data_id": 1,
+                            "resource": {
+                                "code": "NA",
+                                "name": "labor 2",
+                                "salary": 20.0,
+                                "status": "Active",
+                                "contract_mode": "PAYROLL",
+                                "id": 2,
+                                "gender": "Male",
+                                "regdate": "2023-11-21",
+                                "data_id": 1
+                            }
                         },
                         {
                             "id": 60,
@@ -1040,7 +1845,62 @@
                             "time_allot": 8.0,
                             "workstation_id": 15,
                             "date_allot": "2024-06-01",
-                            "data_id": 1
+                            "data_id": 1,
+                            "resource": {
+                                "code": "NA",
+                                "name": "labor 2",
+                                "salary": 20.0,
+                                "status": "Active",
+                                "contract_mode": "PAYROLL",
+                                "id": 2,
+                                "gender": "Male",
+                                "regdate": "2023-11-21",
+                                "data_id": 1
+                            }
+                        }
+                    ],
+                    "child_resources": [
+                        {
+                            "id": 58,
+                            "resource_id": 2,
+                            "time_lost": 0.0,
+                            "contract_mode": "PAYROLL",
+                            "time_allot": 8.0,
+                            "workstation_id": 10,
+                            "date_allot": "2024-06-01",
+                            "data_id": 1,
+                            "resource": {
+                                "code": "NA",
+                                "name": "labor 2",
+                                "salary": 20.0,
+                                "status": "Active",
+                                "contract_mode": "PAYROLL",
+                                "id": 2,
+                                "gender": "Male",
+                                "regdate": "2023-11-21",
+                                "data_id": 1
+                            }
+                        },
+                        {
+                            "id": 60,
+                            "resource_id": 2,
+                            "time_lost": 0.0,
+                            "contract_mode": "CONTRACT",
+                            "time_allot": 8.0,
+                            "workstation_id": 15,
+                            "date_allot": "2024-06-01",
+                            "data_id": 1,
+                            "resource": {
+                                "code": "NA",
+                                "name": "labor 2",
+                                "salary": 20.0,
+                                "status": "Active",
+                                "contract_mode": "PAYROLL",
+                                "id": 2,
+                                "gender": "Male",
+                                "regdate": "2023-11-21",
+                                "data_id": 1
+                            }
                         }
                     ],
                     "category_config": {},
@@ -1072,7 +1932,7 @@
                             "material_return_totals": {},
                             "material_reject_totals": {},
                             "job_work_totals": 0,
-                            "capacity_totals": 475.0,
+                            "capacity_totals": 160.0,
                             "ws_date": "\"2024-06-01\"",
                             "jobs": [],
                             "resources": [
@@ -1084,17 +1944,18 @@
                                     "time_allot": 8.0,
                                     "workstation_id": 10,
                                     "date_allot": "2024-06-01",
-                                    "data_id": 1
-                                },
-                                {
-                                    "id": 59,
-                                    "resource_id": 5,
-                                    "time_lost": 0.0,
-                                    "contract_mode": "CONTRACT",
-                                    "time_allot": 7.0,
-                                    "workstation_id": 10,
-                                    "date_allot": "2024-06-01",
-                                    "data_id": 1
+                                    "data_id": 1,
+                                    "resource": {
+                                        "code": "NA",
+                                        "name": "labor 2",
+                                        "salary": 20.0,
+                                        "status": "Active",
+                                        "contract_mode": "PAYROLL",
+                                        "id": 2,
+                                        "gender": "Male",
+                                        "regdate": "2023-11-21",
+                                        "data_id": 1
+                                    }
                                 }
                             ],
                             "child_resources": [
@@ -1106,17 +1967,18 @@
                                     "time_allot": 8.0,
                                     "workstation_id": 10,
                                     "date_allot": "2024-06-01",
-                                    "data_id": 1
-                                },
-                                {
-                                    "id": 59,
-                                    "resource_id": 5,
-                                    "time_lost": 0.0,
-                                    "contract_mode": "CONTRACT",
-                                    "time_allot": 7.0,
-                                    "workstation_id": 10,
-                                    "date_allot": "2024-06-01",
-                                    "data_id": 1
+                                    "data_id": 1,
+                                    "resource": {
+                                        "code": "NA",
+                                        "name": "labor 2",
+                                        "salary": 20.0,
+                                        "status": "Active",
+                                        "contract_mode": "PAYROLL",
+                                        "id": 2,
+                                        "gender": "Male",
+                                        "regdate": "2023-11-21",
+                                        "data_id": 1
+                                    }
                                 }
                             ],
                             "category_config": {},
@@ -1161,7 +2023,18 @@
                                     "time_allot": 8.0,
                                     "workstation_id": 15,
                                     "date_allot": "2024-06-01",
-                                    "data_id": 1
+                                    "data_id": 1,
+                                    "resource": {
+                                        "code": "NA",
+                                        "name": "labor 2",
+                                        "salary": 20.0,
+                                        "status": "Active",
+                                        "contract_mode": "PAYROLL",
+                                        "id": 2,
+                                        "gender": "Male",
+                                        "regdate": "2023-11-21",
+                                        "data_id": 1
+                                    }
                                 }
                             ],
                             "child_resources": [
@@ -1173,7 +2046,18 @@
                                     "time_allot": 8.0,
                                     "workstation_id": 15,
                                     "date_allot": "2024-06-01",
-                                    "data_id": 1
+                                    "data_id": 1,
+                                    "resource": {
+                                        "code": "NA",
+                                        "name": "labor 2",
+                                        "salary": 20.0,
+                                        "status": "Active",
+                                        "contract_mode": "PAYROLL",
+                                        "id": 2,
+                                        "gender": "Male",
+                                        "regdate": "2023-11-21",
+                                        "data_id": 1
+                                    }
                                 }
                             ],
                             "category_config": {},
@@ -1359,7 +2243,7 @@
             }
         }
     },
-    "primary_ws_flag": False,
+    "primary_ws_flag": false,
     "WORKSTATION_PATH ": [
         [
             1,

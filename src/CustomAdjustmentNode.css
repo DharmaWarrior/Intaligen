@@ -17,8 +17,8 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 40px;
-  height: 40px;
+  width: 80px;
+  height: 80px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -50,6 +50,55 @@
   stroke-linecap: round;
 }
 
+.search-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 8px;
+}
+
+.search-label {
+  color: #ffc107; /* Change to desired color */
+  margin-bottom: 8px; /* Add space between label and input */
+}
+
+.search-input {
+  border: 1px solid #d1d5db;
+  padding: 8px;
+  border-radius: 4px;
+  width: 100%;
+  background-color: aliceblue;
+}
+
+.search-results {
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  margin-top: 8px;
+  max-height: 12rem;
+  overflow-y: auto;
+}
+
+.search-result-item {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.search-result-item:hover {
+  background-color: #f3f4f6;
+}
+
+.job-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  color: #fff;
+}
+
+/* Additional styles to adjust Button spacing */
+.m-10px {
+  margin: 10px;
+}
+
 .icon {
   display: flex;
   align-items: center;
@@ -65,11 +114,13 @@
   margin-top: 8px;
   color: black;
   width: 5px;
+  margin-right: 35px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 .tooltip {
   visibility: hidden;
-  width: 510px;
+  width: 260px;
   background-color: rgba(0, 0, 0, 0.8);
   color: white;
   text-align: left;

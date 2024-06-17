@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Handle } from 'reactflow';
 import { User, Cog } from 'lucide-react';
-import './CustomNode.css';
+import './CustomAdjustmentNode.css';
 import {
   Tooltip,
   TooltipContent,
@@ -10,7 +10,7 @@ import {
 } from "./../components/ui/tooltip";
 
 
-function CustomNode({ data }) {
+function CustomAdjustmentNode({ data }) {
   const { label, userValue, gearValue, capacity, totalCapacity, MainTable = [], resourceData = [], alloted, received } = data;
   const [editableJobData, setEditableJobData] = useState(MainTable);
   const [isEditing, setIsEditing] = useState(Array(MainTable.length).fill(false));
@@ -21,7 +21,7 @@ function CustomNode({ data }) {
   useEffect(() => {
     setEditableJobData(MainTable);
     setIsEditing(Array(MainTable.length).fill(false));
-  }, [MainTable]);
+  }, []);
 
   useEffect(() => {
     setUpdatedUserValue(userValue);
@@ -187,4 +187,4 @@ function CustomNode({ data }) {
   );
 }
 
-export default CustomNode;
+export default CustomAdjustmentNode;
