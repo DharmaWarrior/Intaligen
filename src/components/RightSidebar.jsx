@@ -18,11 +18,13 @@ import {
   TableHeader,
   TableRow,
 } from "./../../components/ui/table"
-
+import EditDialog from './../cards/EditDialog'; // Import the EditDialog component
+import ExpandableProductTable from "./ExpandableProductTable";
 import { Button } from "./../../components/ui/button";
 import { Separator } from "./../../components/ui/separator";
 import { Textarea } from "./../../components/ui/textarea";
 import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "./../../components/ui/tooltip";
+
 
 function RightSidebar({ isOpen, content, onClose, planning, resources, products, materials }) {
   const [activeTab, setActiveTab] = useState('Planning');
@@ -31,6 +33,11 @@ function RightSidebar({ isOpen, content, onClose, planning, resources, products,
   const [editableResData, setEditableResData] = useState(Array.isArray(resources) ? resources : []);
   const [editableMaterialData, setEditableMaterialData] = useState(Array.isArray(materials) ? materials : []);
   const [expandedProducts, setExpandedProducts] = useState({});
+  const [isEditing, setIsEditing] = useState(false);
+
+
+  const openEditDialog = () => setIsEditing(true);
+  const closeEditDialog = () => setIsEditing(false);
 
   console.log("Planning", planning);
   console.log("Resources", resources);
@@ -150,7 +157,11 @@ function RightSidebar({ isOpen, content, onClose, planning, resources, products,
               >
                 Materials
               </button>
+              <Button className='ml-auto mb-1' variant="ghost" size="sm" onClick={openEditDialog} >
+                <span className="text-sm">Edit</span>
+              </Button>
             </div>
+            
 
             {activeTab === 'Planning' && (
               <Table className="min-w-full bg-white">
@@ -227,49 +238,7 @@ function RightSidebar({ isOpen, content, onClose, planning, resources, products,
               </div>
             )}
             {activeTab === 'Products' && (
-              <Table className="min-w-full bg-white">
-                <TableHeader>
-                  <TableRow>
-                    <TableHead className="py-2 px-4 bg-gray-100 border-b">Name</TableHead>
-                    <TableHead className="py-2 px-4 bg-gray-100 border-b">Alloted</TableHead>
-                    <TableHead className="py-2 px-4 bg-gray-100 border-b">Unit</TableHead>
-                    <TableHead className="py-2 px-4 bg-gray-100 border-b">Finished</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                {editableJobData.map((job, index) => (
-                  <React.Fragment key={`job-${index}`}>
-                    <TableRow key={`job-row-${index}`}>
-                      <TableCell
-                        className="py-2 px-4 border-b cursor-pointer text-violet-800 hover:underline"
-                        onClick={() => toggleProductDetails(index)}
-                      >
-                        {job.name}
-                      </TableCell>
-                      <TableCell className="py-2 px-4 border-b">{job.allocated}</TableCell>
-                      <TableCell className="py-2 px-4 border-b">{job.unit}</TableCell>
-                      <TableCell className="py-2 px-4 border-b">0</TableCell>
-                    </TableRow>
-                    {expandedProducts[index] && (
-                      <TableRow key={`job-details-${index}`}>
-                        <TableCell className="py-2 px-4 border-b">
-                        {'>>'}{'Adjustment'}
-                        </TableCell>
-                        <TableCell className="py-2 px-4 border-b">
-                        {job.to_allot}
-                        </TableCell>
-                        <TableCell className="py-2 px-4 border-b">
-                        {job.unit}
-                        </TableCell>
-                        <TableCell className="py-2 px-4 border-b">
-                        0
-                        </TableCell>
-                      </TableRow>
-                    )}
-                  </React.Fragment>
-                ))}
-                </TableBody>
-              </Table>
+              <ExpandableProductTable jobData={editableJobData} toEdit={false} />
             )}
             {activeTab === 'Materials' && (
               <Table className="min-w-full bg-white">
@@ -299,6 +268,7 @@ function RightSidebar({ isOpen, content, onClose, planning, resources, products,
             )}
           </div>
           {/* <Separator className="mt-auto" /> */}
+          <EditDialog isOpen={isEditing} onClose={closeEditDialog} jobData={editableJobData} />
         </div>
       </div>
     </div>

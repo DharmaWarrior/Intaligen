@@ -166,6 +166,7 @@ function Flow() {
       const passing_id = matchingJob ? matchingJob.id : 'Unknown';
       const to_allot = matchingJob ? matchingJob.qty_allot : 0;
       
+      
   
       return {
         name: itemName,
@@ -178,6 +179,7 @@ function Flow() {
         ws_date: wsdetails.ws_date,
         to_allot: to_allot,
         childinfo: wsdetails.childs,
+        item_id: id,
       };
     });
   };
