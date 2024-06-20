@@ -32,6 +32,7 @@ const Search = ({ label, onSelect , onsearch}) => {
       if (response.status === 200) {
         const data = await response.json();
         setSearchResults(data);
+        console.log(data);
       } else {
         console.error('Failed to fetch search results', response.status);
       }

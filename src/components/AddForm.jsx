@@ -4,6 +4,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
+import Search from './Search'
 
 const AddForm = ({ open, handleClose, handleFormSubmit, fetchData, formFields, title }) => {
   const initialFormData = formFields.reduce((acc, field) => {
@@ -25,7 +26,6 @@ const AddForm = ({ open, handleClose, handleFormSubmit, fetchData, formFields, t
     event.preventDefault();
     await handleFormSubmit(formData);
     setFormData(initialFormData); // Reset form data after submission
-    fetchData(); // Re-fetch the data to update the list
     handleClose();
   };
 

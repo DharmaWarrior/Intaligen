@@ -413,7 +413,7 @@ function Flow() {
 
   return (
     <div className="w-full h-[90vh] mt-0 flex flex-col">
-      <Sidebar />
+      {/* <Sidebar /> */}
       <RightSidebar
         isOpen={isSidebarOpen}
         content={selectedNode ? selectedNode.data.label : ''}
@@ -422,18 +422,15 @@ function Flow() {
         resources={selectedNode ? selectedNode.data.resourceData : []}
         products={selectedNode ? selectedNode.data.AdjustmentResource : []}
         materials={selectedNode ? selectedNode.data.MaterialData : []}
-        
-
       />
-      <div className="h-[90%] overflow-y-auto absolute right-0 w-[80%] px-10 flow-container" ref={containerRef}>
+      <div className="h-[100%] overflow-y-auto absolute right-0 w-[80%] flow-container" ref={containerRef}>
         <div className="flow-container" ref={containerRef}>
-        <ReactFlow
+          <ReactFlow
             nodes={nodes}
             edges={edges}
             nodeTypes={nodeTypes}
             onNodeClick={handleNodeClick}
-            style={{ height: '100%', width: '80%' }}
-
+            style={{ height: '100%' , width: '100%'}}
           >
             <Background />
             <Controls position="top-left" />

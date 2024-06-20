@@ -10,6 +10,7 @@ import DescriptionBox from './cards/DescriptionBox';
 import InventoryCard from './cards/InventoryCard';
 import FinanceCard from './cards/FinanceCard';
 import BOMDialog from './cards/BOMDialog';
+import { ScrollArea } from './../components/ui/scroll-area';
 
 
 const styles = {
@@ -294,9 +295,9 @@ export default function ProductInfo() {
   }
 
   return (
-    <div className="w-full h-[90vh] mt-0 flex flex-col">
-      <Sidebar />
-      <div className="h-[90%] overflow-y-auto absolute right-0 w-[80%] px-5 py-5">
+    <ScrollArea className="h-[700px]">
+    <div className="w-full  mt-0 flex flex-col">
+      <div className="px-5 py-5">
         <div className="ml-2 flex flex-col mt-1 space-y-5">
           <h1 className="text-3xl font-bold text-gray-800">{itemHeading}</h1>
           
@@ -575,6 +576,7 @@ export default function ProductInfo() {
         </div>
       </div>
     </div>
+    </ScrollArea>
   );
 }
 

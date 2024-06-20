@@ -5,6 +5,12 @@ import { CirclePlus, Search } from "lucide-react";
 import { Button } from "./../components/ui/button";
 import { cn } from "./components/cn";
 import { Input } from './../components/ui/input';
+import { RxDashboard } from 'react-icons/rx';
+import { MdInsights } from 'react-icons/md';
+import { RiCouponLine } from 'react-icons/ri';
+import { FiUser } from 'react-icons/fi';
+import { AiOutlineMessage } from 'react-icons/ai';
+import { BsFolder, BsWallet2 } from 'react-icons/bs';
 import {
   ResizableHandle,
   ResizablePanel,
@@ -22,10 +28,13 @@ import { MailDisplay } from "./components/MailDispaly";
 import { MailList } from "./components/MailList";
 import { useMail } from "./hooks/useMail";
 import AddForm from "./components/AddForm";
+import Nav from "./components/Nav";
 
 export default function Mail({
   mails,
-  defaultLayout = [265, 440, 655],
+  fetchOrders,
+  defaultLayout = [65, 270, 455],
+  defaultCollapsed = false,
   ordersData,
   onStatusChange,
   currentStatus,
@@ -35,6 +44,10 @@ export default function Mail({
   const [activeOrders, setActiveOrders] = useState([]);
   const [pendingOrders, setPendingOrders] = useState([]);
   const [dispatchedOrders, setDispatchedOrders] = useState([]);
+  const [selectedOrder, setSelectedOrder] = useState(null);
+  const [isCollapsed, setIsCollapsed] = React.useState(defaultCollapsed);
+  const [currentTab, setCurrentTab] = useState(currentStatus); // New state for current tab
+  const [searchQuery, setSearchQuery] = useState(""); // New state for search query
 
   useEffect(() => {
     if (ordersData) {
@@ -54,12 +67,6 @@ export default function Mail({
           }))
       : [];
   };
-
-  const selectedOrder = mail.selected
-    ? [...activeOrders, ...pendingOrders, ...dispatchedOrders].find(
-        (item) => item.order.id === mail.selected
-      )
-    : null;
 
   const handleDialogOpen = () => {
     setDialogOpen(true);
@@ -86,9 +93,9 @@ export default function Mail({
       });
 
       if (response.ok) {
-        alert('Order added successfully');
         setDialogOpen(false);
-        fetchOrders(); // Fetch updated orders after adding new one
+        setCurrentTab("Pending");  // Change the tab to "Pending"
+        fetchOrders("Pending");  // Fetch updated orders after adding new one
       } else {
         alert('Failed to add order');
       }
@@ -99,46 +106,82 @@ export default function Mail({
   };
 
   const formFields = [
-    { name: 'customer_id', label: 'Customer ID', type: 'text', required: true },
+    { name: 'customer_id', label: 'Customer Name', type: 'text', required: true },
     { name: 'order_note', label: 'Order Note', type: 'text', required: true },
     { name: 'dispatch_date', label: 'Dispatch Date', type: 'date', required: true },
   ];
 
-  const fetchOrders = async () => {
-    // Fetch orders data here and update state accordingly
-    // For example:
-    const response = await fetch('/api/orders');
-    const data = await response.json();
-    setActiveOrders(extractOrdersByStatus("Active"));
-    setPendingOrders(extractOrdersByStatus("Pending"));
-    setDispatchedOrders(extractOrdersByStatus("Dispatched"));
+  const handleDeleteMail = async (orderId) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this order?");
+    if (confirmDelete) {
+      try {
+        let token = localStorage.getItem("usersdatatoken");
+        const response = await fetch('/api/deleteorder', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token,
+          },
+          body: JSON.stringify({ delete_order_id: orderId }),
+        });
+
+        if (response.status === 200) {
+          setSelectedOrder(null);
+          fetchOrders("Pending"); // Fetch updated orders after deletion
+        } else {
+          alert('Failed to delete the order');
+        }
+      } catch (error) {
+        console.error('Error deleting the order:', error);
+        alert('An error occurred while deleting the order');
+      }
+    }
   };
 
-  const handleDeleteMail = async (orderId) => {
+  const handleMarkActive = async (orderId) => {
     try {
       let token = localStorage.getItem("usersdatatoken");
-      const response = await fetch('/api/deleteorder', {
+      const response = await fetch('/api/ordervalidation', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + token,
         },
-        body: JSON.stringify({ delete_order_id: orderId }),
+        body: JSON.stringify({ 
+          order_id: orderId,
+          approval:"COMPLETED",
+        }),
       });
 
       if (response.status === 200) {
-        alert('Order deleted');
-        fetchOrders(); // Fetch updated orders after deletion
-        setMail({ selected: null }); // Deselect the mail after deletion
+        setSelectedOrder(null);
+        fetchOrders("Dispatched");
+        setCurrentTab("Dispatched");  // Change the tab to "Dispatched"
+         // Fetch updated orders after activating
       } else {
-        alert('Failed to delete the order');
+        alert('Failed to mark the order as active');
       }
     } catch (error) {
-      console.error('Error deleting the order:', error);
-      alert('An error occurred while deleting the order');
+      console.error('Error marking the order as active:', error);
+      alert('An error occurred while marking the order as active');
     }
   };
 
+
+  // Filter orders based on the search query
+  const filteredPendingOrders = pendingOrders.filter(order =>
+    order.customer.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const filteredActiveOrders = activeOrders.filter(order =>
+    order.customer.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const filteredDispatchedOrders = dispatchedOrders.filter(order =>
+    order.customer.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  console.log(pendingOrders)
   return (
     <TooltipProvider delayDuration={0}>
       <ResizablePanelGroup
@@ -148,10 +191,12 @@ export default function Mail({
             sizes
           )}`;
         }}
-        className="h-full max-h-[800px] items-stretch"
+        className="h-full max-h-[1000px] items-stretch"
       >
-        <ResizablePanel defaultSize={defaultLayout[1]} minSize={30}>
-          <Tabs defaultValue="Active" onValueChange={onStatusChange}>
+
+        <ResizablePanel defaultSize={defaultLayout[1]} minSize={32}>
+          <Tabs value={currentTab} onValueChange={(value) => { setCurrentTab(value); onStatusChange(value); }}>
+            
             <div className="flex items-center px-4 py-2">
               <h1 className="text-xl font-bold">SALES ORDERS</h1>
               <TabsList className="ml-auto">
@@ -183,7 +228,12 @@ export default function Mail({
               <form>
                 <div className="relative mb-2">
                   <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-                  <Input placeholder="Search" className="pl-8" />
+                  <Input 
+                    placeholder="Search" 
+                    className="pl-8" 
+                    value={searchQuery} 
+                    onChange={(e) => setSearchQuery(e.target.value)} // Update search query state on input change
+                  />
                 </div>
               </form>
               <div className="relative mb-3">
@@ -191,20 +241,20 @@ export default function Mail({
               </div>
             </div>
             <TabsContent value="Pending" className="m-0">
-              <MailList items={pendingOrders} onSelectMail={(mail) => setMail({ selected: mail.order.id })} selectedMail={selectedOrder} />
+              <MailList items={filteredPendingOrders} onSelectMail={setSelectedOrder} selectedMail={selectedOrder} onStatusChange={onStatusChange} fetchOrders={fetchOrders}/>
             </TabsContent>
             <TabsContent value="Active" className="m-0">
-              <MailList items={activeOrders} onSelectMail={(mail) => setMail({ selected: mail.order.id })} selectedMail={selectedOrder} />
+              <MailList items={filteredActiveOrders} onSelectMail={setSelectedOrder} selectedMail={selectedOrder} onStatusChange={onStatusChange} fetchOrders={fetchOrders}/>
             </TabsContent>
             <TabsContent value="Dispatched" className="m-0">
-              <MailList items={dispatchedOrders} onSelectMail={(mail) => setMail({ selected: mail.order.id })} selectedMail={selectedOrder} />
+              <MailList items={filteredDispatchedOrders} onSelectMail={setSelectedOrder} selectedMail={selectedOrder} onStatusChange={onStatusChange} fetchOrders={fetchOrders}/>
             </TabsContent>
           </Tabs>
         </ResizablePanel>
 
         <ResizableHandle withHandle />
-        <ResizablePanel defaultSize={defaultLayout[2]}>
-          <MailDisplay mail={selectedOrder} onDeleteMail={handleDeleteMail} />
+        <ResizablePanel defaultSize={defaultLayout[2]} minSize={50}>
+          <MailDisplay mail={selectedOrder} onDeleteMail={handleDeleteMail} onMarkActive={handleMarkActive} setCurrentTab={setCurrentTab} fetchOrders={fetchOrders} currentStatus={currentStatus}/>
         </ResizablePanel>
       </ResizablePanelGroup>
 

@@ -4,11 +4,14 @@ import { ToastContainer, toast } from 'react-toastify';
 import { LoginContext } from './ContextProvider/Context';
 import 'react-toastify/dist/ReactToastify.css';
 import validator from 'validator';
+import { AuthProvider, useAuth } from './ContextProvider/Authcontext';
 
 
 
 export default function Login() {
+
     const { logindata, setLoginData } = useContext(LoginContext);
+    const {user , login, logout } = useAuth(); 
     const [passShow, setPassShow] = useState(false);
     const [inpval, setInpval] = useState({
         email: "",
@@ -88,6 +91,7 @@ export default function Login() {
             console.log("after api call")
             const resone = await data.json();
             const tokenVar = resone.token;
+            
 
             console.log("before authentication api call")
             const data2 = await fetch("/api/checkAuthentication", {
@@ -101,11 +105,16 @@ export default function Login() {
             const res = await data2.json();
             if (res.status === "pass") {
                 localStorage.setItem("usersdatatoken", resone.token);
+                login({
+                    token: resone.token,
+                    login: resone.login
+                })
                 history("/dash");
                 toast.success("Login was successful!", {
                     position: "top-center"
                 });
                 setInpval({ ...inpval, email: "", password: "" });
+                
             } else {
                 toast.error("Invalid credentials!", {
                     position: "top-center"
@@ -117,7 +126,7 @@ export default function Login() {
     return (
         <>
             <section className="w-full py-10 min-h-screen">
-                <div className="form_data max-w-lg w-full mx-auto p-6 bg-white shadow-md rounded flex flex-col items-center">
+                <div className="form_data max-w-lg w-full mx-auto my-12 p-6 bg-white shadow-md rounded flex flex-col items-center">
                     <div className="form_heading mb-10">
                         <h1 className="text-3xl font-sans text-gray-900">Login to Intaligen</h1>
                     </div>

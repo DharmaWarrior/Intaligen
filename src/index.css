@@ -75,7 +75,7 @@
 
   @layer base {
     .sidebar-container{
-      @apply bg-gradient-to-b from-purple-400 to-teal-600 w-[19%]  p-4 border transition-all duration-500 border-solid border-blue-500 absolute mt-20 ml-0
+      @apply bg-gradient-to-b from-purple-400 to-teal-600 w-[19%]  p-4 border transition-all duration-500 border-solid border-blue-500 absolute ml-0
     }
     .sidebar{
         @apply flex items-center h-[120%] mt-1 p-4 rounded-lg cursor-pointer transition-all duration-300 hover:bg-black

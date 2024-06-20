@@ -3,35 +3,57 @@ import formatDistanceToNow from "date-fns/formatDistanceToNow";
 
 import { cn } from "./cn";
 import { Badge } from "./../../components/ui/badge";
+
 import { ScrollArea } from "./../../components/ui/scroll-area";
 import { Separator } from "./../../components/ui/separator";
-import { useMail } from "./../hooks/useMail";
 
-export function MailList({ items, onSelectMail, selectedMail }) {
+export function MailList({ items, onSelectMail, selectedMail, onStatusChange, fetchOrders }) {
+  
+  const handleSelectMail = async (item) => {
+    try {
+      let token = localStorage.getItem("usersdatatoken");
+      const response = await fetch('/api/order_info', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token,
+        },
+        body: JSON.stringify({ order_id: item.order.id }),
+      });
+
+      if (response.status === 302) {
+        const data = await response.json();
+        onSelectMail({ ...data, orderId: item.order.id }); 
+        
+      } else {
+        alert('Failed to fetch order info');
+      }
+    } catch (error) {
+      console.error('Error fetching order info:', error);
+      alert('Error fetching order info');
+    }
+  };
+
   return (
-    <ScrollArea className="h-[400px]">
+    <ScrollArea className="h-[500px]">
       <div className="flex flex-col gap-2 p-4 pt-0">
         {items.length > 0 ? (
           items.map((item) => (
             <button
               key={item.order.id}
-              className={cn(
-                'flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent',
-                selectedMail && selectedMail.order.id === item.order.id && 'bg-muted'
-              )}
-              onClick={() => onSelectMail(item)}
+              className=
+                'flex flex-col items-start gap-2 rounded-lg border border-1 border-solid border-gray-200 p-3 text-left text-sm transition-all hover:bg-accent'
+              
+              onClick={() => handleSelectMail(item)}
             >
-              <div className="flex w-full flex-col gap-1">
+              <div className="flex w-full flex-col  gap-1">
                 <div className="flex items-center">
                   <div className="flex items-center gap-2">
                     <div className="font-semibold text-lg">{item.customer.name}</div>
                   </div>
                   <div
                     className={cn(
-                      'ml-auto text-xl border rounded px-2 border-black',
-                      selectedMail && selectedMail.order.id === item.order.id
-                        ? 'text-foreground'
-                        : 'text-muted-foreground'
+                      'ml-auto text-xl border rounded px-2 border-black'
                     )}
                   >
                     {item.order.status}

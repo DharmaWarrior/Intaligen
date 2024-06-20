@@ -5,9 +5,10 @@ import { accounts, mails } from './data/mails';
 
 export default function Orders() {
     const [ordersData, setOrdersData] = useState({});
-    const [currentStatus, setCurrentStatus] = useState("Active");
+    const [currentStatus, setCurrentStatus] = useState("Pending");
 
     const fetchOrders = async (status) => {
+        console.log(status)
         try {
             let token = localStorage.getItem("usersdatatoken");
             if(!token) {
@@ -25,7 +26,6 @@ export default function Orders() {
 
             if (response.status === 200) {
                 const result = await response.json();
-                console.log('Fetched data:', result);
                 setOrdersData(result);
             } else {
                 console.error('Failed to fetch data');
@@ -44,14 +44,14 @@ export default function Orders() {
     };
 
     return (
-        <div className="w-full h-[90vh] flex">
-            <div className="w-[20%]">
-                <Sidebar />
+        <div className="flex">
+            <div>
+                {/* <Sidebar /> */}
             </div>
-            <div className="w-[80%] h-[90%] overflow-y-auto flex flex-row flex-wrap py-2">
+            <div className=" h-[100%] w-full overflow-y-auto flex flex-row  py-2">
                 <Mail
                     mails={mails}
-                    defaultLayout={[265, 440, 655]}
+                    fetchOrders={fetchOrders}
                     ordersData={ordersData}
                     onStatusChange={handleStatusChange}
                     currentStatus={currentStatus}

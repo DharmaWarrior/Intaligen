@@ -88,12 +88,12 @@ export default function Dashboard() {
 
   return (
     <>
-      {data.message!="Internal Server Error" ? (
-        <div>
-          <div>Dashboard is here!</div>
-          <Sidebar/>
+      {data.message !== "Internal Server Error" ? (
+        <div className='flex'>
+          <div className="h-screen flex justify-center items-center mx-auto text-3xl">
+              Dashboard is here!
+          </div>
         </div>
-        
       ) : (
         <div className="flex justify-center items-center h-screen">
           Loading... &nbsp;
