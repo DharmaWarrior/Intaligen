@@ -32,7 +32,7 @@ import { ScrollArea } from './../../components/ui/scroll-area';
 import BatchDetailsDialog from '.././cards/BatchDetailsDialog';
 import EditOrderDialog from './../cards/EditOrderDialog.jsx';
 
-export function MailDisplay({ mail, onDeleteMail, setCurrentTab, fetchOrders, currentStatus, onMarkActive, selectMailById}) {
+export function MailDisplay({ mail, onDeleteMail, setCurrentTab, fetchOrders, currentStatus, onMarkActive, handleSelectMail}) {
   
   const [activeTab, setActiveTab] = useState('Orders');
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -52,9 +52,7 @@ export function MailDisplay({ mail, onDeleteMail, setCurrentTab, fetchOrders, cu
     setDialogOpen(true);
   };
 
-  const handleSelectMail = (mailId) => {
-    selectMailById(mailId);
-  };
+  
 
 
   const handleDialogClose = () => {
@@ -92,8 +90,9 @@ export function MailDisplay({ mail, onDeleteMail, setCurrentTab, fetchOrders, cu
       if (response.ok) {
         console.log('Batch added successfully');
         setDialogOpen(false);
-        setCurrentTab('Dispatched');
-        fetchOrders('Dispatched');
+        setCurrentTab('Active');
+        fetchOrders('Active');
+        handleSelectMail(id);
         
       } else {
         alert('Failed to add batch');
@@ -116,9 +115,7 @@ export function MailDisplay({ mail, onDeleteMail, setCurrentTab, fetchOrders, cu
     setEditOrderDialogOpen(true);
   };
 
-  const handleToggleBatchView = (batchId) => {
-    setExpandedBatchId(expandedBatchId === batchId ? null : batchId);
-  };
+  
   
   const handleSaveChanges = async (formData) => {
     // Implement the logic to save changes
@@ -148,8 +145,9 @@ export function MailDisplay({ mail, onDeleteMail, setCurrentTab, fetchOrders, cu
       if (response.ok) {
         console.log('Order updated successfully');
         setEditOrderDialogOpen(false);
-        fetchOrders('Pending');
-        setCurrentTab('Pending');
+        fetchOrders(currentStatus);
+        setCurrentTab(currentStatus);
+        handleSelectMail(id);
         
       } else {
         alert('Failed to update order');
@@ -409,45 +407,6 @@ export function MailDisplay({ mail, onDeleteMail, setCurrentTab, fetchOrders, cu
                         {expandedBatchId === batch.id ? 'Cancel' : 'View'}
                       </Button>
                     </div>
-                    {expandedBatchId === batch.id && (
-                      <div className=" flex  flex-col gap-2 transition-all duration-300 ease-in-out transform">
-                        <span className='mt-3 text-blue-500'> Dispatch Date</span>
-                        <input
-                          className="input-field p-2 border border-gray-300 rounded"
-                          type='date'
-                        />
-                        <Table className="min-w-full bg-white">
-                          <TableHeader>
-                            <TableRow>
-                              <TableHead className="py-2 px-4 bg-gray-100 border-b">ITEM NAME</TableHead>
-                              <TableHead className="py-2 px-4 bg-gray-100 border-b">ORDER QTY</TableHead>
-                              <TableHead className="py-2 px-4 bg-gray-100 border-b">UNIT</TableHead>
-                              <TableHead className="py-2 px-4 bg-gray-100 border-b">STOCK</TableHead>
-                              <TableHead className="py-2 px-4 bg-gray-100 border-b">DISPATCH QTY</TableHead>
-                            </TableRow>
-                          </TableHeader>
-                          <TableBody>
-                            {mail.DATA.order_items.map((item, index) => (
-                              <TableRow key={index}>
-                                <TableCell className="py-2 px-4 border-b">{mail.INVENTORY_DATA[item.item_id]["Item Name"]}</TableCell>
-                                <TableCell className="py-2 px-4 border-b">{item.order_qty}</TableCell>
-                                <TableCell className="py-2 px-4 border-b">{item.item_unit}</TableCell>
-                                <TableCell className="py-2 px-4 border-b">{mail.INVENTORY_DATA[item.item_id].total_stock}</TableCell>
-                                <TableCell className="py-2 px-4 border-b">{/* dispatch quantity input here */}</TableCell>
-                              </TableRow>
-                            ))}
-                          </TableBody>
-                        </Table>
-                        <div className="flex justify-end gap-3">
-                          <Button variant="secondary" size="sm">
-                            Save
-                          </Button>
-                          <Button variant="secondary" size="sm">
-                            Move Batch From Inventory
-                          </Button>
-                        </div>
-                      </div>
-                    )}
                   </div>
                 ))}
               </div>

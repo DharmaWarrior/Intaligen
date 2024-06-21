@@ -6,6 +6,7 @@ import PlusIcon from '@mui/icons-material/Add';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import { toast } from 'react-toastify';
+import MasterTable from './components/MasterTable';
 
 export default function Partners() {
     const { logindata } = useContext(LoginContext);
@@ -86,9 +87,8 @@ export default function Partners() {
   
   
     return (
-      <div className="w-full h-[90vh] mt-0 flex flex-col">
-        <Sidebar />
-        <div className="h-[90%] overflow-y-auto absolute right-0 w-[80%] px-10 py-10">
+      <div className="w-full h-[120vh] mt-0 flex flex-col">
+        <div className="absolute right-0 w-[80%] px-10 py-10">
           <div className='flex flex-row'>
             <h1 className='text-4xl font-sans'>LIST OF PARTNERS</h1>
             <div className='absolute right-10'>
@@ -110,7 +110,7 @@ export default function Partners() {
             </div>
           </div>
           <div className="ml-15 flex flex-col mt-5">
-            {/* <TablePartners /> */}
+            {/* <MasterTable /> */}
           </div>
         </div>
   

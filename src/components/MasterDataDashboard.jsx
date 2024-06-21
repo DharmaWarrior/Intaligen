@@ -2,7 +2,7 @@ import React from "react";
 import Sidebar from "./Sidebar";
 import Mastercard from "./Mastercard";
 
-export default function Productionchartsnew()  {
+export default function MasterDataDashboard()  {
 
     return (
         <div className="flex">

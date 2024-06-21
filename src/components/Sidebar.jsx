@@ -23,7 +23,7 @@ import { useAuth } from './ContextProvider/Authcontext';
 export default function Sidebar(
     defaultLayout = [265, 440, 655],
     defaultCollapsed = false,
-    navCollapsedSize = 15,
+    navCollapsedSize = 4,
 ) {
     const [isCollapsed, setIsCollapsed] = React.useState(defaultCollapsed)
     const {user , login, logout } = useAuth(); 
@@ -36,14 +36,16 @@ export default function Sidebar(
                 // defaultSize={defaultLayout[0]}  
                 collapsedSize={navCollapsedSize}
                 collapsible={true}
-                minSize={15}
-                maxSize={20}
-                onCollapse={(collapsed) => {
-                    setIsCollapsed(collapsed)
-                    document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(
-                      collapsed
-                    )}`
-                  }}
+                minSize={12}
+                maxSize={18}
+                onCollapse={() => {
+                    setIsCollapsed(true)
+                    document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(true)}`
+                }}
+                onExpand={() => {
+                    setIsCollapsed(false)
+                    document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(false)}`
+                }}
                 className={cn(
                     isCollapsed &&
                     " h-[120%] overflow-y-auto font-sans top-0 left-0"

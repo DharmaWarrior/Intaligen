@@ -8,6 +8,9 @@
     padding: 0;
   }
 
+  .custom-resizable-handle {
+    z-index: 0; /* Set a lower z-index value */
+  }
   
   @layer base {
     :root {

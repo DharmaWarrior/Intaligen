@@ -13,6 +13,7 @@ import {
 import { LoginContext } from './ContextProvider/Context';
 import { FaPencilAlt, FaCheck, FaTimes } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import { ScrollArea } from './../../components/ui/scroll-area';
 
   
 
@@ -128,6 +129,7 @@ export default function TableItemss({columns,data,setData,fetchSearch, EditdataA
               <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                   <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                       <Table>
+                      <ScrollArea className="h-[72vh]">
                       <TableHeader>
                           <TableRow>
                             {columns.map((column) => (
@@ -135,6 +137,7 @@ export default function TableItemss({columns,data,setData,fetchSearch, EditdataA
                             ))}
                           </TableRow>
                       </TableHeader>
+                      
                       <TableBody>
                         {data.map((row) => (
                           <TableRow key={row.id}>
@@ -199,6 +202,7 @@ export default function TableItemss({columns,data,setData,fetchSearch, EditdataA
                           </TableRow>
                         ))}
                       </TableBody>
+                      </ScrollArea>
                       </Table>
                   </div>
               </div>

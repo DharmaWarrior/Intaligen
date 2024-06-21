@@ -76,6 +76,33 @@ export default function Mail({
     setDialogOpen(false);
   };
 
+
+  const handleSelectMail = async (id) => {
+    try {
+      let token = localStorage.getItem("usersdatatoken");
+      const response = await fetch('/api/order_info', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token,
+        },
+        body: JSON.stringify({ order_id: id }),
+      });
+
+      if (response.status === 302) {
+        const data = await response.json();
+        setSelectedOrder({ ...data, orderId: id }); 
+        
+      } else {
+        alert('Failed to fetch order info');
+      }
+    } catch (error) {
+      console.error('Error fetching order info:', error);
+      alert('Error fetching order info');
+    }
+  };
+
+
   const handleFormSubmit = async (formData) => {
     try {
       let token = localStorage.getItem("usersdatatoken");
@@ -241,20 +268,20 @@ export default function Mail({
               </div>
             </div>
             <TabsContent value="Pending" className="m-0">
-              <MailList items={filteredPendingOrders} onSelectMail={setSelectedOrder} selectedMail={selectedOrder} onStatusChange={onStatusChange} fetchOrders={fetchOrders}/>
+              <MailList items={filteredPendingOrders} handleSelectMail={handleSelectMail} onSelectMail={setSelectedOrder} selectedMail={selectedOrder} onStatusChange={onStatusChange} fetchOrders={fetchOrders}/>
             </TabsContent>
             <TabsContent value="Active" className="m-0">
-              <MailList items={filteredActiveOrders} onSelectMail={setSelectedOrder} selectedMail={selectedOrder} onStatusChange={onStatusChange} fetchOrders={fetchOrders}/>
+              <MailList items={filteredActiveOrders} handleSelectMail={handleSelectMail} onSelectMail={setSelectedOrder} selectedMail={selectedOrder} onStatusChange={onStatusChange} fetchOrders={fetchOrders}/>
             </TabsContent>
             <TabsContent value="Dispatched" className="m-0">
-              <MailList items={filteredDispatchedOrders} onSelectMail={setSelectedOrder} selectedMail={selectedOrder} onStatusChange={onStatusChange} fetchOrders={fetchOrders}/>
+              <MailList items={filteredDispatchedOrders} handleSelectMail={handleSelectMail} onSelectMail={setSelectedOrder} selectedMail={selectedOrder} onStatusChange={onStatusChange} fetchOrders={fetchOrders}/>
             </TabsContent>
           </Tabs>
         </ResizablePanel>
 
-        <ResizableHandle withHandle />
+        <ResizableHandle withHandle className="custom-resizable-handle"/>
         <ResizablePanel defaultSize={defaultLayout[2]} minSize={50}>
-          <MailDisplay mail={selectedOrder} onDeleteMail={handleDeleteMail} onMarkActive={handleMarkActive} setCurrentTab={setCurrentTab} fetchOrders={fetchOrders} currentStatus={currentStatus}/>
+          <MailDisplay mail={selectedOrder} onDeleteMail={handleDeleteMail} handleSelectMail={handleSelectMail} onMarkActive={handleMarkActive} setCurrentTab={setCurrentTab} fetchOrders={fetchOrders} currentStatus={currentStatus}/>
         </ResizablePanel>
       </ResizablePanelGroup>
 
