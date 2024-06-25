@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useState, useEffect } from "react";
 import { CirclePlus, Search } from "lucide-react";
 import { Button } from "./../components/ui/button";
@@ -57,6 +55,10 @@ export default function Mail({
     }
   }, [ordersData]);
 
+  useEffect(() => {
+    onStatusChange(currentTab);
+  }, [currentTab, onStatusChange]);
+
   const extractOrdersByStatus = (status) => {
     return ordersData.orders_data
       ? Object.values(ordersData.orders_data)
@@ -75,7 +77,6 @@ export default function Mail({
   const handleDialogClose = () => {
     setDialogOpen(false);
   };
-
 
   const handleSelectMail = async (id) => {
     try {
@@ -102,8 +103,8 @@ export default function Mail({
     }
   };
 
-
   const handleFormSubmit = async (formData) => {
+    console.log(formData);
     try {
       let token = localStorage.getItem("usersdatatoken");
       const response = await fetch('/api/addorder', {
@@ -133,7 +134,7 @@ export default function Mail({
   };
 
   const formFields = [
-    { name: 'customer_id', label: 'Customer Name', type: 'text', required: true },
+    { name: 'customer_id', label: 'Customer Name', type: 'search', required: true },
     { name: 'order_note', label: 'Order Note', type: 'text', required: true },
     { name: 'dispatch_date', label: 'Dispatch Date', type: 'date', required: true },
   ];
@@ -165,7 +166,7 @@ export default function Mail({
     }
   };
 
-  const handleMarkActive = async (orderId) => {
+  const ApproveToDisp = async (orderId) => {
     try {
       let token = localStorage.getItem("usersdatatoken");
       const response = await fetch('/api/ordervalidation', {
@@ -194,6 +195,63 @@ export default function Mail({
     }
   };
 
+  const ApproveToActive = async (orderId) => {
+    try {
+      let token = localStorage.getItem("usersdatatoken");
+      const response = await fetch('/api/ordervalidation', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token,
+        },
+        body: JSON.stringify({ 
+          order_id: orderId,
+          approval:"ACTIVE",
+        }),
+      });
+
+      if (response.status === 200) {
+        setSelectedOrder(null);
+        fetchOrders("Active");
+        setCurrentTab("Active");  // Change the tab to "Dispatched"
+        handleSelectMail(orderId);
+      } else {
+        alert('Failed to mark the order as active');
+      }
+    } catch (error) {
+      console.error('Error marking the order as active:', error);
+      alert('An error occurred while marking the order as active');
+    }
+  };
+
+  const ApproveToPending = async (orderId) => {
+    try {
+      let token = localStorage.getItem("usersdatatoken");
+      const response = await fetch('/api/ordervalidation', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token,
+        },
+        body: JSON.stringify({ 
+          order_id: orderId,
+          approval:"PENDING",
+        }),
+      });
+
+      if (response.status === 200) {
+        setSelectedOrder(null);
+        fetchOrders("Pending");
+        setCurrentTab("Pending");  // Change the tab to "Dispatched"
+         // Fetch updated orders after activating
+      } else {
+        alert('Failed to mark the order as active');
+      }
+    } catch (error) {
+      console.error('Error marking the order as active:', error);
+      alert('An error occurred while marking the order as active');
+    }
+  };
 
   // Filter orders based on the search query
   const filteredPendingOrders = pendingOrders.filter(order =>
@@ -222,8 +280,7 @@ export default function Mail({
       >
 
         <ResizablePanel defaultSize={defaultLayout[1]} minSize={32}>
-          <Tabs value={currentTab} onValueChange={(value) => { setCurrentTab(value); onStatusChange(value); }}>
-            
+          <Tabs value={currentTab} onValueChange={setCurrentTab}>
             <div className="flex items-center px-4 py-2">
               <h1 className="text-xl font-bold">SALES ORDERS</h1>
               <TabsList className="ml-auto">
@@ -281,7 +338,7 @@ export default function Mail({
 
         <ResizableHandle withHandle className="custom-resizable-handle"/>
         <ResizablePanel defaultSize={defaultLayout[2]} minSize={50}>
-          <MailDisplay mail={selectedOrder} onDeleteMail={handleDeleteMail} handleSelectMail={handleSelectMail} onMarkActive={handleMarkActive} setCurrentTab={setCurrentTab} fetchOrders={fetchOrders} currentStatus={currentStatus}/>
+          <MailDisplay mail={selectedOrder} onDeleteMail={handleDeleteMail} handleSelectMail={handleSelectMail} ApproveToDisp={ApproveToDisp} setCurrentTab={setCurrentTab} fetchOrders={fetchOrders} currentStatus={currentStatus} ApproveToActive={ApproveToActive} ApproveToPending={ApproveToPending}/>
         </ResizablePanel>
       </ResizablePanelGroup>
 

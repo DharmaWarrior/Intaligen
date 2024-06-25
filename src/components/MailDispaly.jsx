@@ -32,12 +32,13 @@ import { ScrollArea } from './../../components/ui/scroll-area';
 import BatchDetailsDialog from '.././cards/BatchDetailsDialog';
 import EditOrderDialog from './../cards/EditOrderDialog.jsx';
 
-export function MailDisplay({ mail, onDeleteMail, setCurrentTab, fetchOrders, currentStatus, onMarkActive, handleSelectMail}) {
+export function MailDisplay({ mail, onDeleteMail, setCurrentTab, fetchOrders, currentStatus, ApproveToDisp, handleSelectMail, ApproveToActive, ApproveToPending}) {
   
   const [activeTab, setActiveTab] = useState('Orders');
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [expandedBatchId, setExpandedBatchId] = useState(null);
+  const [checkedBatches, setCheckedBatches] = useState([]);
   const [selectedBatch, setSelectedBatch] = useState(null);
+  const [selectedBatchDetails, setSelectedBatchDetails] = useState([]);
   const [addBatchDialogOpen, setAddBatchDialogOpen] = useState(false);
   const [editTable, setEditTable] = useState(false);
   const [editOrderDialogOpen, setEditOrderDialogOpen] = useState(false);
@@ -45,22 +46,26 @@ export function MailDisplay({ mail, onDeleteMail, setCurrentTab, fetchOrders, cu
 
   if (mail) {
     var id = mail.orderId;
-    
+    console.log("Yeh id hai iss ki",id);
   }
 
-  const handleDialogOpen = () => {
-    setDialogOpen(true);
-  };
 
-  
+  const handleCheckboxChange = (batchId) => {
+    setCheckedBatches(prevState =>
+      prevState.includes(batchId)
+        ? prevState.filter(id => id !== batchId)
+        : [...prevState, batchId]
+    );
+  };
 
 
   const handleDialogClose = () => {
     setDialogOpen(false);
   };
 
-  const handleBatchView = (batch) => {
+  const handleBatchView = (batch, batchdetails) => {
     setSelectedBatch(batch);
+    setSelectedBatchDetails(batchdetails);
     setDialogOpen(true);
   };
   
@@ -106,6 +111,11 @@ export function MailDisplay({ mail, onDeleteMail, setCurrentTab, fetchOrders, cu
   const handleAddBatchDialogOpen = () => {
     setAddBatchDialogOpen(true);
   };
+  
+  const handleGenerateInvoice = () => {
+    setAddBatchDialogOpen(true);
+  };
+  
   const handleAddBatchDialogClose = () => {
     setAddBatchDialogOpen(false);
   };
@@ -164,25 +174,16 @@ export function MailDisplay({ mail, onDeleteMail, setCurrentTab, fetchOrders, cu
     <div className="flex h-full flex-col">
       <div className="flex items-center p-2">
         <div className="flex items-center gap-2">
-          {currentStatus === 'Active' && (
+        {currentStatus === 'Pending' && (
             <>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button variant="ghost" size="icon" disabled={!mail}>
-                  <ArchiveX className="h-4 w-4" />
-                  <span className="sr-only">Decline Order</span>
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>Decline Order</TooltipContent>
-            </Tooltip>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button variant="ghost" size="icon" disabled={!mail} onClick={() => mail && onMarkActive(id)}>
+                <Button variant="ghost" size="icon" disabled={!mail} onClick={() => mail && ApproveToActive(id)}>
                   <ClipboardCheck className="h-4 w-4" />
-                  <span className="sr-only">Mark As Complete</span>
+                  <span className="sr-only">Approve Order</span>
                 </Button>
               </TooltipTrigger>
-              <TooltipContent>Mark As Complete</TooltipContent>
+              <TooltipContent>Approve Order</TooltipContent>
             </Tooltip>
             <Tooltip>
               <TooltipTrigger asChild>
@@ -218,16 +219,25 @@ export function MailDisplay({ mail, onDeleteMail, setCurrentTab, fetchOrders, cu
             </Tooltip>
           </>
           )}
-          {currentStatus === 'Pending' && (
+          {currentStatus === 'Active' && (
             <>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button variant="ghost" size="icon" disabled={!mail}>
-                  <ClipboardCheck className="h-4 w-4" />
-                  <span className="sr-only">Approve Order</span>
+                <Button variant="ghost" size="icon" disabled={!mail} onClick={() => mail && ApproveToPending(id)}>
+                  <ArchiveX className="h-4 w-4" />
+                  <span className="sr-only">Decline Order</span>
                 </Button>
               </TooltipTrigger>
-              <TooltipContent>Approve Order</TooltipContent>
+              <TooltipContent>Decline Order</TooltipContent>
+            </Tooltip>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button variant="ghost" size="icon" disabled={!mail} onClick={() => mail && ApproveToDisp(id)}>
+                  <ClipboardCheck className="h-4 w-4" />
+                  <span className="sr-only">Mark As Complete</span>
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>Mark As Complete</TooltipContent>
             </Tooltip>
             <Tooltip>
               <TooltipTrigger asChild>
@@ -357,9 +367,22 @@ export function MailDisplay({ mail, onDeleteMail, setCurrentTab, fetchOrders, cu
                 </button>
             </div>
             {activeTab === 'Dispatch' && currentStatus === 'Active' && (
-                <Button variant="secondary" size="sm" onClick={handleAddBatchDialogOpen}>
+                <>
+                <Button variant="secondary" size="sm" className='ml-auto mr-2' onClick={handleAddBatchDialogOpen} >
                   Add Batch
                 </Button>
+                <Button variant="secondary" size="sm" onClick={handleGenerateInvoice} disabled={checkedBatches.length === 0}>
+                  Generate Invoice
+                </Button>
+                </>
+              )}
+
+            {activeTab === 'Dispatch' && currentStatus === 'Dispatched' && (
+                
+                <Button variant="secondary" size="sm" onClick={handleGenerateInvoice} disabled={checkedBatches.length === 0}>
+                  Generate Invoice
+                </Button>
+                
               )}
             {activeTab === 'Orders' && (currentStatus === 'Pending' || currentStatus === 'Active') && (
                 <Button variant="secondary" size="sm" onClick={handleEditOrder}>
@@ -403,8 +426,13 @@ export function MailDisplay({ mail, onDeleteMail, setCurrentTab, fetchOrders, cu
                         <div className="font-bold text-2xl">{batch.batch_name}</div>
                         <div className="text-gray-600">{batch.actual_desp_date}{' | '}</div>
                       </div>
-                      <Button variant="outline" size="sm" onClick={() => handleBatchView(batch.id)}>
-                        {expandedBatchId === batch.id ? 'Cancel' : 'View'}
+                      <input
+                        type="checkbox"
+                        className='ml-auto mr-4'
+                        onChange={() => handleCheckboxChange(batch.id)}
+                      />
+                      <Button variant="outline" size="sm" onClick={() => handleBatchView(batch.id, batch.orderitemdispatch)}>
+                        View
                       </Button>
                     </div>
                   </div>
@@ -412,10 +440,17 @@ export function MailDisplay({ mail, onDeleteMail, setCurrentTab, fetchOrders, cu
               </div>
               </ScrollArea>
             )}
-            {activeTab === 'Documents' && <Textarea />}
+            {activeTab === 'Documents' && (
+              <div className='flex mt-4 items-center justify-between'>
+                <input type='file' />
+                <Button variant="secondary" size="sm" >
+                  Upload 
+                </Button>
+              </div>
+              )}
           </div>
           <Separator className="mt-auto" />
-          <BatchDetailsDialog isOpen={dialogOpen} onClose={handleDialogClose} batch={selectedBatch} mail={mail} />
+          <BatchDetailsDialog id={id} isOpen={dialogOpen} onClose={handleDialogClose} batch={selectedBatch} batchdetails={selectedBatchDetails} mail={mail} />
           <AddForm
             open={addBatchDialogOpen}
             handleClose={handleAddBatchDialogClose}

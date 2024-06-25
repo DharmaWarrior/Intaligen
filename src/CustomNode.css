@@ -121,12 +121,13 @@
 .tooltip {
   visibility: hidden;
   width: 550px; /* Adjusted width to fit content */
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(134, 22, 22, 0.8);
   color: white;
   text-align: left;
   border-radius: 6px;
   padding: 10px;
   position: absolute;
+  margin-bottom: -35px;
   z-index: 1;
   bottom: 125%;
   left: 100%;

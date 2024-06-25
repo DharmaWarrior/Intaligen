@@ -5,7 +5,7 @@ import './CustomNode.css';
 import { Pencil, Check, X, Trash } from 'lucide-react';
 import Search from './components/Search';
 
-function CustomNode({ id, data, fetchWorkstations }) {
+function CustomNode({ data, fetchWorkstations ,setSelectedNode , selectedNode}) {
   const { label, userValue, gearValue, capacity, totalCapacity, MainTable = [], resourceData = [] } = data;
   const [editableJobData, setEditableJobData] = useState(MainTable);
   const [originalJobData, setOriginalJobData] = useState(MainTable.map(job => ({ ...job })));
@@ -254,6 +254,7 @@ function CustomNode({ id, data, fetchWorkstations }) {
           setIsEditing([...isEditing, false]);
           setSelectedItem(null);
           fetchWorkstations();
+          setSelectedNode(selectedNode)
         } else {
           throw new Error('Failed to add resource');
         }
@@ -339,6 +340,7 @@ function CustomNode({ id, data, fetchWorkstations }) {
           />
         </svg>
       </div>
+      
       <div className="label">{label}</div>
       <Handle type="source" position="bottom" />
 
@@ -415,7 +417,7 @@ function CustomNode({ id, data, fetchWorkstations }) {
             </div>
             <div className='flex flex-col'>  
               <h3>Resources</h3>
-              <div className="job-table-container">
+              <div className="job-table-container ">
                 <table>
                   <thead>
                     <tr>
@@ -486,7 +488,7 @@ function CustomNode({ id, data, fetchWorkstations }) {
                 )}
                 </tbody>
                 </table>
-                <Search label='Add Resource' onSelect={handleSelectResource} onsearch='Resource' />
+                <Search label='Add Resource' onSelect={handleSelectResource} onsearch='Resource'/>
               </div>
             </div>
           </div>

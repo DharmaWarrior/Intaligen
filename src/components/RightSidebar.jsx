@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import './RightSidebar.css';
 import {
   FileText,
@@ -8,11 +7,9 @@ import {
   GitPullRequestCreateArrow,
   Bolt
 } from "lucide-react";
-
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -22,7 +19,6 @@ import EditDialog from './../cards/EditDialog'; // Import the EditDialog compone
 import ExpandableProductTable from "./ExpandableProductTable";
 import { Button } from "./../../components/ui/button";
 import { Separator } from "./../../components/ui/separator";
-import { Textarea } from "./../../components/ui/textarea";
 import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "./../../components/ui/tooltip";
 
 
@@ -78,7 +74,9 @@ function RightSidebar({ isOpen, content, onClose, planning, resources, products,
       [index]: !prev[index]
     }));
   };
+
   return (
+    
     <div className={`Rightsidebar ${isOpen ? 'open' : ''}`}>
       <div className='flex flex-row'>
         <div className="line-clamp-1 text-xl mb-2 text-center">{content}</div>
@@ -157,9 +155,21 @@ function RightSidebar({ isOpen, content, onClose, planning, resources, products,
               >
                 Materials
               </button>
-              <Button className='ml-auto mb-1' variant="ghost" size="sm" onClick={openEditDialog} >
-                <span className="text-sm">Edit</span>
-              </Button>
+              {activeTab === 'Products' && (
+                <>
+                <Button className='ml-auto mb-1' variant="ghost" size="sm" onClick={openEditDialog} >
+                  <span className="text-sm">Recieving</span>
+                </Button>
+                <Button className='ml-auto mb-1' variant="ghost" size="sm" onClick={openEditDialog} >
+                  <span className="text-sm">Edit</span>
+                </Button>
+                </>
+              )}
+              {activeTab === 'Materials' && (
+                <Button className='ml-auto mb-1' variant="ghost" size="sm" onClick={openEditDialog} >
+                  <span className="text-sm">Edit</span>
+                </Button>
+              )}
             </div>
             
 
@@ -254,8 +264,11 @@ function RightSidebar({ isOpen, content, onClose, planning, resources, products,
                 </TableHeader>
                 <TableBody>
                   {editableMaterialData.map((job, index) => (
-                    <TableRow key={index}>
-                      <TableCell className="py-2 px-4 border-b">{job.name}</TableCell>
+                    <TableRow key={index} className={job.wip_flag === 'YES' ? 'bg-yellow-100' : ''}>
+                      <TableCell className="py-2 px-4 border-b flex items-center">
+                        {job.name}
+                        {job.wip_flag === 'YES' && <span className="bg-red-500 text-white text-xs px-2 py-1 rounded-full mr-2 ml-2">WIP</span>}
+                      </TableCell>
                       <TableCell className="py-2 px-4 border-b">{job.estimated_totals}</TableCell>
                       <TableCell className="py-2 px-4 border-b">{job.unit}</TableCell>
                       <TableCell className="py-2 px-4 border-b">{job.issue_totals}</TableCell>

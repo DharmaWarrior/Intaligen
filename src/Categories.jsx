@@ -152,7 +152,7 @@ export default function Items() {
   
     return (
       <div className="w-full h-[120vh] mt-0 flex flex-col">
-        <div className="absolute right-0 w-[80%] px-10 py-10">
+        <div className="w-full  justify-center px-10 py-10">
           <div className='flex flex-row'>
             <h1 className='text-4xl font-sans'>LIST OF CATEGORIES</h1>
             <div className='absolute right-10'>

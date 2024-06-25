@@ -12,6 +12,7 @@ import {
 const ExpandableProductTable = ({ jobData, toEdit }) => {
   const [expandedProducts, setExpandedProducts] = useState({});
   const [editedData, setEditedData] = useState(jobData);
+  console.log("Mera JobData",jobData);
 
   const toggleProductDetails = (index) => {
     setExpandedProducts((prev) => ({
@@ -19,6 +20,8 @@ const ExpandableProductTable = ({ jobData, toEdit }) => {
       [index]: !prev[index]
     }));
   };
+
+  var level = 0;
 
   const toggleChildProductDetails = (parentIndex, childIndex) => {
     const key = `${parentIndex}-${childIndex}`;
@@ -28,92 +31,175 @@ const ExpandableProductTable = ({ jobData, toEdit }) => {
     }));
   };
 
-  const handleInputChange = (index, field, value) => {
-    const updatedData = [...editedData];
-    updatedData[index][field] = value;
-    setEditedData(updatedData);
-  };
+  // const handleInputChange = (index, field, value, type, i,calltype) => {
+  //   if(type === 'Parent' ) {
+
+  //     currentElementId = `job-row-${index}-${i}-Parent-${field}`; //8
+  //     old_value =document.getElementById(currentElementId).getAttribute('oldValue'); //5
+      
+  //     difference = value - old_value; //3
+
+  //       var adjustmentKey = `job-row-${index}-${i}-Adjustment-${field}`;
+  //       childSum = oldValue - (document.getElementById(adjustmentKey).value - difference);//4
+  //       document.getElementById(currentElementId).setAttribute('oldValue') = value;
+
+  //       if(value !== childSum + document.getElementById(adjustmentKey).value){
+  //         document.getElementById(adjustmentKey).value += difference;
+  //       }
+        
+  //       old_value2 =document.getElementById(`job-row-${index}-${i+1}-Parent-${field}`).getAttribute('oldValue');
+  //       document.getElementById(`job-row-${index}-${i+1}-Parent-${field}`).value = old_value2 + difference;
+        
+
+      
+
+  //   } else {
+      
+  //     currentElementId = `job-row-${index}-${i}-Adjustment-${field}`;
+  //     old_value =document.getElementById(currentElementId).getAttribute('oldValue');
+  //     document.getElementById(currentElementId).setAttribute('oldValue') = value;
+  //     difference = value - old_value;
+
+  //       var adjustmentKey = `job-row-${index}-${i}-Parent-${field}`;
+  //       if(document.getElementById(adjustmentKey).value === value){
+  //         return;
+  //       }
+  //       document.getElementById(adjustmentKey).value += difference;
+  //       // document.getElementById(adjustmentKey).setAttribute('oldValue') += difference;
+        
+  //       // old_value2 = document.getElementById(`job-row-${index}-${i+1}-Parent-${field}`).getAttribute('oldValue');
+  //       // document.getElementById(`job-row-${index}-${i+1}-Parent-${field}`).value = old_value2 + difference;
+
+      
+  //   }
+  //   const updatedData = [...editedData];
+  //   updatedData[index][field] = value;
+  //   setEditedData(updatedData);
+  // };
 
   const getQtyAllotForItemId = (jobs, itemId) => {
     const job = jobs.find(job => job.item_id === parseInt(itemId, 10));
     return job ? job.qty_allot : 0;
   };
 
-  const renderChildWorkstations = (children, parentIndex, item_id, unit) => {
-    console.log(children);
+  const getQtyRejectForItemId = (jobs, itemId) => {
+    const job = jobs.find(job => job.item_id === parseInt(itemId, 10));
+    return job ? job.qty_reject : 0;
+  };
+
+  const getQtyWipForItemId = (jobs, itemId) => {
+    const job = jobs.find(job => job.item_id === parseInt(itemId, 10));
+    return job ? job.qty_wip : 0;
+  };
+
+  const renderChildWorkstations = (children, parentIndex, item_id, unit, level,index) => {
     return Object.keys(children).map((key) => {
+      
       const child = children[key];
       const childIndex = `${parentIndex}-${key}`;
+      
       return (
         <React.Fragment key={`child-${childIndex}`}>
           {child.totals[item_id] && (
             <>
-                <TableRow key={`child-row-${childIndex}`} className='bg-gray-200'>
-                <TableCell
-                    className="py-2 px-4 border-b cursor-pointer text-red-800 hover:underline"
-                    onClick={() => toggleChildProductDetails(parentIndex, key)}
-                >
-                    {'>>'}{child.workstation.name}
-                </TableCell>
-                <TableCell className="py-2 px-4 border-b">
-                    {toEdit ? (
-                    <input
-                        type="number"
-                        value={child.totals[item_id] ? child.totals[item_id] : 0}
-                        onChange={(e) => handleInputChange(parentIndex, `children[${key}].allocated`, e.target.value)}
-                        className="w-full p-1 border"
-                    />
-                    ) : (
-                    child.totals[item_id] ? child.totals[item_id] : 0
-                    )}
-                </TableCell>
-                <TableCell className="py-2 px-4 border-b">
-                    {toEdit ? (
-                    <input
-                        type="text"
-                        value={unit}
-                        onChange={(e) => handleInputChange(parentIndex, `children[${key}].unit`, e.target.value)}
-                        className="w-full p-1 border"
-                    />
-                    ) : (
-                    unit
-                    )}
-                </TableCell>
-                <TableCell className="py-2 px-4 border-b">0</TableCell>
+                <TableRow key={`job-row-${index}-${level}-Parent`} className='bg-gray-200' >
+                  <TableCell
+                      className="py-2 px-4 border-b cursor-pointer text-red-800 hover:underline"
+                      onClick={() => toggleChildProductDetails(parentIndex, key)}
+                  >
+                      {'>>'}{child.workstation.name}
+                  </TableCell>
+                  <TableCell className="py-2 px-4 border-b">
+                      {child.totals[item_id] ? child.totals[item_id] : 0}
+                  </TableCell>
+                  <TableCell className="py-2 px-4 border-b">
+                      {unit}
+                  </TableCell>
+                  <TableCell className="py-2 px-4 border-b">
+                      {toEdit ? (
+                      <input
+                      id={`job-row-${index}-${level}-Parent-Finished`}
+                          type="number"
+                          value={child.finished ? child.finished : 0}
+                          oldValue = {child.finished ? child.finished : 0}
+                          onChange={(e) => handleInputChange(parentIndex, `children[${key}].finished`, e.target.value, 'Parent')}
+                          className="w-full p-1 border"
+                      />
+                      ) : (
+                      child.finished ? child.finished : 0
+                      )}
+                  </TableCell>
+                  <TableCell className="py-2 px-4 border-b">
+                  {toEdit ? (
+                      <input
+                      id={`job-row-${index}-${level}-Parent-Reject`}
+                          type="number"
+                          value={child.reject_totals[item_id] ? child.reject_totals[item_id] : 0}
+                          oldValue = {child.reject_totals[item_id] ? child.reject_totals[item_id] : 0}
+                          onChange={(e) => handleInputChange(parentIndex, `children[${key}].reject_totals[${item_id}]`, e.target.value, 'Parent')}
+                          className="w-full p-1 border"
+                      />
+                      ) : (
+                        child.reject_totals[item_id] ? child.reject_totals[item_id] : 0
+                      )}
+                  </TableCell><TableCell className="py-2 px-4 border-b">
+                  {toEdit ? (
+                      <input
+                      id={`job-row-${index}-${level}-Parent-Wip`}
+                          type="number"
+                          value={child.wip_totals[item_id] ? child.wip_totals[item_id] : 0}
+                          oldValue = {child.wip_totals[item_id] ? child.wip_totals[item_id] : 0}
+                          onChange={(e) => handleInputChange(parentIndex, `children[${key}].wip_totals[${item_id}]`, e.target.value, 'Parent')}
+                          className="w-full p-1 border"
+                      />
+                      ) : (
+                        child.wip_totals[item_id] ? child.wip_totals[item_id] : 0
+                      )}
+                  </TableCell>
                 </TableRow>
                 {expandedProducts[childIndex] && (
                 <React.Fragment>
-                    <TableRow key={`child-details-${childIndex}`}>
-                    <TableCell className="py-2 px-4 border-b">
-                        {'>>'}{'Adjustment'}
-                    </TableCell>
-                    <TableCell className="py-2 px-4 border-b">
-                        {toEdit ? (
-                        <input
-                            type="number"
-                            value={getQtyAllotForItemId(child.jobs, item_id)}
-                            onChange={(e) => handleInputChange(parentIndex, `children[${key}].to_allot`, e.target.value)}
-                            className="w-full p-1 border"
-                        />
+                    <TableRow key={`job-row-${index}-${level}-Adjustment`}>
+                      <TableCell className="py-2 px-4 border-b">
+                          {'>>'}{'Adjustment'}
+                      </TableCell>
+                      <TableCell className="py-2 px-4 border-b">
+                          {getQtyAllotForItemId(child.jobs, item_id)}
+                      </TableCell>
+                      <TableCell className="py-2 px-4 border-b">
+                          {unit}
+                      </TableCell>
+                      <TableCell className="py-2 px-4 border-b">0</TableCell>
+                      <TableCell className="py-2 px-4 border-b">
+                      {toEdit ? (
+                          <input
+                          id={`job-row-${index}-${level}-Adjustment-Wip`}
+                              type="number"
+                              value={getQtyRejectForItemId(child.jobs, item_id)}
+                              oldValue = {getQtyRejectForItemId(child.jobs, item_id)}
+                              onChange={(e) => handleInputChange(parentIndex, `children[${key}].wip_totals[${item_id}]`, e.target.value, 'Adjustment')}
+                              className="w-full p-1 border"
+                          />
                         ) : (
-                        getQtyAllotForItemId(child.jobs, item_id)
+                          getQtyWipForItemId(child.jobs, item_id)
                         )}
-                    </TableCell>
-                    <TableCell className="py-2 px-4 border-b">
+                      </TableCell><TableCell className="py-2 px-4 border-b">
                         {toEdit ? (
-                        <input
-                            type="text"
-                            value={unit}
-                            onChange={(e) => handleInputChange(parentIndex, `children[${key}].unit`, e.target.value)}
-                            className="w-full p-1 border"
-                        />
+                          <input
+                          id={`job-row-${index}-${level}-Adjustment-Wip`}
+                              type="number"
+                              value={getQtyWipForItemId(child.jobs, item_id)}
+                              oldValue = {getQtyWipForItemId(child.jobs, item_id)}
+                              onChange={(e) => handleInputChange(parentIndex, `children[${key}].wip_totals[${item_id}]`, e.target.value,'Adjustment')}
+                              className="w-full p-1 border"
+                          />
                         ) : (
-                        unit
+                          getQtyWipForItemId(child.jobs, item_id)
                         )}
-                    </TableCell>
-                    <TableCell className="py-2 px-4 border-b">0</TableCell>
+                          
+                      </TableCell>
                     </TableRow>
-                    {child.childs && renderChildWorkstations(child.childs, childIndex, item_id, unit)}
+                    {child.childs && renderChildWorkstations(child.childs, childIndex, item_id, unit, level+1,index)}
                 </React.Fragment>
                 )}
             </>
@@ -132,12 +218,14 @@ const ExpandableProductTable = ({ jobData, toEdit }) => {
           <TableHead className="py-2 px-4 bg-gray-100 border-b">Alloted</TableHead>
           <TableHead className="py-2 px-4 bg-gray-100 border-b">Unit</TableHead>
           <TableHead className="py-2 px-4 bg-gray-100 border-b">Finished</TableHead>
+          <TableHead className="py-2 px-4 bg-gray-100 border-b">Reject</TableHead>
+          <TableHead className="py-2 px-4 bg-gray-100 border-b">WIP</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
         {editedData.map((job, index) => (
           <React.Fragment key={`job-${index}`}>
-            <TableRow key={`job-row-${index}`}>
+            <TableRow key={`job-row-${index}-${level}-Parent`}>
               <TableCell
                 className="py-2 px-4 border-b cursor-pointer text-violet-800 hover:underline"
                 onClick={() => toggleProductDetails(index)}
@@ -145,64 +233,110 @@ const ExpandableProductTable = ({ jobData, toEdit }) => {
                 {job.name}
               </TableCell>
               <TableCell className="py-2 px-4 border-b">
-                {toEdit ? (
-                  <input
-                    type="number"
-                    value={job.allocated}
-                    onChange={(e) => handleInputChange(index, 'allocated', e.target.value)}
-                    className="w-full p-1 border"
-                  />
-                ) : (
-                  job.allocated
-                )}
+                {job.allocated}
+              </TableCell>
+              <TableCell className="py-2 px-4 border-b">
+                {job.unit}
               </TableCell>
               <TableCell className="py-2 px-4 border-b">
                 {toEdit ? (
                   <input
-                    type="text"
-                    value={job.unit}
-                    onChange={(e) => handleInputChange(index, 'unit', e.target.value)}
+                    id={`job-row-${index}-${level}-Parent-Finished`}
+                    type="number"
+                    value={job.finished !== undefined ? job.finished : 0}
+                    oldValue = {job.finished !== undefined ? job.finished : 0}
+                    onChange={(e) => handleInputChange(index, 'finished', e.target.value,'Parent')}
                     className="w-full p-1 border"
                   />
                 ) : (
-                  job.unit
+                  job.finished !== undefined ? job.finished : 0
                 )}
               </TableCell>
-              <TableCell className="py-2 px-4 border-b">0</TableCell>
+              <TableCell className="py-2 px-4 border-b">
+              {toEdit ? (
+                  <input
+                  id={`job-row-${index}-${level}-Parent-Reject`}
+                    type="number"
+                    value={job.reject !== undefined ? job.reject : 0}
+                    oldValue = {job.reject !== undefined ? job.reject : 0}
+                    onChange={(e) => handleInputChange(index, 'reject', e.target.value,'Parent')}
+                    className="w-full p-1 border"
+                  />
+                ) : (
+                  job.reject !== undefined ? job.reject : 0
+                )}
+              </TableCell>
+              <TableCell className="py-2 px-4 border-b">
+              {toEdit ? (
+                  <input
+                  id={`job-row-${index}-${level}-Parent-Wip`}
+                    type="number"
+                    value={job.wip !== undefined ? job.wip : 0}
+                    oldValue = {job.wip !== undefined ? job.wip : 0}
+                    onChange={(e) => handleInputChange(index, 'wip', e.target.value ,'Parent')}
+                    className="w-full p-1 border"
+                  />
+                ) : (
+                  job.wip !== undefined ? job.wip : 0
+                )}
+              </TableCell>
             </TableRow>
             {expandedProducts[index] && (
               <React.Fragment>
-                <TableRow key={`job-details-${index}`}>
+                <TableRow key={`job-row-${index}-${level}-Adjustment`}>
                   <TableCell className="py-2 px-4 border-b">
                     {'>>'}{'Adjustment'}
                   </TableCell>
                   <TableCell className="py-2 px-4 border-b">
-                    {toEdit ? (
-                      <input
-                        type="number"
-                        value={job.to_allot}
-                        onChange={(e) => handleInputChange(index, 'to_allot', e.target.value)}
-                        className="w-full p-1 border"
-                      />
-                    ) : (
-                      job.to_allot
-                    )}
+                    {job.to_allot}
+                  </TableCell>
+                  <TableCell className="py-2 px-4 border-b">
+                    {job.unit}
                   </TableCell>
                   <TableCell className="py-2 px-4 border-b">
                     {toEdit ? (
                       <input
-                        type="text"
-                        value={job.unit}
-                        onChange={(e) => handleInputChange(index, 'unit', e.target.value)}
+                      id={`job-row-${index}-${level}-Adjustment-Finished`}
+                        type="number"
+                        value={job.finished !== undefined ? job.finished : 0}
+                        oldValue = {job.finished !== undefined ? job.finished : 0}
+                        onChange={(e) => handleInputChange(index, 'finished', e.target.value, 'Adjustment')}
                         className="w-full p-1 border"
                       />
                     ) : (
-                      job.unit
+                      job.finished !== undefined ? job.finished : 0
                     )}
                   </TableCell>
-                  <TableCell className="py-2 px-4 border-b">0</TableCell>
+                  <TableCell className="py-2 px-4 border-b">
+                  {toEdit ? (
+                      <input
+                      id={`job-row-${index}-${level}-Adjustment-Reject`}
+                        type="number"
+                        value={job.to_reject !== undefined ? job.to_reject : 0}
+                        oldValue = {job.to_reject !== undefined ? job.to_reject : 0}
+                        onChange={(e) => handleInputChange(index, 'to_reject', e.target.value , 'Adjustment')}
+                        className="w-full p-1 border"
+                      />
+                    ) : (
+                      job.to_reject !== undefined ? job.to_reject : 0
+                    )}
+                  </TableCell>
+                  <TableCell className="py-2 px-4 border-b">
+                  {toEdit ? (
+                      <input
+                      id={`job-row-${index}-${level}-Adjustment-Wip`}
+                        type="number"
+                        value={job.to_wip !== undefined ? job.to_wip : 0}
+                        oldValue = {job.to_wip !== undefined ? job.to_wip : 0}
+                        onChange={(e) => handleInputChange(index, 'to_wip', e.target.value , 'Adjustment')}
+                        className="w-full p-1 border"
+                      />
+                    ) : (
+                      job.to_wip !== undefined ? job.to_wip : 0
+                    )}
+                  </TableCell>
                 </TableRow>
-                {job.childinfo && renderChildWorkstations(job.childinfo, index,job.item_id,job.unit)}
+                {job.childinfo && renderChildWorkstations(job.childinfo, index, job.item_id, job.unit, level+1,index)}
               </React.Fragment>
             )}
           </React.Fragment>
@@ -218,21 +352,11 @@ ExpandableProductTable.propTypes = {
     allocated: PropTypes.number.isRequired,
     unit: PropTypes.string.isRequired,
     to_allot: PropTypes.number.isRequired,
-    childs: PropTypes.objectOf(PropTypes.shape({
-      workstation: PropTypes.shape({
-        name: PropTypes.string.isRequired
-      }).isRequired,
-      allocated: PropTypes.number,
-      unit: PropTypes.string,
-      to_allot: PropTypes.number,
-      childs: PropTypes.object,
-    }))
+    finished: PropTypes.number, // Changed to non-required
+    item_id: PropTypes.number.isRequired,
+    childinfo: PropTypes.object // Assuming childinfo is an object
   })).isRequired,
-  toEdit: PropTypes.bool,
-};
-
-ExpandableProductTable.defaultProps = {
-  toEdit: false,
+  toEdit: PropTypes.bool.isRequired,
 };
 
 export default ExpandableProductTable;

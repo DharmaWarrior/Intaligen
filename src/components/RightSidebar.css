@@ -1,7 +1,5 @@
 .Rightsidebar {
     position: fixed;
-    top: 81px;
-    overflow-y: auto;
     right: 0;
     width: 0;
     height: 100%;

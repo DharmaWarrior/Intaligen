@@ -22,6 +22,15 @@ const AddForm = ({ open, handleClose, handleFormSubmit, fetchData, formFields, t
     }));
   };
 
+  const onSelect = (data) => {
+    console.log(data)
+    setFormData((prevData) => ({
+      ...prevData,
+      'customer_id': data.id
+    }));
+  }
+
+
   const onSubmit = async (event) => {
     event.preventDefault();
     await handleFormSubmit(formData);
@@ -52,16 +61,21 @@ const AddForm = ({ open, handleClose, handleFormSubmit, fetchData, formFields, t
                   />
                   <label className="text-gray-700">{field.label}</label>
                 </div>
+              ) : field.type === 'search' ? (
+                <Search label='Customer Name' onsearch='Customer' onSelect={onSelect}/>
               ) : (
-                <input
-                  className="input-field p-2 border border-gray-300 rounded"
-                  type={field.type}
-                  name={field.name}
-                  placeholder={field.label}
-                  value={formData[field.name]}
-                  onChange={handleChange}
-                  required={field.required}
-                />
+                <div className="search-container">
+                  <label className="text-gray-700">{field.label}</label>
+                  <input
+                    className="input-field p-2 border border-gray-300 rounded"
+                    type={field.type}
+                    name={field.name}
+                    placeholder={field.label}
+                    value={formData[field.name]}
+                    onChange={handleChange}
+                    required={field.required}
+                  />
+              </div>
               )}
             </div>
           ))}

@@ -55,11 +55,13 @@
   flex-direction: column;
   width: 100%;
   gap: 8px;
+  color: #000000;
+  position: relative;
 }
 
 .search-label {
-  color: #ffc107; /* Change to desired color */
-  margin-bottom: 8px; /* Add space between label and input */
+  color: #191813; /* Change to desired color */
+  margin-bottom: 2px; /* Add space between label and input */
 }
 
 .search-input {
@@ -67,15 +69,20 @@
   padding: 8px;
   border-radius: 4px;
   width: 100%;
-  background-color: aliceblue;
+  background-color: f2f1f4;
+  color: #000000;
 }
 
 .search-results {
   border: 1px solid #d1d5db;
   border-radius: 4px;
-  margin-top: 8px;
+  margin-top: 60px;
   max-height: 12rem;
   overflow-y: auto;
+  position: absolute; /* Make the results container absolute */
+  width: 100%; /* Ensure it takes the full width of the container */
+  background-color: #f2f1f4; /* Set background color to match the input */
+  z-index: 10;
 }
 
 .search-result-item {
@@ -83,15 +90,16 @@
   cursor: pointer;
 }
 
-.search-result-item:hover {
-  background-color: #f3f4f6;
+.search-result-item:hover,
+.search-result-item.highlighted { /* Highlighted class for keyboard navigation */
+  background-color: #386acc;
 }
 
 .job-actions {
   display: flex;
   align-items: center;
   gap: 20px;
-  color: #fff;
+  color: #000000;
 }
 
 /* Additional styles to adjust Button spacing */
@@ -120,30 +128,32 @@
 
 .tooltip {
   visibility: hidden;
-  width: 260px;
-  background-color: rgba(0, 0, 0, 0.8);
-  color: white;
+  width: 550px; /* Adjusted width to fit content */
+  background-color: #cbd6e6;
+  color: rgb(0, 0, 0);
   text-align: left;
   border-radius: 6px;
-  padding: 5px;
+  padding: 10px;
   position: absolute;
   z-index: 1;
   bottom: 125%;
-  left: 50%;
-  margin-left: -100px;
+  left: 100%;
+  transform: translateX(-50%);
   opacity: 0;
-  margin-bottom: -35px;
   transition: opacity 0.3s;
 }
 
 .custom-node:hover .tooltip {
   visibility: visible;
-  opacity: 1;
+  opacity: 0.95;
 }
 
 .tooltip-content {
-  color: white;
+  color: rgb(0, 0, 0);
   font-size: 12px;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
 }
 
 .tooltip-content h3 {
@@ -157,6 +167,7 @@
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 10px;
+  
 }
 
 .tooltip-content th,
@@ -164,51 +175,23 @@
   border: 1px solid #ddd;
   padding: 4px;
   text-align: center;
+  
 }
 
 .tooltip-content th {
-  background-color: #444;
+  background-color: #f2f1f4;
 }
 
 .tooltip-content td {
-  background-color: #222;
+  background-color: #f2f1f4;
 }
 
 .tooltip-content input {
-  background-color: #333;
-  color: #fff;
+  background-color: #f2f1f4;
+  color: #000000;
   border: none;
   text-align: center;
   width: 50px; /* Adjust the width as needed */
-}
-
-.connected-rectangle {
-  visibility: hidden;
-  width: 150px;
-  background-color: rgba(0, 0, 0, 0.8);
-  color: white;
-  text-align: left;
-  border-radius: 6px;
-  padding: 10px;
-  position: absolute;
-  z-index: 1;
-  top: calc(100% + 10px);
-  left: 50%;
-  transform: translateX(-50%);
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-
-.custom-node:hover .connected-rectangle {
-  visibility: visible;
-  opacity: 1;
-}
-
-.connected-rectangle h4 {
-  margin-top: 0;
-  margin-bottom: 5px;
-  font-size: 14px;
-  text-align: center;
 }
 
 .adjustment-info {
