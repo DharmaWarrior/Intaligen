@@ -10,7 +10,7 @@ import { AuthProvider, useAuth } from './ContextProvider/Authcontext';
 
 export default function Login() {
 
-    const { logindata, setLoginData } = useContext(LoginContext);
+    // const { logindata, setLoginData } = useContext(LoginContext);
     const {user , login, logout } = useAuth(); 
     const [passShow, setPassShow] = useState(false);
     const [inpval, setInpval] = useState({

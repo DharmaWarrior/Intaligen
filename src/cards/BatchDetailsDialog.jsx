@@ -15,7 +15,7 @@ const BatchDetailsDialog = ({ isOpen, onClose, id, batch, mail, batchdetails }) 
     // Initialize dispatch quantities based on batchdetails
     const initialQuantities = {};
     batchdetails.forEach(item => {
-      initialQuantities[item.order_item_id] = item.dispatch_qty;
+      initialQuantities[item.id] = item.dispatch_qty;
     });
 
     return initialQuantities;
@@ -27,7 +27,7 @@ const BatchDetailsDialog = ({ isOpen, onClose, id, batch, mail, batchdetails }) 
   useEffect(() => {
     const updatedQuantities = {};
     batchdetails.forEach(item => {
-      updatedQuantities[item.order_item_id] = item.dispatch_qty;
+      updatedQuantities[item.id] = item.dispatch_qty;
     });
     setDispatchQuantities(updatedQuantities);
   }, [batchdetails]);
@@ -50,6 +50,13 @@ const BatchDetailsDialog = ({ isOpen, onClose, id, batch, mail, batchdetails }) 
   const handleSave = async () => {
     try {
       const token = localStorage.getItem('usersdatatoken');
+
+      // Extract units based on batchdetails
+      const dispatchUnits = batchdetails.map(item => {
+        const orderItem = mail.orders_data[id].items.find(items => items.order_item_id === item.order_item_id);
+        return orderItem ? orderItem.unit : '';
+      });
+
       const response = await fetch('/api/dispatchchallan', {
         method: 'POST',
         headers: {
@@ -65,10 +72,11 @@ const BatchDetailsDialog = ({ isOpen, onClose, id, batch, mail, batchdetails }) 
           actual_desp_date: dispatchDate,
           'desp_qtys[]': Object.values(dispatchQuantities),
           'order_item_ids[]': Object.keys(dispatchQuantities),
+          'desp_units[]': dispatchUnits,
         }),
       });
 
-      if (response.ok) {
+      if (response.status === 302) {
         console.log('Dispatch items saved successfully');
         onClose();
       } else {
@@ -82,6 +90,13 @@ const BatchDetailsDialog = ({ isOpen, onClose, id, batch, mail, batchdetails }) 
   const handleMoveBatch = async () => {
     try {
       const token = localStorage.getItem('usersdatatoken');
+
+      // Extract units based on batchdetails
+      const dispatchUnits = batchdetails.map(item => {
+        const orderItem = mail.orders_data[id].items.find(items => items.order_item_id === item.order_item_id);
+        return orderItem ? orderItem.unit : '';
+      });
+
       const response = await fetch('/api/dispatchchallan', {
         method: 'POST',
         headers: {
@@ -97,17 +112,18 @@ const BatchDetailsDialog = ({ isOpen, onClose, id, batch, mail, batchdetails }) 
           actual_desp_date: dispatchDate,
           'desp_qtys[]': Object.values(dispatchQuantities),
           'order_item_ids[]': Object.keys(dispatchQuantities),
+          'desp_units[]': dispatchUnits,
         }),
       });
 
       if (response.ok) {
-        console.log('Dispatch items moved successfully');
+        console.log('Dispatch items saved successfully');
         onClose();
       } else {
-        console.error('Failed to move dispatch items');
+        console.error('Failed to save dispatch items');
       }
     } catch (error) {
-      console.error('Error moving dispatch items:', error);
+      console.error('Error saving dispatch items:', error);
     }
   };
 
@@ -155,8 +171,8 @@ const BatchDetailsDialog = ({ isOpen, onClose, id, batch, mail, batchdetails }) 
                     <input
                       type="number"
                       className="input-field p-2 border border-gray-300 rounded"
-                      value={dispatchQuantities[item.order_item_id] !== undefined ? dispatchQuantities[item.order_item_id] : ''} // default to empty string if undefined
-                      onChange={(e) => handleQuantityChange(item.order_item_id, e.target.value)}
+                      value={dispatchQuantities[item.id] !== undefined ? dispatchQuantities[item.id] : ''} // default to empty string if undefined
+                      onChange={(e) => handleQuantityChange(item.id, e.target.value)}
                     />
                   </TableCell>
                 </TableRow>

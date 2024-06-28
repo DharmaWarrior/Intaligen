@@ -11,6 +11,9 @@ import {
   } from './../../components/ui/resizable';
 import { Separator } from './../../components/ui/separator';
 import Nav from './Nav'
+import {
+    LogOut,
+} from 'lucide-react';
 import { RxDashboard } from 'react-icons/rx';
 import { MdInsights } from 'react-icons/md';
 import { RiCouponLine } from 'react-icons/ri';
@@ -19,6 +22,7 @@ import { AiOutlineMessage } from 'react-icons/ai';
 import { BsFolder, BsWallet2 } from 'react-icons/bs';
 import { Button } from './../../components/ui/button';
 import { useAuth } from './ContextProvider/Authcontext';
+import { toast } from 'react-toastify';
 
 export default function Sidebar(
     defaultLayout = [265, 440, 655],
@@ -29,6 +33,30 @@ export default function Sidebar(
     const {user , login, logout } = useAuth(); 
 
     const history = useNavigate();
+
+    const logoutuser = async () => {
+        try {
+            let token = localStorage.getItem("usersdatatoken");
+            const response = await fetch('/api/logout', {
+                method: 'GET',
+                headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token,
+                },
+            });
+        
+            if (response.ok) {
+                console.log('Logout was successful!');
+                logout();
+                history("/");
+            } else {
+                console.log('Logout was unsuccessful!');
+            }
+        } catch (error) {
+            console.error('Error fetching order info:', error);
+            alert('Error fetching order info');
+        }
+    };
 
     {
         return (
@@ -51,7 +79,7 @@ export default function Sidebar(
                     " h-[120%] overflow-y-auto font-sans top-0 left-0"
                 )}
             >
-            <div className='text-2xl text-black p-3'>Raqgen Solutions Pvt. Ltd.</div>
+            <div className='text-2xl text-black pb-3'>Raqgen Solutions Pvt. Ltd.</div>
                 <Separator className='mb-3'/> 
                 <Nav
                     isCollapsed={isCollapsed}
@@ -121,10 +149,15 @@ export default function Sidebar(
                     },
                     ]}
                 />
-                <Button className='mt-4 ml-3' onClick={() => { 
-                    logout();
-                    history("/");
-                    }}> Logout</Button>
+                {!isCollapsed ? (
+                    <Button className='mt-4 ml-3' onClick={logoutuser}> Logout</Button>
+                ) : (
+                    <Button className='my-1 ml-3' size="icon" onClick={logoutuser}> 
+                        <LogOut className="h-4 w-4"/>
+                    </Button>
+                )
+                    }
+                
                 
             </ResizablePanel>
         );

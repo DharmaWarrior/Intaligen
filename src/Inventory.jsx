@@ -3,11 +3,10 @@ import {Tabs, TabsContent, TabsList, TabsTrigger} from './../components/ui/tabs'
 import {Button} from './../components/ui/button'
 import {data4 , data5, data6} from './data/data';
 import { DataTable } from './components/DataTable';
-import { ArrowUpDown, MoreHorizontal } from 'lucide-react';
+import { ArrowUpDown, MoreHorizontal,FileSpreadsheet, FileText , CloudUpload, FileUp, FilePlus} from 'lucide-react';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from './../components/ui/dropdown-menu';
 import { Checkbox } from './../components/ui/checkbox';
 import { DetailsDialog } from './cards/DetailsDialog';
-import { Item } from '@radix-ui/react-select';
 
 
 
@@ -18,8 +17,6 @@ const Inventory = () => {
   
   const [lookupData, setLookupData] = useState([]);
   const [recentData, setRecentData] = useState([]);
-  const [openDialog, setOpenDialog] = useState(false);
-  const [item_id, SetItemId] = useState(0);
   
 
 
@@ -92,10 +89,6 @@ const fetchRecent = async () => {
     fetchRecent();
   }, []);
 
-  const handleDetailsDialog = (item_id) => {
-    SetItemId(item_id)
-    setOpenDialog(true)
-  }
 
   const columns1 = [
     {
@@ -200,16 +193,15 @@ const fetchRecent = async () => {
         
   
         return (
-        //   <DetailsDialog 
-        //     item_id={item.item_id} // Pass the item_id here
-        //     Heading={item["Item Name"]}
-        //     value={{
-        //       active: item.total_stock,
-        //       wip: item.total_wip_stock,
-        //       reject: item.total_reject_stock,
-        //     }}
-        // />
-          <Button onClick={handleDetailsDialog(item.item_id)}> View Details </Button>
+          <DetailsDialog 
+            item_id={item.item_id} // Pass the item_id here
+            Heading={item["Item Name"]}
+            value={{
+              active: item.total_stock,
+              wip: item.total_wip_stock,
+              reject: item.total_reject_stock,
+            }}
+        />
         );
       },
     },
@@ -418,14 +410,14 @@ const fetchRecent = async () => {
   ];
   
   const buttons1 = React.useMemo(() => [
-    { "Header": "ADD ADJUSTMENTS"},
-    { "Header": "EXPORT STOCKLIST"},
+    { "Header": "ADD ADJUSTMENTS", "icon" : FilePlus},
+    { "Header": "EXPORT STOCKLIST", "icon" : FileUp},
   ], [editModes]);
 
   const buttons2 = React.useMemo(() => [
-    { "Header": "STOCK LIST EXCEL"},
-    { "Header": "STOCK LIST PDF"},
-    { "Header": "UPLOAD RECONCILIATION LIST"},
+    { "Header": "STOCK LIST EXCEL" , "icon" : FileSpreadsheet},
+    { "Header": "STOCK LIST PDF" , "icon" : FileText}, 
+    { "Header": "UPLOAD RECONCILIATION LIST" , "icon" : CloudUpload},
   ], [editModes]);
 
   return (
@@ -466,12 +458,6 @@ const fetchRecent = async () => {
           </TabsContent>
         </Tabs>
       </div>
-      <DetailsDialog Heading={"Hey"}
-            value={{
-              active: 4,
-              wip:5 ,
-              reject: 6,
-            }} openDialog={openDialog} setOpenDialog={setOpenDialog} item_id={item_id}/>
     </div>
   )
 }

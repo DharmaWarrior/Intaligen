@@ -11,9 +11,11 @@ const EditOrderDialog = ({ isOpen, handleClose, orderData, handleSave }) => {
   const [note, setNote] = useState(orderData ? orderData.DATA.order_info.note : '');
 
   useEffect(() => {
-    setSelectedItems([...orderData.order_data_df]);
-    setDespDate(orderData.DATA.order_info.despdate);
-    setNote(orderData.DATA.order_info.note);
+    if (orderData) {
+      setSelectedItems([...orderData.order_data_df]);
+      setDespDate(orderData.DATA.order_info.despdate);
+      setNote(orderData.DATA.order_info.note);
+    }
   }, [orderData]);
 
   const handleDeleteRow = (index) => {
@@ -23,8 +25,6 @@ const EditOrderDialog = ({ isOpen, handleClose, orderData, handleSave }) => {
   };
 
   const handleSaveChanges = () => {
-    // Implement logic to save changes
-    // Prepare data to be saved, including quantity changes, despdate, and note
     const updatedOrderData = {
       order_data_df: selectedItems,
       order_info: {
@@ -32,24 +32,22 @@ const EditOrderDialog = ({ isOpen, handleClose, orderData, handleSave }) => {
         note: note,
       },
     };
-    handleSave(updatedOrderData); // Example: Pass updatedOrderData to handleSave
-    console.log(updatedOrderData)
+    handleSave(updatedOrderData);
   };
 
   const handleQuantityChange = (index, value) => {
     const updatedItems = [...selectedItems];
-    updatedItems[index].order_qty = parseInt(value); // Assuming input value is always a number
+    updatedItems[index].order_qty = parseInt(value);
     setSelectedItems(updatedItems);
   };
 
   const handleAddItemToOrder = (selectedItem) => {
     const newItem = {
       item_name: selectedItem.name,
-      order_qty: 1, // You can set default quantity as needed
+      order_qty: 1,
       item_unit: selectedItem.unit,
       id: selectedItem.id,
     };
-    
     setSelectedItems([...selectedItems, newItem]);
   };
 

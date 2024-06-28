@@ -16,42 +16,6 @@
                 "active_date": "2023-11-23",
                 "deliverybatches": [
                     {
-                        "id": 29,
-                        "despdate": "2024-06-04",
-                        "status": "STORE",
-                        "invoice_id": 197,
-                        "order_id": 21,
-                        "batch_name": "sarth",
-                        "actual_desp_date": "2024-06-06",
-                        "data_id": 1,
-                        "orderitemdispatch": [
-                            {
-                                "id": 63,
-                                "dispatch_qty": 0.0,
-                                "inventory_ledger_id": null,
-                                "delivery_batch_id": 29,
-                                "order_item_id": 19,
-                                "data_id": 1
-                            },
-                            {
-                                "id": 64,
-                                "dispatch_qty": 0.0,
-                                "inventory_ledger_id": null,
-                                "delivery_batch_id": 29,
-                                "order_item_id": 20,
-                                "data_id": 1
-                            },
-                            {
-                                "id": 65,
-                                "dispatch_qty": 0.0,
-                                "inventory_ledger_id": null,
-                                "delivery_batch_id": 29,
-                                "order_item_id": 47,
-                                "data_id": 1
-                            }
-                        ]
-                    },
-                    {
                         "id": 17,
                         "despdate": "2023-11-30",
                         "status": "DISPATCHED",
@@ -82,6 +46,42 @@
                                 "dispatch_qty": 20.0,
                                 "inventory_ledger_id": 585,
                                 "delivery_batch_id": 17,
+                                "order_item_id": 47,
+                                "data_id": 1
+                            }
+                        ]
+                    },
+                    {
+                        "id": 29,
+                        "despdate": "2024-06-04",
+                        "status": "STORE",
+                        "invoice_id": 197,
+                        "order_id": 21,
+                        "batch_name": "sarth",
+                        "actual_desp_date": "2024-06-06",
+                        "data_id": 1,
+                        "orderitemdispatch": [
+                            {
+                                "id": 63,
+                                "dispatch_qty": 5.0,
+                                "inventory_ledger_id": null,
+                                "delivery_batch_id": 29,
+                                "order_item_id": 19,
+                                "data_id": 1
+                            },
+                            {
+                                "id": 64,
+                                "dispatch_qty": 5.0,
+                                "inventory_ledger_id": null,
+                                "delivery_batch_id": 29,
+                                "order_item_id": 20,
+                                "data_id": 1
+                            },
+                            {
+                                "id": 65,
+                                "dispatch_qty": 5.0,
+                                "inventory_ledger_id": null,
+                                "delivery_batch_id": 29,
                                 "order_item_id": 47,
                                 "data_id": 1
                             }
@@ -306,42 +306,6 @@
             "active_date": "2023-11-23",
             "deliverybatches": [
                 {
-                    "id": 29,
-                    "despdate": "2024-06-04",
-                    "status": "STORE",
-                    "invoice_id": 197,
-                    "order_id": 21,
-                    "batch_name": "sarth",
-                    "actual_desp_date": "2024-06-06",
-                    "data_id": 1,
-                    "orderitemdispatch": [
-                        {
-                            "id": 63,
-                            "dispatch_qty": 0.0,
-                            "inventory_ledger_id": null,
-                            "delivery_batch_id": 29,
-                            "order_item_id": 19,
-                            "data_id": 1
-                        },
-                        {
-                            "id": 64,
-                            "dispatch_qty": 0.0,
-                            "inventory_ledger_id": null,
-                            "delivery_batch_id": 29,
-                            "order_item_id": 20,
-                            "data_id": 1
-                        },
-                        {
-                            "id": 65,
-                            "dispatch_qty": 0.0,
-                            "inventory_ledger_id": null,
-                            "delivery_batch_id": 29,
-                            "order_item_id": 47,
-                            "data_id": 1
-                        }
-                    ]
-                },
-                {
                     "id": 17,
                     "despdate": "2023-11-30",
                     "status": "DISPATCHED",
@@ -372,6 +336,42 @@
                             "dispatch_qty": 20.0,
                             "inventory_ledger_id": 585,
                             "delivery_batch_id": 17,
+                            "order_item_id": 47,
+                            "data_id": 1
+                        }
+                    ]
+                },
+                {
+                    "id": 29,
+                    "despdate": "2024-06-04",
+                    "status": "STORE",
+                    "invoice_id": 197,
+                    "order_id": 21,
+                    "batch_name": "sarth",
+                    "actual_desp_date": "2024-06-06",
+                    "data_id": 1,
+                    "orderitemdispatch": [
+                        {
+                            "id": 63,
+                            "dispatch_qty": 5.0,
+                            "inventory_ledger_id": null,
+                            "delivery_batch_id": 29,
+                            "order_item_id": 19,
+                            "data_id": 1
+                        },
+                        {
+                            "id": 64,
+                            "dispatch_qty": 5.0,
+                            "inventory_ledger_id": null,
+                            "delivery_batch_id": 29,
+                            "order_item_id": 20,
+                            "data_id": 1
+                        },
+                        {
+                            "id": 65,
+                            "dispatch_qty": 5.0,
+                            "inventory_ledger_id": null,
+                            "delivery_batch_id": 29,
                             "order_item_id": 47,
                             "data_id": 1
                         }
@@ -498,7 +498,7 @@
             }
         ]
     },
-    "TODAY": "2024-06-25",
+    "TODAY": "2024-06-28",
     "INVENTORY_DATA": {
         "2": {
             "Item Name": "FG Item 1 bs",

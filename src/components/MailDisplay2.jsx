@@ -9,7 +9,7 @@ import {
 import { Button } from "./../../components/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./../../components/ui/tooltip";
 import { DataTable } from './DataTable';
-import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";
+import { ArrowUpDown, FileUp, MoreHorizontal, Search,FolderPlus } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./../../components/ui/tabs";
 
 
@@ -363,10 +363,11 @@ export function MailDisplay2({ ordersData, tabData, stockData }) {
             <Tooltip>
                 <TooltipTrigger asChild>
                     <Button variant="default"className='ml-auto' >
-                        ADD SELECTION
+                      <FolderPlus className="h-4 w-4" />
+                      <span className="sr-only">ADD SELECTION</span>
                     </Button>
                 </TooltipTrigger>
-                <TooltipContent>Add New Chart</TooltipContent>
+                <TooltipContent>ADD SELECTION</TooltipContent>
             </Tooltip>
         </div>
         <Tabs defaultValue="mk_to_order" >
@@ -422,12 +423,26 @@ export function MailDisplay2({ ordersData, tabData, stockData }) {
                                 </button>
                             </div>
                             {(activeTab === 'finished' || activeTab === 'semi-finished') && (
-                                <Button variant="ghost">
-                                    EXPORT
-                                </Button>
+                                <Tooltip>
+                                  <TooltipTrigger asChild>
+                                    <Button variant="ghost" size="icon" >
+                                      <FileUp className="h-5 w-5" />
+                                      <span className="sr-only">EXPORT</span>
+                                    </Button>
+                                  </TooltipTrigger>
+                                  <TooltipContent>EXPORT</TooltipContent>
+                                </Tooltip>
                             )}
                             {activeTab === 'by-category' && (
-                                <Button variant="ghost">Search By Category</Button>
+                                <Tooltip>
+                                  <TooltipTrigger asChild>
+                                    <Button variant="ghost" size="icon" >
+                                      <Search className="h-5 w-5" />
+                                      <span className="sr-only">Search By Category</span>
+                                    </Button>
+                                  </TooltipTrigger>
+                                  <TooltipContent>Search By Category</TooltipContent>
+                                </Tooltip>
                             )}
                         </div>
                         {activeTab === 'finished' && (

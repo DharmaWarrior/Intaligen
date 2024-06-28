@@ -7,7 +7,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { ScrollArea } from "./../../components/ui/scroll-area";
 import { Button } from "./../../components/ui/button";
 import { Checkbox } from "./../../components/ui/checkbox";
@@ -30,6 +30,7 @@ import {
   TableRow,
 } from "./../../components/ui/table";
 import Filter from "./Filter";
+import { Tooltip, TooltipTrigger, TooltipContent  } from "./../../components/ui/tooltip";
 
 
 export function DataTable({data , columns, addbutton, Savebutton}) {
@@ -59,7 +60,8 @@ export function DataTable({data , columns, addbutton, Savebutton}) {
 
   return (
     <div className="w-full">
-      <div className="flex items-center py-4 gap-3">
+      <div className="flex items-center py-4 gap-5">
+        <Filter/>
         <Input
           placeholder="Filter names..."
           value={table.getColumn("Item Name")?.getFilterValue() ?? ""}
@@ -68,9 +70,17 @@ export function DataTable({data , columns, addbutton, Savebutton}) {
           }
           className="max-w-sm"
         />
-        <Filter/>
+        
         {addbutton ? (addbutton.map((button) => (
-        <Button key={button.Header} >{button.Header}</Button>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button variant="ghost" size="icon">
+                <button.icon className="h-5 w-5" />
+                <span className="sr-only">{button.Header}</span>
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>{button.Header}</TooltipContent>
+          </Tooltip>
         ))) : (null)}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
