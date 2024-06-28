@@ -6,6 +6,7 @@ import CustomNode from './CustomNode';
 import CustomAdjustmentNode from './CustomAdjustmentNode';
 import RightSidebar from './components/RightSidebar';
 
+
 function Flow() {
   const containerRef = useRef(null);
   const [nodes, setNodes] = useState([]);
@@ -13,10 +14,11 @@ function Flow() {
   const [openAdjustmentNodes, setOpenAdjustmentNodes] = useState([]);
   const [selectedNode, setSelectedNode] = useState(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [noded, setNoded] = useState({});
 
   const nodeTypes = useMemo(() => ({
     adjustmentNode: (props) => <CustomAdjustmentNode fetchWorkstations={fetchWorkstations}   {...props} />,
-    customNode: (props) => <CustomNode fetchWorkstations={fetchWorkstations} setSelectedNode={setSelectedNode} selectedNode={selectedNode} {...props} />
+    customNode: (props) => <CustomNode fetchWorkstations={fetchWorkstations} noded={noded} setSelectedNode={setSelectedNode} setIsSidebarOpen={setIsSidebarOpen} {...props} />
   }), []);
   
   
@@ -211,12 +213,14 @@ function Flow() {
     fetchWorkstations();
   }, []);
 
-  
+ 
 
   
 
   const handleNodeClick = (event, node) => {
 
+    setNoded(node);
+    console.log("Noded hai",noded);
     if (node.id === '1') {
       setSelectedNode(node);
       setIsSidebarOpen(true);

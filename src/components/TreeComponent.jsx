@@ -1,7 +1,7 @@
 // TreeComponent.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { data } from './../data/data'; // Adjust the import path if needed
+import { data } from '../data/data'; // Adjust the import path if needed
 import './TreeComponent.css';
 import  {ScrollArea} from './../../components/ui/scroll-area'
 import { Button } from './../../components/ui/button';

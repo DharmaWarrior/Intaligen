@@ -31,51 +31,55 @@ const ExpandableProductTable = ({ jobData, toEdit }) => {
     }));
   };
 
-  // const handleInputChange = (index, field, value, type, i,calltype) => {
-  //   if(type === 'Parent' ) {
+  const handleInputChange = (index, field, value, type, i) => {
+    if(type === 'Parent' ) {
 
-  //     currentElementId = `job-row-${index}-${i}-Parent-${field}`; //8
-  //     old_value =document.getElementById(currentElementId).getAttribute('oldValue'); //5
+      var currentElementId = `job-row-${index}-${i}-Parent-${field}`; //8
+      console.log(currentElementId)
+      var old_value =document.getElementById(currentElementId).getAttribute('oldValue'); //5
       
-  //     difference = value - old_value; //3
+      var difference = value - old_value; //3
 
-  //       var adjustmentKey = `job-row-${index}-${i}-Adjustment-${field}`;
-  //       childSum = oldValue - (document.getElementById(adjustmentKey).value - difference);//4
-  //       document.getElementById(currentElementId).setAttribute('oldValue') = value;
+      var adjustmentKey = `job-row-${index}-${i}-Adjustment-${field}`;
+      console.log(adjustmentKey)
+      console.log(document.getElementById(adjustmentKey))
+      // var childSum = old_value - (document.getElementById(adjustmentKey).value - difference);//4
+      
 
-  //       if(value !== childSum + document.getElementById(adjustmentKey).value){
-  //         document.getElementById(adjustmentKey).value += difference;
-  //       }
+      if(document.getElementById(adjustmentKey).value === document.getElementById(adjustmentKey).getAttribute('oldValue')){
+        document.getElementById(adjustmentKey).value += difference;
+      }
+      document.getElementById(currentElementId).setAttribute('oldValue',value);
+      var old_value2 =document.getElementById(`job-row-${index}-${i+1}-Parent-${field}`).getAttribute('oldValue');
+      document.getElementById(`job-row-${index}-${i+1}-Parent-${field}`).value = old_value2 + difference;
         
-  //       old_value2 =document.getElementById(`job-row-${index}-${i+1}-Parent-${field}`).getAttribute('oldValue');
-  //       document.getElementById(`job-row-${index}-${i+1}-Parent-${field}`).value = old_value2 + difference;
+
+      
+
+    } else {
+      
+      var currentElementId = `job-row-${index}-${i}-Adjustment-${field}`;
+      var old_value =document.getElementById(currentElementId).getAttribute('oldValue');
+      
+      var difference = value - old_value;
+
+      var adjustmentKey = `job-row-${index}-${i}-Parent-${field}`;
+      if(document.getElementById(adjustmentKey).value === document.getElementById(adjustmentKey).getAttribute('oldValue')){
+        document.getElementById(adjustmentKey).value += difference;
+      }
+      
+      document.getElementById(currentElementId).setAttribute('oldValue', value);
+        // document.getElementById(adjustmentKey).setAttribute('oldValue') += difference;
         
+        // old_value2 = document.getElementById(`job-row-${index}-${i+1}-Parent-${field}`).getAttribute('oldValue');
+        // document.getElementById(`job-row-${index}-${i+1}-Parent-${field}`).value = old_value2 + difference;
 
       
-
-  //   } else {
-      
-  //     currentElementId = `job-row-${index}-${i}-Adjustment-${field}`;
-  //     old_value =document.getElementById(currentElementId).getAttribute('oldValue');
-  //     document.getElementById(currentElementId).setAttribute('oldValue') = value;
-  //     difference = value - old_value;
-
-  //       var adjustmentKey = `job-row-${index}-${i}-Parent-${field}`;
-  //       if(document.getElementById(adjustmentKey).value === value){
-  //         return;
-  //       }
-  //       document.getElementById(adjustmentKey).value += difference;
-  //       // document.getElementById(adjustmentKey).setAttribute('oldValue') += difference;
-        
-  //       // old_value2 = document.getElementById(`job-row-${index}-${i+1}-Parent-${field}`).getAttribute('oldValue');
-  //       // document.getElementById(`job-row-${index}-${i+1}-Parent-${field}`).value = old_value2 + difference;
-
-      
-  //   }
-  //   const updatedData = [...editedData];
-  //   updatedData[index][field] = value;
-  //   setEditedData(updatedData);
-  // };
+    }
+    const updatedData = [...editedData];
+    updatedData[index][field] = value;
+    setEditedData(updatedData);
+  };
 
   const getQtyAllotForItemId = (jobs, itemId) => {
     const job = jobs.find(job => job.item_id === parseInt(itemId, 10));
@@ -118,11 +122,11 @@ const ExpandableProductTable = ({ jobData, toEdit }) => {
                   <TableCell className="py-2 px-4 border-b">
                       {toEdit ? (
                       <input
-                      id={`job-row-${index}-${level}-Parent-Finished`}
+                      id={`job-row-${index}-${level}-Parent-finished`}
                           type="number"
                           value={child.finished ? child.finished : 0}
                           oldValue = {child.finished ? child.finished : 0}
-                          onChange={(e) => handleInputChange(parentIndex, `children[${key}].finished`, e.target.value, 'Parent')}
+                          onChange={(e) => handleInputChange(parentIndex, `finished`, e.target.value, 'Parent', level)}
                           className="w-full p-1 border"
                       />
                       ) : (
@@ -132,11 +136,11 @@ const ExpandableProductTable = ({ jobData, toEdit }) => {
                   <TableCell className="py-2 px-4 border-b">
                   {toEdit ? (
                       <input
-                      id={`job-row-${index}-${level}-Parent-Reject`}
+                      id={`job-row-${index}-${level}-Parent-reject`}
                           type="number"
                           value={child.reject_totals[item_id] ? child.reject_totals[item_id] : 0}
                           oldValue = {child.reject_totals[item_id] ? child.reject_totals[item_id] : 0}
-                          onChange={(e) => handleInputChange(parentIndex, `children[${key}].reject_totals[${item_id}]`, e.target.value, 'Parent')}
+                          onChange={(e) => handleInputChange(parentIndex, `reject`, e.target.value, 'Parent', level)}
                           className="w-full p-1 border"
                       />
                       ) : (
@@ -145,11 +149,11 @@ const ExpandableProductTable = ({ jobData, toEdit }) => {
                   </TableCell><TableCell className="py-2 px-4 border-b">
                   {toEdit ? (
                       <input
-                      id={`job-row-${index}-${level}-Parent-Wip`}
+                      id={`job-row-${index}-${level}-Parent-wip`}
                           type="number"
                           value={child.wip_totals[item_id] ? child.wip_totals[item_id] : 0}
                           oldValue = {child.wip_totals[item_id] ? child.wip_totals[item_id] : 0}
-                          onChange={(e) => handleInputChange(parentIndex, `children[${key}].wip_totals[${item_id}]`, e.target.value, 'Parent')}
+                          onChange={(e) => handleInputChange(parentIndex, `wip`, e.target.value, 'Parent', level)}
                           className="w-full p-1 border"
                       />
                       ) : (
@@ -173,11 +177,11 @@ const ExpandableProductTable = ({ jobData, toEdit }) => {
                       <TableCell className="py-2 px-4 border-b">
                       {toEdit ? (
                           <input
-                          id={`job-row-${index}-${level}-Adjustment-Wip`}
+                          id={`job-row-${index}-${level}-Adjustment-wip`}
                               type="number"
                               value={getQtyRejectForItemId(child.jobs, item_id)}
                               oldValue = {getQtyRejectForItemId(child.jobs, item_id)}
-                              onChange={(e) => handleInputChange(parentIndex, `children[${key}].wip_totals[${item_id}]`, e.target.value, 'Adjustment')}
+                              onChange={(e) => handleInputChange(parentIndex, `wip`, e.target.value, 'Adjustment', level)}
                               className="w-full p-1 border"
                           />
                         ) : (
@@ -186,11 +190,11 @@ const ExpandableProductTable = ({ jobData, toEdit }) => {
                       </TableCell><TableCell className="py-2 px-4 border-b">
                         {toEdit ? (
                           <input
-                          id={`job-row-${index}-${level}-Adjustment-Wip`}
+                          id={`job-row-${index}-${level}-Adjustment-wip`}
                               type="number"
                               value={getQtyWipForItemId(child.jobs, item_id)}
                               oldValue = {getQtyWipForItemId(child.jobs, item_id)}
-                              onChange={(e) => handleInputChange(parentIndex, `children[${key}].wip_totals[${item_id}]`, e.target.value,'Adjustment')}
+                              onChange={(e) => handleInputChange(parentIndex, `wip`, e.target.value,'Adjustment', level)}
                               className="w-full p-1 border"
                           />
                         ) : (
@@ -241,11 +245,11 @@ const ExpandableProductTable = ({ jobData, toEdit }) => {
               <TableCell className="py-2 px-4 border-b">
                 {toEdit ? (
                   <input
-                    id={`job-row-${index}-${level}-Parent-Finished`}
+                    id={`job-row-${index}-${level}-Parent-finished`}
                     type="number"
                     value={job.finished !== undefined ? job.finished : 0}
                     oldValue = {job.finished !== undefined ? job.finished : 0}
-                    onChange={(e) => handleInputChange(index, 'finished', e.target.value,'Parent')}
+                    onChange={(e) => handleInputChange(index, 'finished', e.target.value,'Parent', level)}
                     className="w-full p-1 border"
                   />
                 ) : (
@@ -255,11 +259,11 @@ const ExpandableProductTable = ({ jobData, toEdit }) => {
               <TableCell className="py-2 px-4 border-b">
               {toEdit ? (
                   <input
-                  id={`job-row-${index}-${level}-Parent-Reject`}
+                  id={`job-row-${index}-${level}-Parent-reject`}
                     type="number"
                     value={job.reject !== undefined ? job.reject : 0}
                     oldValue = {job.reject !== undefined ? job.reject : 0}
-                    onChange={(e) => handleInputChange(index, 'reject', e.target.value,'Parent')}
+                    onChange={(e) => handleInputChange(index, 'reject', e.target.value,'Parent' , level)}
                     className="w-full p-1 border"
                   />
                 ) : (
@@ -269,11 +273,11 @@ const ExpandableProductTable = ({ jobData, toEdit }) => {
               <TableCell className="py-2 px-4 border-b">
               {toEdit ? (
                   <input
-                  id={`job-row-${index}-${level}-Parent-Wip`}
+                  id={`job-row-${index}-${level}-Parent-wip`}
                     type="number"
                     value={job.wip !== undefined ? job.wip : 0}
                     oldValue = {job.wip !== undefined ? job.wip : 0}
-                    onChange={(e) => handleInputChange(index, 'wip', e.target.value ,'Parent')}
+                    onChange={(e) => handleInputChange(index, 'wip', e.target.value ,'Parent' , level)}
                     className="w-full p-1 border"
                   />
                 ) : (
@@ -296,11 +300,11 @@ const ExpandableProductTable = ({ jobData, toEdit }) => {
                   <TableCell className="py-2 px-4 border-b">
                     {toEdit ? (
                       <input
-                      id={`job-row-${index}-${level}-Adjustment-Finished`}
+                      id={`job-row-${index}-${level}-Adjustment-finished`}
                         type="number"
                         value={job.finished !== undefined ? job.finished : 0}
                         oldValue = {job.finished !== undefined ? job.finished : 0}
-                        onChange={(e) => handleInputChange(index, 'finished', e.target.value, 'Adjustment')}
+                        onChange={(e) => handleInputChange(index, 'finished', e.target.value, 'Adjustment', level)}
                         className="w-full p-1 border"
                       />
                     ) : (
@@ -310,11 +314,11 @@ const ExpandableProductTable = ({ jobData, toEdit }) => {
                   <TableCell className="py-2 px-4 border-b">
                   {toEdit ? (
                       <input
-                      id={`job-row-${index}-${level}-Adjustment-Reject`}
+                      id={`job-row-${index}-${level}-Adjustment-reject`}
                         type="number"
                         value={job.to_reject !== undefined ? job.to_reject : 0}
                         oldValue = {job.to_reject !== undefined ? job.to_reject : 0}
-                        onChange={(e) => handleInputChange(index, 'to_reject', e.target.value , 'Adjustment')}
+                        onChange={(e) => handleInputChange(index, 'reject', e.target.value , 'Adjustment',  level)}
                         className="w-full p-1 border"
                       />
                     ) : (
@@ -324,11 +328,11 @@ const ExpandableProductTable = ({ jobData, toEdit }) => {
                   <TableCell className="py-2 px-4 border-b">
                   {toEdit ? (
                       <input
-                      id={`job-row-${index}-${level}-Adjustment-Wip`}
+                      id={`job-row-${index}-${level}-Adjustment-wip`}
                         type="number"
                         value={job.to_wip !== undefined ? job.to_wip : 0}
                         oldValue = {job.to_wip !== undefined ? job.to_wip : 0}
-                        onChange={(e) => handleInputChange(index, 'to_wip', e.target.value , 'Adjustment')}
+                        onChange={(e) => handleInputChange(index, 'wip', e.target.value , 'Adjustment', level)}
                         className="w-full p-1 border"
                       />
                     ) : (

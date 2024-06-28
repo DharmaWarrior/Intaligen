@@ -5,7 +5,7 @@ import './CustomNode.css';
 import { Pencil, Check, X, Trash } from 'lucide-react';
 import Search from './components/Search';
 
-function CustomNode({ data, fetchWorkstations ,setSelectedNode , selectedNode}) {
+function CustomNode({ data, fetchWorkstations ,setSelectedNode , setIsSidebarOpen , noded}) {
   const { label, userValue, gearValue, capacity, totalCapacity, MainTable = [], resourceData = [] } = data;
   const [editableJobData, setEditableJobData] = useState(MainTable);
   const [originalJobData, setOriginalJobData] = useState(MainTable.map(job => ({ ...job })));
@@ -222,6 +222,8 @@ function CustomNode({ data, fetchWorkstations ,setSelectedNode , selectedNode}) 
           setIsEditing([...isEditing, false]);
           setSelectedItem(null);
           fetchWorkstations();
+          console.log('Selected Node:', noded);
+          setIsSidebarOpen(false)
         } else {
           throw new Error('Failed to add job');
         }

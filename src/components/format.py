@@ -63,24 +63,24 @@
                         "orderitemdispatch": [
                             {
                                 "id": 36,
-                                "dispatch_qty": 11.0,
-                                "inventory_ledger_id": null,
+                                "dispatch_qty": 20.0,
+                                "inventory_ledger_id": 583,
                                 "delivery_batch_id": 17,
                                 "order_item_id": 19,
                                 "data_id": 1
                             },
                             {
                                 "id": 37,
-                                "dispatch_qty": 15.0,
-                                "inventory_ledger_id": null,
+                                "dispatch_qty": 20.0,
+                                "inventory_ledger_id": 584,
                                 "delivery_batch_id": 17,
                                 "order_item_id": 20,
                                 "data_id": 1
                             },
                             {
                                 "id": 38,
-                                "dispatch_qty": 0.0,
-                                "inventory_ledger_id": null,
+                                "dispatch_qty": 20.0,
+                                "inventory_ledger_id": 585,
                                 "delivery_batch_id": 17,
                                 "order_item_id": 47,
                                 "data_id": 1
@@ -189,7 +189,7 @@
             },
             "items": [
                 {
-                    "dispatch_qty": 11.0,
+                    "dispatch_qty": 20.0,
                     "item_id": 2,
                     "order_qty": 16.0,
                     "delivery_batch_id": 17,
@@ -198,10 +198,10 @@
                     "id": 2,
                     "item_name": "FG Item 1 bs",
                     "unit": "dozend",
-                    "balance_qty": 5.0
+                    "balance_qty": -4.0
                 },
                 {
-                    "dispatch_qty": 15.0,
+                    "dispatch_qty": 20.0,
                     "item_id": 3,
                     "order_qty": 12.0,
                     "delivery_batch_id": 17,
@@ -210,10 +210,10 @@
                     "id": 3,
                     "item_name": "Sabka Product",
                     "unit": "pcs",
-                    "balance_qty": -3.0
+                    "balance_qty": -8.0
                 },
                 {
-                    "dispatch_qty": 0.0,
+                    "dispatch_qty": 20.0,
                     "item_id": 2,
                     "order_qty": 5.0,
                     "delivery_batch_id": 17,
@@ -222,7 +222,7 @@
                     "id": 2,
                     "item_name": "FG Item 1 bs",
                     "unit": "dozend",
-                    "balance_qty": 5.0
+                    "balance_qty": -15.0
                 }
             ],
             "chart_items": [
@@ -231,7 +231,7 @@
                     "FG Item 1 bs",
                     16.0,
                     "dozens",
-                    11.0,
+                    20.0,
                     2
                 ],
                 [
@@ -239,7 +239,7 @@
                     "Sabka Product",
                     12.0,
                     "pcs",
-                    15.0,
+                    20.0,
                     3
                 ],
                 [
@@ -247,7 +247,7 @@
                     "FG Item 1 bs",
                     5.0,
                     "dozens",
-                    0.0,
+                    20.0,
                     2
                 ]
             ],
@@ -256,7 +256,7 @@
     },
     "order_data_df": [
         {
-            "dispatch_qty": 11.0,
+            "dispatch_qty": 20.0,
             "item_id": 2,
             "order_qty": 16.0,
             "delivery_batch_id": 17,
@@ -265,10 +265,10 @@
             "id": 2,
             "item_name": "FG Item 1 bs",
             "unit": "dozend",
-            "balance_qty": 5.0
+            "balance_qty": -4.0
         },
         {
-            "dispatch_qty": 15.0,
+            "dispatch_qty": 20.0,
             "item_id": 3,
             "order_qty": 12.0,
             "delivery_batch_id": 17,
@@ -277,10 +277,10 @@
             "id": 3,
             "item_name": "Sabka Product",
             "unit": "pcs",
-            "balance_qty": -3.0
+            "balance_qty": -8.0
         },
         {
-            "dispatch_qty": 0.0,
+            "dispatch_qty": 20.0,
             "item_id": 2,
             "order_qty": 5.0,
             "delivery_batch_id": 17,
@@ -289,7 +289,7 @@
             "id": 2,
             "item_name": "FG Item 1 bs",
             "unit": "dozend",
-            "balance_qty": 5.0
+            "balance_qty": -15.0
         }
     ],
     "DATA": {
@@ -353,24 +353,24 @@
                     "orderitemdispatch": [
                         {
                             "id": 36,
-                            "dispatch_qty": 11.0,
-                            "inventory_ledger_id": null,
+                            "dispatch_qty": 20.0,
+                            "inventory_ledger_id": 583,
                             "delivery_batch_id": 17,
                             "order_item_id": 19,
                             "data_id": 1
                         },
                         {
                             "id": 37,
-                            "dispatch_qty": 15.0,
-                            "inventory_ledger_id": null,
+                            "dispatch_qty": 20.0,
+                            "inventory_ledger_id": 584,
                             "delivery_batch_id": 17,
                             "order_item_id": 20,
                             "data_id": 1
                         },
                         {
                             "id": 38,
-                            "dispatch_qty": 0.0,
-                            "inventory_ledger_id": null,
+                            "dispatch_qty": 20.0,
+                            "inventory_ledger_id": 585,
                             "delivery_batch_id": 17,
                             "order_item_id": 47,
                             "data_id": 1
@@ -498,17 +498,17 @@
             }
         ]
     },
-    "TODAY": "2024-06-24",
+    "TODAY": "2024-06-25",
     "INVENTORY_DATA": {
         "2": {
             "Item Name": "FG Item 1 bs",
             "Item Unit": "dozend",
-            "total_stock": 55.0
+            "total_stock": 19.0
         },
         "3": {
             "Item Name": "Sabka Product",
             "Item Unit": "pcs",
-            "total_stock": 9158.0
+            "total_stock": 9091.0
         }
     }
 }

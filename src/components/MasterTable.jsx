@@ -14,12 +14,13 @@ import { LoginContext } from './ContextProvider/Context';
 import { FaPencilAlt, FaCheck, FaTimes } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { ScrollArea } from './../../components/ui/scroll-area';
+import Filter from './Filter';
 
   
 
 
 
-export default function TableItemss({columns,data,setData,fetchSearch, EditdataApi}) {
+export default function TableItemss({columns,data,setData,fetchSearch, EditdataApi,addbutton}) {
 
   
 
@@ -115,15 +116,20 @@ export default function TableItemss({columns,data,setData,fetchSearch, EditdataA
   return (
     <>
       <div className="mt-2 flex flex-col">
-        <div className="mb-4">
+        
+        <div className="mb-4 flex gap-2">
           <input
               type="text"
               placeholder="Search..."
               value={searchTerm}
               onChange={handleSearchInputChange}
-              className="px-4 py-1.5 mr-4 border rounded-lg"
+              className="px-4 py-1.5 border rounded-lg"
           />
-          <Button onClick={handleSearch}>Search</Button>
+          <Button onClick={handleSearch} variant="ghost" >Search</Button>
+          <Filter/>
+          {addbutton ? (addbutton.map((button) => (
+            <Button key={button.Header} >{button.Header}</Button>
+          ))) : (null)}
         </div>
           <div className="-my-2 overflow-x-auto -mx-4 sm:-mx-6 lg:-mx-8">
               <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import Sidebar from './components/Sidebar';
 import Mail from './Mail';
 import { accounts, mails } from './data/mails';
 

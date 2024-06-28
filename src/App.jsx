@@ -81,7 +81,7 @@ export default function App() {
   
   const defaultLayout = layout ? (JSON.parse(layout) || undefined) : undefined;
   const defaultCollapsed = collapsed ? JSON.parse(collapsed) : undefined;
-  console.log(layout, defaultCollapsed); 
+  
   
 
   useEffect(() => {

@@ -51,7 +51,7 @@ export default function Sidebar(
                     " h-[120%] overflow-y-auto font-sans top-0 left-0"
                 )}
             >
-            <div className='text-2xl text-black mb-7'>Raqgen Solutions Pvt. Ltd.</div>
+            <div className='text-2xl text-black p-3'>Raqgen Solutions Pvt. Ltd.</div>
                 <Separator className='mb-3'/> 
                 <Nav
                     isCollapsed={isCollapsed}

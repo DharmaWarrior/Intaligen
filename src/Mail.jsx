@@ -1,14 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { CirclePlus, Search } from "lucide-react";
 import { Button } from "./../components/ui/button";
-import { cn } from "./components/cn";
 import { Input } from './../components/ui/input';
-import { RxDashboard } from 'react-icons/rx';
-import { MdInsights } from 'react-icons/md';
-import { RiCouponLine } from 'react-icons/ri';
-import { FiUser } from 'react-icons/fi';
-import { AiOutlineMessage } from 'react-icons/ai';
-import { BsFolder, BsWallet2 } from 'react-icons/bs';
 import {
   ResizableHandle,
   ResizablePanel,
@@ -26,7 +19,6 @@ import { MailDisplay } from "./components/MailDispaly";
 import { MailList } from "./components/MailList";
 import { useMail } from "./hooks/useMail";
 import AddForm from "./components/AddForm";
-import Nav from "./components/Nav";
 
 export default function Mail({
   mails,
