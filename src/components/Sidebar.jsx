@@ -62,6 +62,7 @@ export default function Sidebar(
         <ResizablePanel
             // defaultSize={defaultLayout[0]}  
             collapsedSize={navCollapsedSize}
+            
             collapsible={true}
             minSize={12}
             maxSize={18}

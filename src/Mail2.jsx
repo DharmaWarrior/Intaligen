@@ -24,7 +24,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "./../components/ui/tool
 export default function Mail2({
     mails,
     fetchOrders,
-    defaultLayout = [65, 270, 455],
+    defaultLayout = [65, 33, 59],
     ordersData,
 }) {
     const [mail, setMail] = useMail();
@@ -194,7 +194,7 @@ export default function Mail2({
         </ResizablePanel>
 
         <ResizableHandle withHandle className="custom-resizable-handle"/>
-            <ResizablePanel defaultSize={defaultLayout[2]} minSize={50}>
+            <ResizablePanel defaultSize={defaultLayout[2]} minSize={59}>
                 <MailDisplay2 ordersData={ordersData} tabData={tabData} stockData={stockData}/>
             </ResizablePanel>
         </ResizablePanelGroup>

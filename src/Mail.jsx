@@ -17,26 +17,23 @@ import {
 import { TooltipProvider } from "./../components/ui/tooltip";
 import { MailDisplay } from "./components/MailDispaly";
 import { MailList } from "./components/MailList";
-import { useMail } from "./hooks/useMail";
 import AddForm from "./components/AddForm";
 
 export default function Mail({
   fetchOrders,
-  defaultLayout = [65, 270, 455],
+  defaultLayout = [18, 32, 50], // Adjusted sizes to ensure default size is not less than min size
   defaultCollapsed = false,
   ordersData,
   onStatusChange,
   currentStatus,
 }) {
-  const [mail, setMail] = useMail();
   const [dialogOpen, setDialogOpen] = useState(false);
   const [activeOrders, setActiveOrders] = useState([]);
   const [pendingOrders, setPendingOrders] = useState([]);
   const [dispatchedOrders, setDispatchedOrders] = useState([]);
   const [selectedOrder, setSelectedOrder] = useState(null);
-  const [isCollapsed, setIsCollapsed] = React.useState(defaultCollapsed);
-  const [currentTab, setCurrentTab] = useState(currentStatus); // New state for current tab
-  const [searchQuery, setSearchQuery] = useState(""); // New state for search query
+  const [currentTab, setCurrentTab] = useState(currentStatus);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     if (ordersData) {
@@ -84,7 +81,6 @@ export default function Mail({
       if (response.status === 302) {
         const data = await response.json();
         setSelectedOrder({ ...data, orderId: id }); 
-        
       } else {
         alert('Failed to fetch order info');
       }
@@ -113,8 +109,8 @@ export default function Mail({
 
       if (response.ok) {
         setDialogOpen(false);
-        setCurrentTab("Pending");  // Change the tab to "Pending"
-        fetchOrders("Pending");  // Fetch updated orders after adding new one
+        setCurrentTab("Pending");
+        fetchOrders("Pending");
       } else {
         alert('Failed to add order');
       }
@@ -146,7 +142,7 @@ export default function Mail({
 
         if (response.status === 200) {
           setSelectedOrder(null);
-          fetchOrders("Pending"); // Fetch updated orders after deletion
+          fetchOrders("Pending");
         } else {
           alert('Failed to delete the order');
         }
@@ -157,7 +153,7 @@ export default function Mail({
     }
   };
 
-  const ApproveToDisp = async (orderId) => {
+  const changeOrderStatus = async (orderId, newStatus) => {
     try {
       let token = localStorage.getItem("usersdatatoken");
       const response = await fetch('/api/ordervalidation', {
@@ -168,129 +164,49 @@ export default function Mail({
         },
         body: JSON.stringify({ 
           order_id: orderId,
-          approval:"COMPLETED",
+          approval: newStatus,
         }),
       });
 
       if (response.status === 200) {
         setSelectedOrder(null);
-        fetchOrders("Dispatched");
-        setCurrentTab("Dispatched");  // Change the tab to "Dispatched"
-         // Fetch updated orders after activating
-      } else {
-        alert('Failed to mark the order as active');
-      }
-    } catch (error) {
-      console.error('Error marking the order as active:', error);
-      alert('An error occurred while marking the order as active');
-    }
-  };
-
-  const ApproveToActive = async (orderId) => {
-    try {
-      let token = localStorage.getItem("usersdatatoken");
-      const response = await fetch('/api/ordervalidation', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + token,
-        },
-        body: JSON.stringify({ 
-          order_id: orderId,
-          approval:"ACTIVE",
-        }),
-      });
-
-      if (response.status === 200) {
-        setSelectedOrder(null);
-        fetchOrders("Active");
-        setCurrentTab("Active");  // Change the tab to "Dispatched"
+        fetchOrders(newStatus);
+        setCurrentTab(newStatus);
         handleSelectMail(orderId);
       } else {
-        alert('Failed to mark the order as active');
+        alert(`Failed to mark the order as ${newStatus.toLowerCase()}`);
       }
     } catch (error) {
-      console.error('Error marking the order as active:', error);
-      alert('An error occurred while marking the order as active');
+      console.error(`Error marking the order as ${newStatus.toLowerCase()}:`, error);
+      alert(`An error occurred while marking the order as ${newStatus.toLowerCase()}`);
     }
   };
 
-  const ApproveToPending = async (orderId) => {
-    try {
-      let token = localStorage.getItem("usersdatatoken");
-      const response = await fetch('/api/ordervalidation', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + token,
-        },
-        body: JSON.stringify({ 
-          order_id: orderId,
-          approval:"PENDING",
-        }),
-      });
-
-      if (response.status === 200) {
-        setSelectedOrder(null);
-        fetchOrders("Pending");
-        setCurrentTab("Pending");  // Change the tab to "Dispatched"
-         // Fetch updated orders after activating
-      } else {
-        alert('Failed to mark the order as active');
-      }
-    } catch (error) {
-      console.error('Error marking the order as active:', error);
-      alert('An error occurred while marking the order as active');
-    }
-  };
-
-  // Filter orders based on the search query
-  const filteredPendingOrders = pendingOrders.filter(order =>
+  const filteredOrders = (orders) => orders.filter(order =>
     order.customer.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const filteredActiveOrders = activeOrders.filter(order =>
-    order.customer.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-
-  const filteredDispatchedOrders = dispatchedOrders.filter(order =>
-    order.customer.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-
-  console.log(pendingOrders)
   return (
     <TooltipProvider delayDuration={0}>
       <ResizablePanelGroup
         direction="horizontal"
         onLayout={(sizes) => {
-          document.cookie = `react-resizable-panels:layout=${JSON.stringify(
-            sizes
-          )}`;
+          document.cookie = `react-resizable-panels:layout=${JSON.stringify(sizes)}`;
         }}
         className="h-full max-h-[1000px] items-stretch"
       >
-
-        <ResizablePanel defaultSize={defaultLayout[1]} minSize={32}>
+        <ResizablePanel defaultSize={defaultLayout[1]} minSize={32} id='2' order='2'>
           <Tabs value={currentTab} onValueChange={setCurrentTab}>
             <div className="flex items-center px-4 py-2">
               <h1 className="text-xl font-bold">SALES ORDERS</h1>
               <TabsList className="ml-auto">
-                <TabsTrigger
-                  value="Pending"
-                  className="text-zinc-600 dark:text-zinc-200"
-                >
+                <TabsTrigger value="Pending" className="text-zinc-600 dark:text-zinc-200">
                   Pending
                 </TabsTrigger>
-                <TabsTrigger
-                  value="Active"
-                  className="text-zinc-600 dark:text-zinc-200"
-                >
+                <TabsTrigger value="Active" className="text-zinc-600 dark:text-zinc-200">
                   Active
                 </TabsTrigger>
-                <TabsTrigger
-                  value="Dispatched"
-                  className="text-zinc-600 dark:text-zinc-200"
-                >
+                <TabsTrigger value="Dispatched" className="text-zinc-600 dark:text-zinc-200">
                   Dispatched
                 </TabsTrigger>
               </TabsList>
@@ -307,7 +223,7 @@ export default function Mail({
                     placeholder="Search" 
                     className="pl-8" 
                     value={searchQuery} 
-                    onChange={(e) => setSearchQuery(e.target.value)} // Update search query state on input change
+                    onChange={(e) => setSearchQuery(e.target.value)} 
                   />
                 </div>
               </form>
@@ -316,28 +232,57 @@ export default function Mail({
               </div>
             </div>
             <TabsContent value="Pending" className="m-0">
-              <MailList items={filteredPendingOrders} handleSelectMail={handleSelectMail} onSelectMail={setSelectedOrder} selectedMail={selectedOrder} onStatusChange={onStatusChange} fetchOrders={fetchOrders}/>
+              <MailList 
+                items={filteredOrders(pendingOrders)} 
+                handleSelectMail={handleSelectMail} 
+                onSelectMail={setSelectedOrder} 
+                selectedMail={selectedOrder} 
+                onStatusChange={onStatusChange} 
+                fetchOrders={fetchOrders}
+              />
             </TabsContent>
             <TabsContent value="Active" className="m-0">
-              <MailList items={filteredActiveOrders} handleSelectMail={handleSelectMail} onSelectMail={setSelectedOrder} selectedMail={selectedOrder} onStatusChange={onStatusChange} fetchOrders={fetchOrders}/>
+              <MailList 
+                items={filteredOrders(activeOrders)} 
+                handleSelectMail={handleSelectMail} 
+                onSelectMail={setSelectedOrder} 
+                selectedMail={selectedOrder} 
+                onStatusChange={onStatusChange} 
+                fetchOrders={fetchOrders}
+              />
             </TabsContent>
             <TabsContent value="Dispatched" className="m-0">
-              <MailList items={filteredDispatchedOrders} handleSelectMail={handleSelectMail} onSelectMail={setSelectedOrder} selectedMail={selectedOrder} onStatusChange={onStatusChange} fetchOrders={fetchOrders}/>
+              <MailList 
+                items={filteredOrders(dispatchedOrders)} 
+                handleSelectMail={handleSelectMail} 
+                onSelectMail={setSelectedOrder} 
+                selectedMail={selectedOrder} 
+                onStatusChange={onStatusChange} 
+                fetchOrders={fetchOrders}
+              />
             </TabsContent>
           </Tabs>
         </ResizablePanel>
-
         <ResizableHandle withHandle className="custom-resizable-handle"/>
-        <ResizablePanel defaultSize={defaultLayout[2]} minSize={50}>
-          <MailDisplay mail={selectedOrder} onDeleteMail={handleDeleteMail} handleSelectMail={handleSelectMail} ApproveToDisp={ApproveToDisp} setCurrentTab={setCurrentTab} fetchOrders={fetchOrders} currentStatus={currentStatus} ApproveToActive={ApproveToActive} ApproveToPending={ApproveToPending}/>
+        <ResizablePanel defaultSize={defaultLayout[2]} minSize={50} id='3' order='3'>
+          <MailDisplay 
+            mail={selectedOrder} 
+            onDeleteMail={handleDeleteMail} 
+            handleSelectMail={handleSelectMail} 
+            ApproveToDisp={() => changeOrderStatus(selectedOrder.orderId, "COMPLETED")}
+            setCurrentTab={setCurrentTab} 
+            fetchOrders={fetchOrders} 
+            currentStatus={currentStatus} 
+            ApproveToActive={() => changeOrderStatus(selectedOrder.orderId, "ACTIVE")}
+            ApproveToPending={() => changeOrderStatus(selectedOrder.orderId, "PENDING")}
+          />
         </ResizablePanel>
       </ResizablePanelGroup>
-
       <AddForm
         open={dialogOpen}
         handleClose={handleDialogClose}
         handleFormSubmit={handleFormSubmit}
-        fetchData={fetchOrders} // Pass the fetchOrders function to refresh the list after adding order
+        fetchData={fetchOrders}
         formFields={formFields}
         title="Add New Order"
       />

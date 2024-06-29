@@ -309,26 +309,28 @@ function Flow() {
   return (
     <div className="w-full h-[120vh] mt-0 flex flex-col">
       {!isDateSelected && (
-        <div className='flex'>
-          <div className="h-screen flex justify-center items-center mx-auto text-3xl">
-            <div className="date-input-container border rounded-lg p-8 shadow-lg bg-white">
-              <label htmlFor="date-input" className="block mb-4 font-bold text-lg">Select Date:</label>
-              <input
-                type="date"
-                id="date-input"
-                value={selectedDate}
-                onChange={handleDateChange}
-                className="border rounded px-3 py-2 mb-4 w-full"
-              />
-              <button 
-                onClick={handleShowClick}
-                className="bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700 transition duration-300 w-full"
-              >
-                Show
-              </button>
-            </div>
+        <>
+        <h1 className="mb-8 text-4xl font-bold text-gray-800">Production Department</h1>
+        <div className="flex flex-col w-full justify-start  font-inte">
+          
+          <div className="date-input-container border border-gray-300 rounded-lg p-8 shadow-lg bg-white w-full ">
+            <label htmlFor="date-input" className="block mb-4 font-semibold text-lg text-gray-700">Select Date:</label>
+            <input
+              type="date"
+              id="date-input"
+              value={selectedDate}
+              onChange={handleDateChange}
+              className="border border-gray-300 rounded-md px-3 py-2 mb-4 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <button 
+              onClick={handleShowClick}
+              className="bg-blue-600 text-white font-semibold py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300 w-full"
+            >
+              Show
+            </button>
           </div>
         </div>
+        </>
       )}
       {isDateSelected && (
         <>

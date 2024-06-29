@@ -106,11 +106,11 @@ export default function TableItemss({ columns, data, setData, fetchSearch, Editd
                     {data.map((row) => (
                       <TableRow key={row.id}>
                         {columns.map((column) => (
-                          <TableCell className="font-medium w-[100px]">
+                          <TableCell className="font-medium w-[100px]" key={column.header}>
                             {editModes[row.id] ? (
                               column.type === "select" ? (
                                 <select
-                                  className={`border-2 w-15 ${column.editable === "false" ? '' : 'border-blue-500'}`}
+                                  className={` w-15 ${column.editable === "false" ? '' : 'border-2 border-blue-500'}`}
                                   value={editableRowData[row.id][column.accessor]}
                                   onChange={(e) => handleInputChange(e, row.id, column.accessor)}
                                 >
@@ -123,7 +123,7 @@ export default function TableItemss({ columns, data, setData, fetchSearch, Editd
                               ) : (
                                 <input
                                   disabled={column.editable === "false"}
-                                  className={`border-2 w-15 ${column.editable === "false" ? '' : 'border-blue-500'}`}
+                                  className={` w-15 ${column.editable === "false" ? '' : 'border-2 border-blue-500'}`}
                                   type={column.type}
                                   value={editableRowData[row.id][column.accessor]}
                                   onChange={(e) => handleInputChange(e, row.id, column.accessor)}

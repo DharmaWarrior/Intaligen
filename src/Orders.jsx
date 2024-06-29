@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Mail from './Mail';
-import {mails } from './data/mails';
 
 export default function Orders() {
 
@@ -8,7 +7,7 @@ export default function Orders() {
     const [currentStatus, setCurrentStatus] = useState("Pending");
 
     const fetchOrders = async (status) => {
-        console.log(status)
+        
         try {
             let token = localStorage.getItem("usersdatatoken");
             if(!token) {
