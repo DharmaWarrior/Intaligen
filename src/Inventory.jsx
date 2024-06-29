@@ -17,6 +17,50 @@ const Inventory = () => {
   
   const [lookupData, setLookupData] = useState([]);
   const [recentData, setRecentData] = useState([]);
+
+  const availableCategories = [
+    [
+        4,
+        "RAW MATERIAL"
+    ],
+    [
+        5,
+        "PACKING MATERIAL"
+    ],
+    [
+        3,
+        "EXPORT"
+    ],
+    [
+        7,
+        "RAJASTHAN"
+    ],
+    [
+        1,
+        "QWERTY"
+    ],
+    [
+        15,
+        "ABC"
+    ],
+    [
+        16,
+        "WORKER-TYPE1"
+    ],
+    [
+        2,
+        "Worker -type-2"
+    ],
+    [
+        6,
+        "MACHINE-type-1"
+    ],
+    [
+        17,
+        "MACHINE TYPE 2"
+    ]
+];
+
   
 
 
@@ -465,13 +509,13 @@ const fetchRecent = async () => {
             </TabsList>
           </div>
           <TabsContent value="item_lookup" className="m-0 border border-x-y-emerald-50 card custom-scroll">
-            <DataTable data={lookupData} columns={columns1} addbutton={buttons1}/>
+            <DataTable data={lookupData} columns={columns1} addbutton={buttons1} availableCategories={availableCategories}/>
           </TabsContent>
           <TabsContent value="recent_activity" className="m-0 border border-x-y-emerald-50 card custom-scroll">
-            <DataTable data={recentData} columns={columns2} />
+            <DataTable data={recentData} columns={columns2} availableCategories={availableCategories}/>
           </TabsContent>
           <TabsContent value="physical_reconciliation" className="m-0 border border-x-y-emerald-50 card custom-scroll">
-            <DataTable data={lookupData} columns={columns3} addbutton={buttons2} Savebutton={true}/>
+            <DataTable data={lookupData} columns={columns3} addbutton={buttons2} Savebutton={true} availableCategories={availableCategories}/>
           </TabsContent>
         </Tabs>
       </div>

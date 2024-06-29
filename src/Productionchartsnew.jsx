@@ -1,11 +1,12 @@
 
 import React ,{useState, useEffect} from 'react'
-import Mail2 from './Mail2';
+import Chart from './Chart';
 
 export default function Productionchartsnew() {
-  const [mails, setMails] = React.useState([]);
+  const [charts, setCharts] = React.useState([]);
   const [ordersData, setOrdersData] = React.useState({});
   const [loading, setLoading] = useState(true);
+  const [categories , setCategories] = useState([]);
 
   const fetchCharts = async () => {
       try {
@@ -24,8 +25,9 @@ export default function Productionchartsnew() {
   
         if (response.ok) {
           const result = await response.json();
-          setMails(result.data);
+          setCharts(result.data);
           setOrdersData(result.ORDERS);
+          setCategories(result.categories);
         } else {
           console.error('Failed to fetch data');
           setLoading(false);
@@ -40,15 +42,15 @@ export default function Productionchartsnew() {
   
     useEffect(() => {
       fetchCharts();
-      // fetchData();
     }, []);
 
   return (
     <div className="flex">
       <div className=" h-[100%] w-full flex flex-row  py-2">
-          <Mail2
-              mails={mails}
+          <Chart
+              charts={charts}
               ordersData={ordersData}
+              categories={categories}
           />
       </div>
   </div>

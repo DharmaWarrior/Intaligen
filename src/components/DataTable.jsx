@@ -29,7 +29,7 @@ import {
 import Filter from "./Filter";
 import { Tooltip, TooltipTrigger, TooltipContent } from "./../../components/ui/tooltip";
 
-export function DataTable({ data, columns, addbutton, Savebutton }) {
+export function DataTable({ data, columns, addbutton, Savebutton,availableCategories }) {
   const [sorting, setSorting] = React.useState([]);
   const [columnFilters, setColumnFilters] = React.useState([]);
   const [columnVisibility, setColumnVisibility] = React.useState({});
@@ -87,7 +87,7 @@ export function DataTable({ data, columns, addbutton, Savebutton }) {
   return (
     <div className="w-full">
       <div className="flex items-center py-4 gap-5">
-        <Filter />
+        <Filter availableCategories={availableCategories} kFilter={true}/>
         <Input
           placeholder="Filter names..."
           value={table.getColumn("Item Name")?.getFilterValue() ?? ""}

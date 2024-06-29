@@ -1,20 +1,20 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Checkbox } from "./../../components/ui/checkbox"
+import { Checkbox } from "../../components/ui/checkbox"
 import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
     DropdownMenuTrigger,
-} from "./../../components/ui/dropdown-menu"
-import { Button } from "./../../components/ui/button";
-import { Tooltip, TooltipContent, TooltipTrigger } from "./../../components/ui/tooltip";
+} from "../../components/ui/dropdown-menu"
+import { Button } from "../../components/ui/button";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../../components/ui/tooltip";
 import { DataTable } from './DataTable';
 import { ArrowUpDown, FileUp, MoreHorizontal, Search,FolderPlus } from "lucide-react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "./../../components/ui/tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../components/ui/tabs";
 
 
 
-export function MailDisplay2({ ordersData, tabData, stockData }) {
+export function ChartDisplay({ ordersData, tabData, stockData, categories }) {
   
     const [activeTab, setActiveTab] = useState('finished');
     const [selectedOrder, setSelectedOrder] = useState(null);
@@ -451,10 +451,10 @@ export function MailDisplay2({ ordersData, tabData, stockData }) {
                             )}
                         </div>
                         {activeTab === 'finished' && (
-                            <DataTable data={finishedTabData} columns={columnOrder} addbutton={buttons1}/>
+                            <DataTable data={finishedTabData} columns={columnOrder} addbutton={buttons1} availableCategories={categories} />
                         )}
                         {activeTab === 'semi-finished' && (
-                            <DataTable data={semiFinishedTabData} columns={columnOrder} addbutton={buttons1}/>
+                            <DataTable data={semiFinishedTabData} columns={columnOrder} addbutton={buttons1} availableCategories={categories}/>
                         )}
                     </div>
                 </div>
@@ -488,7 +488,7 @@ export function MailDisplay2({ ordersData, tabData, stockData }) {
                             )}
                         </div>
                         {activeTab === 'products' && (
-                            <DataTable data={stockData} columns={columnStock} addbutton={buttons1}/>
+                            <DataTable data={stockData} columns={columnStock} addbutton={buttons1} availableCategories={categories}/>
                         )}
                     </div>
                 </div>

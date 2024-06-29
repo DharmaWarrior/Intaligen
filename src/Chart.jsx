@@ -1,33 +1,30 @@
 import React, { useState, useEffect } from "react";
-import { CirclePlus, Search } from "lucide-react";
-import { Button } from "./../components/ui/button";
-import { Input } from './../components/ui/input';
+import { CirclePlus } from "lucide-react";
+import { Button } from "../components/ui/button";
 import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
-} from './../components/ui/resizable';
-import { Separator } from './../components/ui/separator';
+} from '../components/ui/resizable';
+import { Separator } from '../components/ui/separator';
 import {
   Tabs,
   TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "./../components/ui/tabs";
-import { TooltipProvider } from "./../components/ui/tooltip";
-import { MailDisplay2 } from "./components/MailDisplay2";
-import { MailList2 } from "./components/MailList2";
-import { useMail } from "./hooks/useMail";
+} from "../components/ui/tabs";
+import { TooltipProvider } from "../components/ui/tooltip";
+import { ChartDisplay } from "./components/ChartDisplay";
+import { Chartlist } from "./components/Chartlist";
 import AddForm from "./components/AddForm";
-import { Tooltip, TooltipContent, TooltipTrigger } from "./../components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../components/ui/tooltip";
 
-export default function Mail2({
-    mails,
+export default function Chart({
+    charts,
+    categories,
     fetchOrders,
     defaultLayout = [65, 33, 59],
     ordersData,
 }) {
-    const [mail, setMail] = useMail();
+
     const [dialogOpen, setDialogOpen] = useState(false);
     const [loading, setLoading] = useState(true);
     const [tabData, setTabData] = useState({});
@@ -171,7 +168,6 @@ export default function Mail2({
             <Tabs value='Pending'>
                 <div className="flex items-center px-4 py-2">
                     <h1 className="text-xl font-bold">MASTER PRODUCTION SCHEDULE</h1>
-                    
                     <Tooltip>
                         <TooltipTrigger asChild>
                             <Button variant="ghost" size="icon" className='ml-auto' onClick={handleDialogOpen}>
@@ -188,14 +184,14 @@ export default function Mail2({
                     </div>
                 </div>
                 <TabsContent value="Pending" className="m-0">
-                    <MailList2 items={mails}/>
+                    <Chartlist items={charts}/>
                 </TabsContent>
             </Tabs>
         </ResizablePanel>
 
         <ResizableHandle withHandle className="custom-resizable-handle"/>
             <ResizablePanel defaultSize={defaultLayout[2]} minSize={59}>
-                <MailDisplay2 ordersData={ordersData} tabData={tabData} stockData={stockData}/>
+                <ChartDisplay ordersData={ordersData} tabData={tabData} stockData={stockData} categories={categories}/>
             </ResizablePanel>
         </ResizablePanelGroup>
 

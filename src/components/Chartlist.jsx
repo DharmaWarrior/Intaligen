@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { CirclePlus } from 'lucide-react';
 import { cn } from "./cn";
-import { Badge } from "./../../components/ui/badge";
-import { ScrollArea } from "./../../components/ui/scroll-area";
-import { Separator } from "./../../components/ui/separator";
-import { Button } from "./../../components/ui/button";
-import { Table, TableBody, TableCell, TableHeader, TableHead, TableRow } from "./../../components/ui/table";
+import { Badge } from "../../components/ui/badge";
+import { ScrollArea } from "../../components/ui/scroll-area";
+import { Separator } from "../../components/ui/separator";
+import { Button } from "../../components/ui/button";
+import { Table, TableBody, TableCell, TableHeader, TableHead, TableRow } from "../../components/ui/table";
 import { useNavigate } from 'react-router-dom';
-import EditChartDialog from './../cards/EditChartDialog';
+import EditChartDialog from '../cards/EditChartDialog';
 
 function formatDate(dateString) {
     const date = new Date(dateString);
@@ -17,7 +17,7 @@ function formatDate(dateString) {
     return `${day}-${month}-${year}`;
 }
 
-export function MailList2({ items, handleSelectMail, onSelectMail, selectedMail, onStatusChange, fetchOrders }) {
+export function Chartlist({ items, handleSelectMail, onSelectMail, selectedMail, onStatusChange, fetchOrders }) {
     const navigate = useNavigate();
     const [isDialogOpen, setDialogOpen] = useState(false);
     const [selectedOrderData, setSelectedOrderData] = useState(null);
