@@ -12,13 +12,11 @@ function Nav({ links, isCollapsed }) {
       data-collapsed={isCollapsed}
       className="group flex flex-col gap-4 py-2 data-[collapsed=true]:py-2"
     >
-      
       <nav className="grid gap-6 pr-2 group-[[data-collapsed=true]]:justify-center group-[[data-collapsed=true]]:px-2">
-        
         {links.map((link, index) =>
           isCollapsed ? (
-            <TooltipProvider>
-              <Tooltip key={index} delayDuration={0}>
+            <TooltipProvider key={index}>
+              <Tooltip delayDuration={0}>
                 <TooltipTrigger asChild>
                   <Link
                     to={link.route}

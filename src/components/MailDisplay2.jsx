@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Checkbox } from "./../../components/ui/checkbox"
 import {
     DropdownMenu,
@@ -119,6 +119,7 @@ export function MailDisplay2({ ordersData, tabData, stockData }) {
         },
         {
           accessorKey: "Item Name",
+          heading: "Item Name",
           header: ({ column }) => (
             <Button
               variant="ghost"
@@ -131,6 +132,7 @@ export function MailDisplay2({ ordersData, tabData, stockData }) {
         },
         {
           accessorKey: "Item Unit",
+          heading: "Item Unit",
           header: ({ column }) => (
             <Button
               variant="ghost"
@@ -143,6 +145,7 @@ export function MailDisplay2({ ordersData, tabData, stockData }) {
         },
         {
           accessorKey: "Order_Quantity",
+          heading: "Order Quantity",
           header: ({ column }) => (
             <Button
               variant="ghost"
@@ -155,6 +158,7 @@ export function MailDisplay2({ ordersData, tabData, stockData }) {
         },
         {
           accessorKey: "Stock_Quantity",
+          heading: "Stock Quantity",
           header: ({ column }) => (
             <Button
               variant="ghost"
@@ -167,6 +171,7 @@ export function MailDisplay2({ ordersData, tabData, stockData }) {
         },
         {
           accessorKey: "Alloted_Quantity",
+          heading: "Alloted Quantity",
           header: ({ column }) => (
             <Button
               variant="ghost"
@@ -179,6 +184,7 @@ export function MailDisplay2({ ordersData, tabData, stockData }) {
         },
         {
           accessorKey: "Progress_Quantity",
+          heading: "Progress Quantity",
           header: ({ column }) => (
             <Button
               variant="ghost"
@@ -191,6 +197,7 @@ export function MailDisplay2({ ordersData, tabData, stockData }) {
         },
         {
           accessorKey: "Max Possible",
+          heading: "Max Possible",
           header: ({ column }) => (
             <Button
               variant="ghost"
@@ -249,6 +256,7 @@ export function MailDisplay2({ ordersData, tabData, stockData }) {
         },
         {
           accessorKey: "Item Name",
+          heading: "Item Name",
           header: ({ column }) => (
             <Button
               variant="ghost"
@@ -261,6 +269,7 @@ export function MailDisplay2({ ordersData, tabData, stockData }) {
         },
         {
           accessorKey: "Item Unit",
+          heading: "Item Unit",
           header: ({ column }) => (
             <Button
               variant="ghost"
@@ -273,6 +282,7 @@ export function MailDisplay2({ ordersData, tabData, stockData }) {
         },
         {
           accessorKey: "demand",
+          heading: "Demand",
           header: ({ column }) => (
             <Button
               variant="ghost"
@@ -285,6 +295,7 @@ export function MailDisplay2({ ordersData, tabData, stockData }) {
         },
         {
           accessorKey: "Stock_Quantity",
+          heading: "Stock Quantity",
           header: ({ column }) => (
             <Button
               variant="ghost"
@@ -297,6 +308,7 @@ export function MailDisplay2({ ordersData, tabData, stockData }) {
         },
         {
           accessorKey: "Alloted_Quantity",
+          heading: "Alloted Quantity",
           header: ({ column }) => (
             <Button
               variant="ghost"
@@ -309,6 +321,7 @@ export function MailDisplay2({ ordersData, tabData, stockData }) {
         },
         {
           accessorKey: "Progress_Quantity",
+          heading: "Progress Quantity",
           header: ({ column }) => (
             <Button
               variant="ghost"
@@ -321,6 +334,7 @@ export function MailDisplay2({ ordersData, tabData, stockData }) {
         },
         {
           accessorKey: "Max Possible",
+          heading: "Max Possible",
           header: ({ column }) => (
             <Button
               variant="ghost"
@@ -354,7 +368,9 @@ export function MailDisplay2({ ordersData, tabData, stockData }) {
         },
       ];
     
-    
+      const buttons1 = React.useMemo(() => [
+        { "Header": "EXPORT STOCKLIST", "icon" : FileUp},
+      ]);
     
     return (
     <div className="flex h-full flex-col">
@@ -400,39 +416,28 @@ export function MailDisplay2({ ordersData, tabData, stockData }) {
                     )}
                   </select>
                     <div className="flex-1 whitespace-pre-wrap text-sm">
-                        <div className="flex border-b-2 border-gray-200 items-center justify-between pb-2">
+                        <div className="flex border-b-2 border-gray-200 items-center justify-between ">
                             <div>
                                 <button
-                                className={`py-2 px-4 ${activeTab === 'finished' ? 'border-b-2 border-blue-500 text-blue-500' : 'text-gray-500'}`}
+                                className={`py-2 px-4 ${activeTab === 'finished' ? 'bg-[#2a2a3d] text-[#517876]' : 'bg-[#f0f0f0] text-black'}`}
                                 onClick={() => setActiveTab('finished')}
                                 >
                                 Finished
                                 </button>
                                 
                                 <button
-                                className={`py-2 px-4 ${activeTab === 'semi-finished' ? 'border-b-2 border-blue-500 text-blue-500' : 'text-gray-500'}`}
+                                className={`py-2 px-4 ${activeTab === 'semi-finished' ? 'bg-[#2a2a3d] text-[#517876]' : 'bg-[#f0f0f0] text-black'}`}
                                 onClick={() => setActiveTab('semi-finished')}
                                 >
                                 Semi-Finished
                                 </button>
                                 <button
-                                className={`py-2 px-4 ${activeTab === 'by-category' ? 'border-b-2 border-blue-500 text-blue-500' : 'text-gray-500'}`}
+                                className={`py-2 px-4 ${activeTab === 'by-category' ? 'bg-[#2a2a3d] text-[#517876]' : 'bg-[#f0f0f0] text-black'}`}
                                 onClick={() => setActiveTab('by-category')}
                                 >
                                 By Category
                                 </button>
                             </div>
-                            {(activeTab === 'finished' || activeTab === 'semi-finished') && (
-                                <Tooltip>
-                                  <TooltipTrigger asChild>
-                                    <Button variant="ghost" size="icon" >
-                                      <FileUp className="h-5 w-5" />
-                                      <span className="sr-only">EXPORT</span>
-                                    </Button>
-                                  </TooltipTrigger>
-                                  <TooltipContent>EXPORT</TooltipContent>
-                                </Tooltip>
-                            )}
                             {activeTab === 'by-category' && (
                                 <Tooltip>
                                   <TooltipTrigger asChild>
@@ -446,10 +451,10 @@ export function MailDisplay2({ ordersData, tabData, stockData }) {
                             )}
                         </div>
                         {activeTab === 'finished' && (
-                            <DataTable data={finishedTabData} columns={columnOrder}/>
+                            <DataTable data={finishedTabData} columns={columnOrder} addbutton={buttons1}/>
                         )}
                         {activeTab === 'semi-finished' && (
-                            <DataTable data={semiFinishedTabData} columns={columnOrder}/>
+                            <DataTable data={semiFinishedTabData} columns={columnOrder} addbutton={buttons1}/>
                         )}
                     </div>
                 </div>
@@ -461,13 +466,13 @@ export function MailDisplay2({ ordersData, tabData, stockData }) {
                         <div className="flex border-b-2 border-gray-200 items-center justify-between pb-2">
                             <div>
                                 <button
-                                className={`py-2 px-4 ${activeTab === 'products' ? 'border-b-2 border-blue-500 text-blue-500' : 'text-gray-500'}`}
+                                className={`py-2 px-4 ${activeTab === 'products' ? 'bg-[#2a2a3d] text-[#517876]' : 'bg-[#f0f0f0] text-black'}`}
                                 onClick={() => setActiveTab('products')}
                                 >
                                 Products
                                 </button>
                                 <button
-                                className={`py-2 px-4 ${activeTab === 'by-category' ? 'border-b-2 border-blue-500 text-blue-500' : 'text-gray-500'}`}
+                                className={`py-2 px-4 ${activeTab === 'by-category' ? 'bg-[#2a2a3d] text-[#517876]' : 'bg-[#f0f0f0] text-black'}`}
                                 onClick={() => setActiveTab('by-category')}
                                 >
                                 By Category
@@ -483,7 +488,7 @@ export function MailDisplay2({ ordersData, tabData, stockData }) {
                             )}
                         </div>
                         {activeTab === 'products' && (
-                            <DataTable data={stockData} columns={columnStock}/>
+                            <DataTable data={stockData} columns={columnStock} addbutton={buttons1}/>
                         )}
                     </div>
                 </div>

@@ -15,9 +15,6 @@ import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./../../components/ui/dropdown-menu";
 import { Input } from "./../../components/ui/input";
@@ -30,10 +27,9 @@ import {
   TableRow,
 } from "./../../components/ui/table";
 import Filter from "./Filter";
-import { Tooltip, TooltipTrigger, TooltipContent  } from "./../../components/ui/tooltip";
+import { Tooltip, TooltipTrigger, TooltipContent } from "./../../components/ui/tooltip";
 
-
-export function DataTable({data , columns, addbutton, Savebutton}) {
+export function DataTable({ data, columns, addbutton, Savebutton }) {
   const [sorting, setSorting] = React.useState([]);
   const [columnFilters, setColumnFilters] = React.useState([]);
   const [columnVisibility, setColumnVisibility] = React.useState({});
@@ -58,10 +54,40 @@ export function DataTable({data , columns, addbutton, Savebutton}) {
     },
   });
 
+  const getColumnHeaderLabel = (column) => {
+    return column.heading;
+  };
+  
+  const exportDataToCSV = () => {
+    const headers = columns
+      .filter((col) => col.id !== "select" && col.id !== "actions") // Exclude column with id "select"
+      .map((col) => getColumnHeaderLabel(col))
+      .join(",");
+    const rows = table.getRowModel().rows.map((row) =>
+      row.getVisibleCells().map((cell) => cell.getValue()).slice(1).join(",")
+    );
+    const csvContent = [headers, ...rows].join("\n");
+
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.setAttribute("href", url);
+    link.setAttribute("download", "data_table_export.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const handleButtonClick = (header) => {
+    if (header.includes("EXPORT")) {
+      exportDataToCSV();
+    }
+  };
+
   return (
     <div className="w-full">
       <div className="flex items-center py-4 gap-5">
-        <Filter/>
+        <Filter />
         <Input
           placeholder="Filter names..."
           value={table.getColumn("Item Name")?.getFilterValue() ?? ""}
@@ -70,18 +96,24 @@ export function DataTable({data , columns, addbutton, Savebutton}) {
           }
           className="max-w-sm"
         />
-        
-        {addbutton ? (addbutton.map((button) => (
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button variant="ghost" size="icon">
-                <button.icon className="h-5 w-5" />
-                <span className="sr-only">{button.Header}</span>
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>{button.Header}</TooltipContent>
-          </Tooltip>
-        ))) : (null)}
+
+        {addbutton
+          ? addbutton.map((button) => (
+              <Tooltip key={button.Header}>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => handleButtonClick(button.Header)}
+                  >
+                    <button.icon className="h-5 w-5" />
+                    <span className="sr-only">{button.Header}</span>
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>{button.Header}</TooltipContent>
+              </Tooltip>
+            ))
+          : null}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
@@ -109,48 +141,48 @@ export function DataTable({data , columns, addbutton, Savebutton}) {
       </div>
       <div className="rounded-md border shadow-md ">
         <Table>
-        <ScrollArea className="h-[60vh]">
-          <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => (
-                  <TableHead key={header.id} className="text-center">
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                  </TableHead>
-                ))}
-              </TableRow>
-            ))}
-          </TableHeader>
-          <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id} className="text-center">
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </TableCell>
+          <ScrollArea className="h-[60vh]">
+            <TableHeader>
+              {table.getHeaderGroups().map((headerGroup) => (
+                <TableRow key={headerGroup.id}>
+                  {headerGroup.headers.map((header) => (
+                    <TableHead key={header.id} className="text-center">
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                    </TableHead>
                   ))}
                 </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell colSpan={columns.length} className="h-24 text-center">
-                  No results.
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
+              ))}
+            </TableHeader>
+            <TableBody>
+              {table.getRowModel().rows?.length ? (
+                table.getRowModel().rows.map((row) => (
+                  <TableRow
+                    key={row.id}
+                    data-state={row.getIsSelected() && "selected"}
+                  >
+                    {row.getVisibleCells().map((cell) => (
+                      <TableCell key={cell.id} className="text-center">
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={columns.length} className="h-24 text-center">
+                    No results.
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
           </ScrollArea>
         </Table>
       </div>
@@ -180,7 +212,7 @@ export function DataTable({data , columns, addbutton, Savebutton}) {
       </div>
       {Savebutton ? (
         <div className="flex items-center justify-start space-x-2 ">
-          <Button >
+          <Button>
             SAVE
           </Button>
         </div>

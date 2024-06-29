@@ -11,7 +11,7 @@ import MasterTable from './components/MasterTable';
 import AddForm from './components/AddForm';
 
 export default function Items() {
-    const { logindata } = useContext(LoginContext);
+
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [editModes, setEditModes] = useState({});
@@ -56,18 +56,11 @@ export default function Items() {
       fetchData();
     }, []);
   
-    const handleEditClick = (rowIndex) => {
-      setEditModes(prevEditModes => ({
-        ...prevEditModes,
-        [rowIndex]: !prevEditModes[rowIndex]
-      }));
-    };
-  
     const handleOpen = (type) => {
       setFormType(type);
       setOpen(true);
     };
-  
+
     const handleClose = () => {
       setOpen(false);
     };
@@ -117,7 +110,7 @@ export default function Items() {
           alert('Error updating data: ' + error);
       }
     };
-  
+
     const handleFormSubmit = async (formData) => {
       try {
         const response = await fetch("/api/AddItem", {
@@ -149,7 +142,6 @@ export default function Items() {
         toast.error("Error!!", { position: "top-center" });
       }
     };
-    
 
     const fetchSearch = async (searchTerm) => {
       try {

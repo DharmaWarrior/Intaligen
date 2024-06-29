@@ -21,7 +21,6 @@ import { useMail } from "./hooks/useMail";
 import AddForm from "./components/AddForm";
 
 export default function Mail({
-  mails,
   fetchOrders,
   defaultLayout = [65, 270, 455],
   defaultCollapsed = false,

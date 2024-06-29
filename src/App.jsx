@@ -31,62 +31,19 @@ import Cookies from "js-cookie"; // Import js-cookie
 import Inventory from "./Inventory";
 
 export default function App() {
+
   const [data, setData] = useState(false);
-
-  const history = useNavigate();
   const location = useLocation(); // Get the current location
-
-  
-
-  const DashboardValid = async () => {
-    let token = localStorage.getItem("usersdatatoken");
-
-    const res = await fetch("/userdashboard", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer " + token
-      }
-    });
-
-    const data = await res.json();
-
-    console.log(data.message);
-    if (data.message === "Internal Server Error") {
-      console.log("User not valid app.js");
-      // history("/");
-    } else {
-      const finalData = {
-        status: 200,
-        ValidUserOne: data
-      };
-      console.log("login dataa is set");
-      setLoginData(finalData);
-    }
-  };
-
-  
 
   // Retrieve layout and collapsed state from cookies
   const layout = Cookies.get("react-resizable-panels:layout");
   const collapsed = Cookies.get("react-resizable-panels:collapsed");
   
-  
-  // let defaultCollapsed = null;
-  // if (collapsed === undefined) {
-  //   defaultCollapsed = false;
-  // } else {
-  //   defaultCollapsed = collapsed ? JSON.parse(collapsed) : undefined; 
-  // }
-  
   const defaultLayout = layout ? (JSON.parse(layout) || undefined) : undefined;
   const defaultCollapsed = collapsed ? JSON.parse(collapsed) : undefined;
-  
-  
 
   useEffect(() => {
     setTimeout(() => {
-      DashboardValid();
       setData(true);
     }, 100);
   }, []);

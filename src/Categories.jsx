@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from 'react';
-import Sidebar from "./components/Sidebar";
 import { LoginContext } from './components/ContextProvider/Context';
 import ImportIcon from '@mui/icons-material/ImportExport';
 import PlusIcon from '@mui/icons-material/Add';
@@ -10,7 +9,7 @@ import MasterTable from './components/MasterTable';
 import AddForm from './components/AddForm';
 
 export default function Items() {
-    const { logindata } = useContext(LoginContext);
+
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [editModes, setEditModes] = useState({});
@@ -58,22 +57,15 @@ export default function Items() {
       fetchData();
     }, []);
   
-    const handleEditClick = (rowIndex) => {
-      setEditModes(prevEditModes => ({
-        ...prevEditModes,
-        [rowIndex]: !prevEditModes[rowIndex]
-      }));
-    };
-  
     const handleOpen = (type) => {
-    setFormType(type);
-    setOpen(true);
-  };
+      setFormType(type);
+      setOpen(true);
+    };
 
-  const handleClose = () => {
-    setOpen(false);
-  };
-  
+    const handleClose = () => {
+      setOpen(false);
+    };
+
     const handleFormSubmit = async (formData) => {
       try {
         const response = await fetch("/api/AddItem", {
@@ -105,40 +97,6 @@ export default function Items() {
         toast.error("Error!!", { position: "top-center" });
       }
     };
-    
-
-    const fetchSearch = async (searchTerm) => {
-      // try {
-      //   let token = localStorage.getItem("usersdatatoken");
-      //   if(!token) {
-      //     console.log("Token not found");
-      //   }
-        
-      //   const response = await fetch("/api/searchitem", {
-      //     method: "POST",
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //       "Authorization": "Bearer " + token,
-      //     },
-      //     body: JSON.stringify({
-      //       "name": `${searchTerm}`
-      //     })
-      //   });
-  
-      //   if (response.status === 200) {
-      //     const result = await response.json();
-      //     setData(result);
-      //     setLoading(false);
-      //   } else {
-      //     alert('Failed to fetch data');
-      //     setLoading(false);
-      //   }
-      // } catch (error) {
-      //   alert('Error fetching data: ' + error);
-      //   setLoading(false);
-      // }
-      console.log(searchTerm);
-    }
 
     const columns = React.useMemo(() => [
       { "Header": "Name", "accessor": "name" , "type": "text" , "url": "/product/" , "url_append": `id`, "editable" : "true"},
@@ -149,7 +107,7 @@ export default function Items() {
       { name: 'Category_Name', label: 'Category Name *', type: 'text', required: true },
       { name: 'Category_Type', label: 'Category Type', type: 'text' },
     ];
-  
+
     return (
       <div className="w-full h-[120vh] mt-0 flex flex-col">
         <div className="w-full  justify-center px-10 py-10">

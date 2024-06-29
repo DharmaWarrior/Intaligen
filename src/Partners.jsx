@@ -9,10 +9,9 @@ import { toast } from 'react-toastify';
 import MasterTable from './components/MasterTable';
 
 export default function Partners() {
-    const { logindata } = useContext(LoginContext);
+
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [editModes, setEditModes] = useState({});
     const [open, setOpen] = useState(false);
   
     const fetchData = async () => {

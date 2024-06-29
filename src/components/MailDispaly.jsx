@@ -346,21 +346,21 @@ export function MailDisplay({ mail, onDeleteMail, setCurrentTab, fetchOrders, cu
             <div className="flex  border-b-2 border-gray-200 items-center justify-between">
               <div>
                 <button
-                  className={`py-2 px-4 ${activeTab === 'Orders' ? 'border-b-2 border-blue-500 text-blue-500' : 'text-gray-500'}`}
+                  className={`py-2 px-4 ${activeTab === 'Orders' ? 'bg-[#2a2a3d] text-[#517876]' : 'bg-[#f0f0f0] text-black'}`}
                   onClick={() => setActiveTab('Orders')}
                 >
                   Orders
                 </button>
                 {currentStatus !== 'Pending' && (
                   <button
-                  className={`py-2 px-4 ${activeTab === 'Dispatch' ? 'border-b-2 border-blue-500 text-blue-500' : 'text-gray-500'}`}
+                  className={`py-2 px-4 ${activeTab === 'Dispatch' ? 'bg-[#2a2a3d] text-[#517876]' : 'bg-[#f0f0f0] text-black'}`}
                   onClick={() => setActiveTab('Dispatch')}
                 >
                   Dispatch
                 </button>
                 )}
                 <button
-                  className={`py-2 px-4 ${activeTab === 'Documents' ? 'border-b-2 border-blue-500 text-blue-500' : 'text-gray-500'}`}
+                  className={`py-2 px-4 ${activeTab === 'Documents' ? 'bg-[#2a2a3d] text-[#517876]' : 'bg-[#f0f0f0] text-black'}`}
                   onClick={() => setActiveTab('Documents')}
                 >
                   Documents

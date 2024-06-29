@@ -6,12 +6,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import validator from 'validator';
 import { AuthProvider, useAuth } from './ContextProvider/Authcontext';
 
-
-
 export default function Login() {
 
-    // const { logindata, setLoginData } = useContext(LoginContext);
-    const {user , login, logout } = useAuth(); 
+    const { user, login, logout } = useAuth(); 
     const [passShow, setPassShow] = useState(false);
     const [inpval, setInpval] = useState({
         email: "",
@@ -21,23 +18,18 @@ export default function Login() {
         email: false,
         password: false,
     });
-
     const history = useNavigate();
-
     const setVal = (e) => {
         const { name, value } = e.target;
         setInpval((prevState) => ({
             ...prevState,
             [name]: value
         }));
-
         // Validate the input while typing
         validateField(name, value);
     };
-
     const validateField = (name, value) => {
         let isError = false;
-
         if (name === "email") {
             if (value.trim() === "" || !validator.isEmail(value)) {
                 isError = true;
@@ -47,18 +39,14 @@ export default function Login() {
                 isError = true;
             }
         }
-
         setErrors((prevErrors) => ({
             ...prevErrors,
             [name]: isError
         }));
     };
-
     const loginuser = async (e) => {
         e.preventDefault();
-
         const { email, password } = inpval;
-
         if (email === "") {
             toast.error("Email is required!", {
                 position: "top-center"
@@ -71,7 +59,7 @@ export default function Login() {
             toast.error("Password is required!", {
                 position: "top-center"
             });
-        } else if (password.length<6) {
+        } else if (password.length < 6) {
             toast.error("Minimum length of password should be 6!", {
                 position: "top-center"
             });
@@ -87,12 +75,9 @@ export default function Login() {
                     "referer": "", email, password
                 })
             });
-
             console.log("after api call")
             const resone = await data.json();
             const tokenVar = resone.token;
-            
-
             console.log("before authentication api call")
             const data2 = await fetch("/api/checkAuthentication", {
                 method: "GET",
@@ -101,7 +86,6 @@ export default function Login() {
                     "Content-Type": "application/json"
                 },
             });
-
             const res = await data2.json();
             if (res.status === "pass") {
                 localStorage.setItem("usersdatatoken", resone.token);
@@ -125,14 +109,14 @@ export default function Login() {
 
     return (
         <>
-            <section className="w-full py-10 min-h-screen">
-                <div className="form_data max-w-lg w-full mx-auto my-12 p-6 bg-white shadow-md rounded flex flex-col items-center">
+            <section className="w-full py-10 min-h-screen bg-[#2a2a3d] text-white">
+                <div className="form_data max-w-lg w-full mx-auto my-12 p-6 bg-[#27293d] text-gray-900 shadow-md rounded flex flex-col items-center">
                     <div className="form_heading mb-10">
-                        <h1 className="text-3xl font-sans text-gray-900">Login to Intaligen</h1>
+                        <h1 className="text-3xl font-sans text-[#d3d4d8]">Login to Intaligen</h1>
                     </div>
                     <form className="w-full" onSubmit={loginuser}>
                         <div className="form_input">
-                            <label htmlFor="email" className="block font-sans font-semibold text-blue-900 text-sm mb-2">Email</label>
+                            <label htmlFor="email" className="block font-sans font-semibold text-[#a8a9b1] text-sm mb-2">Email</label>
                             <input
                                 type="email"
                                 value={inpval.email}
@@ -144,7 +128,7 @@ export default function Login() {
                             />
                         </div>
                         <div className="form_input">
-                            <label htmlFor="password" className="block font-semibold text-blue-900 text-sm mb-2 font-sans">Password</label>
+                            <label htmlFor="password" className="block font-semibold text-[#a8a9b1] text-sm mb-2 font-sans">Password</label>
                             <div className="two relative font-sans">
                                 <input
                                     type={!passShow ? "password" : "text"}
@@ -160,11 +144,8 @@ export default function Login() {
                                 </div>
                             </div>
                         </div>
-
                         <button className="font-sans btn bg-gradient-to-r from-purple-400 to-teal-600 text-white font-semibold py-3 px-4 rounded-lg focus:outline-none focus:shadow-outline w-full">Login</button>
-                        
-
-                        <p className="font-sans text-sm mt-4 text-center">Don't have an Account? <NavLink to="/register" className="text-violet-500">Sign Up</NavLink> </p>
+                        <p className="font-sans text-sm mt-4 text-center text-[#a8a9b1]">Don't have an Account? <NavLink to="/register" className="text-[#1da7b6]">Sign Up</NavLink> </p>
                     </form>
                     <ToastContainer />
                 </div>

@@ -10,7 +10,7 @@ import {
     ResizablePanelGroup,
   } from './../../components/ui/resizable';
 import { Separator } from './../../components/ui/separator';
-import Nav from './Nav'
+import Nav from './Nav';
 import {
     LogOut,
 } from 'lucide-react';
@@ -30,7 +30,7 @@ export default function Sidebar(
     navCollapsedSize = 4,
 ) {
     const [isCollapsed, setIsCollapsed] = React.useState(defaultCollapsed)
-    const {user , login, logout } = useAuth(); 
+    const { user, login, logout } = useAuth(); 
 
     const history = useNavigate();
 
@@ -58,109 +58,105 @@ export default function Sidebar(
         }
     };
 
-    {
-        return (
-            <ResizablePanel
-                // defaultSize={defaultLayout[0]}  
-                collapsedSize={navCollapsedSize}
-                collapsible={true}
-                minSize={12}
-                maxSize={18}
-                onCollapse={() => {
-                    setIsCollapsed(true)
-                    document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(true)}`
-                }}
-                onExpand={() => {
-                    setIsCollapsed(false)
-                    document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(false)}`
-                }}
-                className={cn(
-                    isCollapsed &&
-                    " h-[120%] overflow-y-auto font-sans top-0 left-0"
-                )}
-            >
-            <div className='text-2xl text-black pb-3'>Raqgen Solutions Pvt. Ltd.</div>
-                <Separator className='mb-3'/> 
+    return (
+        <ResizablePanel
+            // defaultSize={defaultLayout[0]}  
+            collapsedSize={navCollapsedSize}
+            collapsible={true}
+            minSize={12}
+            maxSize={18}
+            onCollapse={() => {
+                setIsCollapsed(true)
+                document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(true)}`
+            }}
+            onExpand={() => {
+                setIsCollapsed(false)
+                document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(false)}`
+            }}
+            className={cn(
+                isCollapsed &&
+                "h-[120%] overflow-y-auto font-sans top-0 left-0"
+            )}
+        >
+            <div className='bg-gradient-to-b from-[#27a1ba] to-purple-400 text-white h-full p-2'>
+                <div className='text-1xl p-3'>Raqgen Solutions Pvt. Ltd.</div>
+                <Separator className='mb-3' /> 
                 <Nav
                     isCollapsed={isCollapsed}
                     links={[
-                    {
-                        label: "1",
-                        icon: RxDashboard,
-                        title: "Dashboard",
-                        route: "/dash",
-                        variant: "ghost",
-                    },
-                    {
-                        label: "2",
-                        icon: MdInsights,
-                        title: "Production planning",
-                        variant: "ghost",
-                        route: "/productionchartsnew"
-                    },
-                    {
-                        label: "3",
-                        icon: RiCouponLine,
-                        title: "Orders",
-                        variant: "ghost",
-                        route: "/orders"
-                    },
-                    {
-                        label: "4",
-                        icon: RiCouponLine,
-                        title: "Production departments",
-                        variant: "ghost",
-                        route: "/workstation_console"
-                    },
-                    {
-                        label: "5",
-                        icon: BsWallet2,
-                        title: "Inventory",
-                        variant: "ghost",
-                        route: "/inventory"
-                    },
-                    {
-                        label: "6",
-                        icon: AiOutlineMessage,
-                        title: "Material planning",
-                        variant: "ghost",
-                        route: "/material-planning"
-                    },
-                    {
-                        label: "7",
-                        icon: BsFolder,
-                        title: "Purchases",
-                        variant: "ghost",
-                        route: "/purchases"
-                    },
-                    {
-                        label: "8",
-                        icon: FiUser,
-                        title: "Admin",
-                        variant: "ghost",
-                        route: "/admin"
-                    },
-                    {
-                        label: "9",
-                        icon: BsWallet2,
-                        title: "Master data",
-                        variant: "ghost",
-                        route: "/masterDataDashboard"
-                    },
+                        {
+                            label: "1",
+                            icon: RxDashboard,
+                            title: "Dashboard",
+                            route: "/dash",
+                            variant: "ghost",
+                        },
+                        {
+                            label: "2",
+                            icon: MdInsights,
+                            title: "Production planning",
+                            variant: "ghost",
+                            route: "/productionchartsnew"
+                        },
+                        {
+                            label: "3",
+                            icon: RiCouponLine,
+                            title: "Orders",
+                            variant: "ghost",
+                            route: "/orders"
+                        },
+                        {
+                            label: "4",
+                            icon: RiCouponLine,
+                            title: "Production departments",
+                            variant: "ghost",
+                            route: "/workstation_console"
+                        },
+                        {
+                            label: "5",
+                            icon: BsWallet2,
+                            title: "Inventory",
+                            variant: "ghost",
+                            route: "/inventory"
+                        },
+                        {
+                            label: "6",
+                            icon: AiOutlineMessage,
+                            title: "Material planning",
+                            variant: "ghost",
+                            route: "/material-planning"
+                        },
+                        {
+                            label: "7",
+                            icon: BsFolder,
+                            title: "Purchases",
+                            variant: "ghost",
+                            route: "/purchases"
+                        },
+                        {
+                            label: "8",
+                            icon: FiUser,
+                            title: "Admin",
+                            variant: "ghost",
+                            route: "/admin"
+                        },
+                        {
+                            label: "9",
+                            icon: BsWallet2,
+                            title: "Master data",
+                            variant: "ghost",
+                            route: "/masterDataDashboard"
+                        },
                     ]}
                 />
                 {!isCollapsed ? (
                     <Button className='mt-4 ml-3' onClick={logoutuser}> Logout</Button>
                 ) : (
-                    <Button className='my-1 ml-3' size="icon" onClick={logoutuser}> 
+                    <Button className='my-1 ml-1' size="icon" onClick={logoutuser}> 
                         <LogOut className="h-4 w-4"/>
                     </Button>
-                )
-                    }
-                
-                
-            </ResizablePanel>
-        );
-    }
+                )}
+            </div>
+        </ResizablePanel>
+    );
 }
-

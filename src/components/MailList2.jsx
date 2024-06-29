@@ -47,7 +47,7 @@ export function MailList2({ items, handleSelectMail, onSelectMail, selectedMail,
             <div className="flex flex-col p-4 gap-2 pt-0">
                 {Object.values(items).map((item, index) => (
                     <div key={index} className='flex flex-col items-start gap-2 rounded-lg border border-1 border-solid border-gray-200 p-3 text-left text-sm transition-all '>
-                        <div className="flex w-full gap-4">
+                        <div className="flex w-full ">
                             <div className="flex flex-col items-left gap-3">
                                 <div className="font-semibold text-lg">
                                     {formatDate(item.date)}
@@ -70,7 +70,7 @@ export function MailList2({ items, handleSelectMail, onSelectMail, selectedMail,
                                     EDIT CHART
                                 </Button>
                             </div>
-                            <div>
+                            <div className=" mx-auto">
                                 <Table className="border border-gray-200 rounded-lg">
                                     <TableHeader className="bg-gray-100 rounded-t-lg">
                                         <TableRow>

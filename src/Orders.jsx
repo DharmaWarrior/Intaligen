@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Mail from './Mail';
-import { accounts, mails } from './data/mails';
+import {mails } from './data/mails';
 
 export default function Orders() {
+
     const [ordersData, setOrdersData] = useState({});
     const [currentStatus, setCurrentStatus] = useState("Pending");
 
@@ -44,12 +45,8 @@ export default function Orders() {
 
     return (
         <div className="flex">
-            <div>
-                {/* <Sidebar /> */}
-            </div>
             <div className=" h-[100%] w-full overflow-y-auto flex flex-row  py-2">
                 <Mail
-                    mails={mails}
                     fetchOrders={fetchOrders}
                     ordersData={ordersData}
                     onStatusChange={handleStatusChange}

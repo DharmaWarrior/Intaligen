@@ -11,7 +11,7 @@ import MasterTable from './components/MasterTable';
 import AddForm from './components/AddForm';
 
 export default function Items() {
-    const { logindata } = useContext(LoginContext);
+
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [editModes, setEditModes] = useState({});
@@ -51,13 +51,6 @@ export default function Items() {
     useEffect(() => {
       fetchData();
     }, []);
-  
-    const handleEditClick = (rowIndex) => {
-      setEditModes(prevEditModes => ({
-        ...prevEditModes,
-        [rowIndex]: !prevEditModes[rowIndex]
-      }));
-    };
   
     const handleOpen = (type) => {
       setFormType(type);

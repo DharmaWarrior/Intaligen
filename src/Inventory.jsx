@@ -115,6 +115,7 @@ const fetchRecent = async () => {
     },
     {
       accessorKey: "item_code",
+      heading: "ITEM CODE",
       header: ({ column }) => (
         <Button
           variant="ghost"
@@ -127,6 +128,7 @@ const fetchRecent = async () => {
     },
     {
       accessorKey: "Item Name",
+      heading : "NAME",
       header: ({ column }) => (
         <Button
           variant="ghost"
@@ -139,6 +141,7 @@ const fetchRecent = async () => {
     },
     {
       accessorKey: "Item Unit",
+      heading : "UNIT",
       header: ({ column }) => (
         <Button
           variant="ghost"
@@ -151,6 +154,7 @@ const fetchRecent = async () => {
     },
     {
       accessorKey: "total_stock",
+      heading : "READY STOCK",
       header: ({ column }) => (
         <Button
           variant="ghost"
@@ -163,6 +167,7 @@ const fetchRecent = async () => {
     },
     {
       accessorKey: "total_wip_stock",
+      heading : "WIP STOCK",
       header: ({ column }) => (
         <Button
           variant="ghost"
@@ -175,6 +180,7 @@ const fetchRecent = async () => {
     },
     {
       accessorKey: "total_reject_stock",
+      heading : "REJECT STOCK",
       header: ({ column }) => (
         <Button
           variant="ghost"
@@ -232,6 +238,7 @@ const fetchRecent = async () => {
     },
     {
       accessorKey: "name",
+      heading: "ITEM",
       header: ({ column }) => (
         <Button
           variant="ghost"
@@ -244,6 +251,7 @@ const fetchRecent = async () => {
     },
     {
       accessorKey: "qty",
+      heading: "QTY",
       header: ({ column }) => (
         <Button
           variant="ghost"
@@ -256,6 +264,7 @@ const fetchRecent = async () => {
     },
     {
       accessorKey: "item_unit",
+      heading: "UNIT",
       header: ({ column }) => (
         <Button
           variant="ghost"
@@ -268,6 +277,7 @@ const fetchRecent = async () => {
     },
     {
       accessorKey: "note",
+      heading: "NOTE",
       header: ({ column }) => (
         <Button
           variant="ghost"
@@ -280,6 +290,7 @@ const fetchRecent = async () => {
     },
     {
       accessorKey: "regdate",
+      heading: "DATE",
       header: ({ column }) => (
         <Button
           variant="ghost"
@@ -317,6 +328,7 @@ const fetchRecent = async () => {
     },
     {
       accessorKey: "item_code",
+      heading: "ITEM CODE",
       header: ({ column }) => (
         <Button
           variant="ghost"
@@ -329,6 +341,7 @@ const fetchRecent = async () => {
     },
     {
       accessorKey: "Item Name",
+      heading : "NAME",
       header: ({ column }) => (
         <Button
           variant="ghost"
@@ -341,6 +354,7 @@ const fetchRecent = async () => {
     },
     {
       accessorKey: "Item Unit",
+      heading : "UNIT",
       header: ({ column }) => (
         <Button
           variant="ghost"
@@ -353,6 +367,7 @@ const fetchRecent = async () => {
     },
     {
       accessorKey: "total_stock",
+      heading : "SYSTEM STOCK",
       header: ({ column }) => (
         <Button
           variant="ghost"
@@ -365,6 +380,7 @@ const fetchRecent = async () => {
     },
     {
       accessorKey: "total_stock",
+      heading : "PHYSICAL STOCK",
       header: ({ column }) => (
         <Button
           variant="ghost"
@@ -387,6 +403,7 @@ const fetchRecent = async () => {
     },
     {
       accessorKey: "narration",
+      heading : "NARRATION",
       header: ({ column }) => (
         <Button
           variant="ghost"
