@@ -15,8 +15,8 @@ const styles = {
   },
   selectWrapper: {
     flex: '1',
-    marginTop : '12px',
-    marginLeft : '5px' // Take remaining space in the flex container
+    marginTop: '12px',
+    marginLeft: '5px', // Take remaining space in the flex container
   },
   selectedCategories: {
     display: 'flex',
@@ -52,13 +52,14 @@ const styles = {
   },
 };
 
-export default function Filter({ availableCategories, kFilter }) {
+export default function Filter({ label, availableCategories, kFilter, handleSaveFilter }) {
   // Initialize allCategories with availableCategories prop
   const [allCategories, setAllCategories] = useState([...availableCategories]);
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [filterType, setFilterType] = useState('inclusive');
   const [filterOptions, setFilterOptions] = useState('Get Top K Data Items');
+  const [kValue, setKValue] = useState(10); // Add a state variable for the K value
 
   useEffect(() => {
     setAllCategories([...availableCategories]);
@@ -83,8 +84,16 @@ export default function Filter({ availableCategories, kFilter }) {
   };
 
   const handleSaveCategories = () => {
-    console.log('Selected Categories:', selectedCategories);
-    console.log('Filter Type:', filterType);
+    const filters_array = selectedCategories.map((category) => category[0].toString());
+    const filterData = {
+      filters_array,
+      filter_type: filterType,
+    };
+    if (kFilter) {
+      filterData.kValue = kValue; // Include the K value when kFilter is true
+    }
+    console.log('Filter Data:', filterData);
+    handleSaveFilter(filterData);
     handleCloseDialog();
   };
 
@@ -104,92 +113,97 @@ export default function Filter({ availableCategories, kFilter }) {
   return (
     <>
       <Button variant="ghost" onClick={handleOpenDialog}>
-        Filter
+        {label || 'Filter'}
       </Button>
       <Dialog open={openDialog} onClose={handleCloseDialog} maxWidth="md" fullWidth>
         <DialogTitle>Select Filters</DialogTitle>
         <DialogContent style={styles.dialogContent}>
           <>
-          <h2>Category Filters</h2>
-          <div style={styles.selectContainer}>
-            <div style={{ marginTop: '10px', display : 'flex', flexDirection: 'column' }}>
-              <label>
-                <input
-                  type="radio"
-                  value="inclusive"
-                  checked={filterType === 'inclusive'}
-                  onChange={handleFilterTypeChange1}
-                />
-                <span style={{ marginLeft: '5px' }}>Inclusive</span>
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  value="exclusive"
-                  checked={filterType === 'exclusive'}
-                  onChange={handleFilterTypeChange1}
-                />
-                <span style={{ marginLeft: '5px' }}>Exclusive</span>
-              </label>
-            </div>
-            <div style={styles.selectWrapper}>
-              <select
-                onChange={(e) => handleCategorySelect(JSON.parse(e.target.value))}
-                value=""
-                className="border rounded w-full py-2 px-3"
-              >
-                <option value="" disabled>Select Category</option>
-                {allCategories.map((category) => (
-                  <option key={category[0]} value={JSON.stringify(category)}>
-                    {category[1]}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div style={styles.selectedCategories}>
-              {selectedCategories.map((category) => (
-                <div key={category[0]} style={styles.button}>
-                  {category[1]}
-                  <span
-                    onClick={() => handleCategoryRemove(category)}
-                    style={styles.crossButton}
-                  >
-                    ✕
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-          { kFilter && (
-            <>
-            <h2>Filter Options</h2>
+            <h2>Category Filters</h2>
             <div style={styles.selectContainer}>
-              <div style={{ marginTop: '3px', display : 'flex', flexDirection: 'column' }}>
+              <div style={{ marginTop: '10px', display: 'flex', flexDirection: 'column' }}>
                 <label>
                   <input
                     type="radio"
-                    value="Get Top K Data Items"
-                    checked={filterOptions === 'Get Top K Data Items'}
-                    onChange={handleFilterTypeChange2}
+                    value="inclusive"
+                    checked={filterType === 'inclusive'}
+                    onChange={handleFilterTypeChange1}
                   />
-                  <span style={{ marginLeft: '5px' }}>Get Top K Data Items</span>
+                  <span style={{ marginLeft: '5px' }}>Inclusive</span>
                 </label>
                 <label>
                   <input
                     type="radio"
-                    value="Get Data Items Based on Date Range"
-                    checked={filterOptions === 'Get Data Items Based on Date Range'}
-                    onChange={handleFilterTypeChange2}
+                    value="exclusive"
+                    checked={filterType === 'exclusive'}
+                    onChange={handleFilterTypeChange1}
                   />
-                  <span style={{ marginLeft: '5px' }}>Get Data Items Based on Date Range</span>
+                  <span style={{ marginLeft: '5px' }}>Exclusive</span>
                 </label>
-                <span >Enter K Value :</span>
-                <input type="number" placeholder="10" className="border rounded w-full py-2 px-3" />
+              </div>
+              <div style={styles.selectWrapper}>
+                <select
+                  onChange={(e) => handleCategorySelect(JSON.parse(e.target.value))}
+                  value=""
+                  className="border rounded w-full py-2 px-3"
+                >
+                  <option value="" disabled>Select Category</option>
+                  {allCategories.map((category) => (
+                    <option key={category[0]} value={JSON.stringify(category)}>
+                      {category[1]}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div style={styles.selectedCategories}>
+                {selectedCategories.map((category) => (
+                  <div key={category[0]} style={styles.button}>
+                    {category[1]}
+                    <span
+                      onClick={() => handleCategoryRemove(category)}
+                      style={styles.crossButton}
+                    >
+                      ✕
+                    </span>
+                  </div>
+                ))}
               </div>
             </div>
-            </>
-          )}
-          
+            {kFilter && (
+              <>
+                <h2>Filter Options</h2>
+                <div style={styles.selectContainer}>
+                  <div style={{ marginTop: '3px', display: 'flex', flexDirection: 'column' }}>
+                    <label>
+                      <input
+                        type="radio"
+                        value="Get Top K Data Items"
+                        checked={filterOptions === 'Get Top K Data Items'}
+                        onChange={handleFilterTypeChange2}
+                      />
+                      <span style={{ marginLeft: '5px' }}>Get Top K Data Items</span>
+                    </label>
+                    <label>
+                      <input
+                        type="radio"
+                        value="Get Data Items Based on Date Range"
+                        checked={filterOptions === 'Get Data Items Based on Date Range'}
+                        onChange={handleFilterTypeChange2}
+                      />
+                      <span style={{ marginLeft: '5px' }}>Get Data Items Based on Date Range</span>
+                    </label>
+                    <span>Enter K Value :</span>
+                    <input
+                      type="number"
+                      placeholder="10"
+                      className="border rounded w-full py-2 px-3"
+                      value={kValue}
+                      onChange={(e) => setKValue(Number(e.target.value))}
+                    />
+                  </div>
+                </div>
+              </>
+            )}
           </>
         </DialogContent>
         <DialogActions>

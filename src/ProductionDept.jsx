@@ -355,6 +355,9 @@ function Flow() {
             >
               <Background />
               <Controls position="top-left" />
+              <div>
+                <h1 className="text-3xl font-bold text-gray-800 ml-12 mt-3">{selectedDate}</h1>
+              </div>
             </ReactFlow>
           </div>
         </>

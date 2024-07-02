@@ -26,7 +26,7 @@ import {
   DropdownMenuTrigger,
 } from "./../../components/ui/dropdown-menu";
 import { Separator } from "./../../components/ui/separator";
-import { Textarea } from "./../../components/ui/textarea";
+import { ReceiptText } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./../../components/ui/tooltip";
 import { ScrollArea } from './../../components/ui/scroll-area';
 import BatchDetailsDialog from '.././cards/BatchDetailsDialog';
@@ -417,36 +417,48 @@ export function MailDisplay({ mail, onDeleteMail, setCurrentTab, fetchOrders, cu
             )}
 
             {activeTab === 'Dispatch' && mail.orders_data && mail.orders_data[id] && mail.orders_data[id].order && mail.orders_data[id].order.deliverybatches && (
-              <ScrollArea className="h-[300px]">
-              <div className="min-w-full bg-white py-4 ">
-                {mail.orders_data[id].order.deliverybatches.map((batch, index) => (
-                  <div key={index} className="flex flex-col rounded-lg border border-1 border-solid border-gray-200 p-3 text-left text-sm transition-all hover:bg-accent">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <div className="font-bold text-2xl">{batch.batch_name}</div>
-                        <div className="text-gray-600">{batch.actual_desp_date}{' | '}</div>
+              <ScrollArea className="h-[405px]">
+                <div className="min-w-full bg-white py-4 ">
+                  {mail.orders_data[id].order.deliverybatches.map((batch, index) => (
+                    <div key={index} className="flex flex-col gap mb-2 rounded-lg border border-1 border-solid border-gray-200 p-3 text-left text-sm transition-all hover:bg-accent">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <div className="font-bold text-2xl">{batch.batch_name}</div>
+                          <div className="text-gray-600">{batch.actual_desp_date}{' | '}</div>
+                        </div>
+                        <input
+                          type="checkbox"
+                          className='ml-auto mr-4'
+                          onChange={() => handleCheckboxChange(batch.id)}
+                        />
+                        <Button variant="outline" size="sm" onClick={() => handleBatchView(batch.id, batch.orderitemdispatch)}>
+                          View
+                        </Button>
                       </div>
-                      <input
-                        type="checkbox"
-                        className='ml-auto mr-4'
-                        onChange={() => handleCheckboxChange(batch.id)}
-                      />
-                      <Button variant="outline" size="sm" onClick={() => handleBatchView(batch.id, batch.orderitemdispatch)}>
-                        View
-                      </Button>
                     </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
               </ScrollArea>
             )}
             {activeTab === 'Documents' && (
-              <div className='flex mt-4 items-center justify-between'>
-                <input type='file' />
-                <Button variant="secondary" size="sm" >
-                  Upload 
-                </Button>
-              </div>
+              <ScrollArea className="h-[405px]">
+                <div className="flex flex-wrap mt-2 gap-4">
+                  {mail.orders_data[id].order.invoices.map((batch, index) => (
+                    <div key={index} className="bg-gray-200 border border-gray-300 rounded-md overflow-hidden min-w-[calc(33%-16px)] box-border">
+                      <div className="bg-[#00d7d0] p-4 text-white font-bold">{batch.invoice_class}</div>
+                      <div className="p-4 flex flex-col gap-2">
+                        
+                          <ReceiptText />
+                          <span className='mt-5'>{batch.invoice_number} | {batch.invoice_date}</span>
+                        
+                        <Button size='icon' className="bg-blue-500 text-white mt-2 font-bold py-2 w-12">
+                          View
+                        </Button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                </ScrollArea>
               )}
           </div>
           <Separator className="mt-auto" />

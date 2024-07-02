@@ -132,7 +132,7 @@ export default function Items() {
             </div>
           </div>
           <div className="ml-15 flex flex-col mt-5">
-            <MasterTable columns={columns} data={data} setData={setData} fetchSearch={fetchSearch}/>
+            <MasterTable columns={columns} data={data} setData={setData}/>
           </div>
         </div>
   

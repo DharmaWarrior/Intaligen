@@ -29,7 +29,7 @@ import {
 import Filter from "./Filter";
 import { Tooltip, TooltipTrigger, TooltipContent } from "./../../components/ui/tooltip";
 
-export function DataTable({ data, columns, addbutton, Savebutton,availableCategories }) {
+export function DataTable({ data, columns, addbutton, Savebutton, label, availableCategories, isfilter, kFilter, handleSaveFilters }) {
   const [sorting, setSorting] = React.useState([]);
   const [columnFilters, setColumnFilters] = React.useState([]);
   const [columnVisibility, setColumnVisibility] = React.useState({});
@@ -57,10 +57,10 @@ export function DataTable({ data, columns, addbutton, Savebutton,availableCatego
   const getColumnHeaderLabel = (column) => {
     return column.heading;
   };
-  
+
   const exportDataToCSV = () => {
     const headers = columns
-      .filter((col) => col.id !== "select" && col.id !== "actions") // Exclude column with id "select"
+      .filter((col) => col.id !== "select" && col.id !== "actions")
       .map((col) => getColumnHeaderLabel(col))
       .join(",");
     const rows = table.getRowModel().rows.map((row) =>
@@ -87,7 +87,7 @@ export function DataTable({ data, columns, addbutton, Savebutton,availableCatego
   return (
     <div className="w-full">
       <div className="flex items-center py-4 gap-5">
-        <Filter availableCategories={availableCategories} kFilter={true}/>
+        {isfilter && <Filter label={label} availableCategories={availableCategories} kFilter={kFilter} handleSaveFilter={handleSaveFilters}/>}
         <Input
           placeholder="Filter names..."
           value={table.getColumn("Item Name")?.getFilterValue() ?? ""}

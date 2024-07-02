@@ -51,6 +51,42 @@ export default function Items() {
         setLoading(false);
       }
     };
+
+    const handleItemFilter = async (formData) => {
+      try {
+        let token = localStorage.getItem("usersdatatoken");
+        if(!token) {
+          console.log("Token not found");
+        }
+        
+        const response = await fetch("/api/ListItems", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + token,
+          },
+          body: JSON.stringify({
+            filters : {
+              filters_array: ["4"], 
+              filter_type: "inclusive"
+            }
+          })
+        }); 
+  
+        if (response.ok) {
+          const result = await response.json();
+          setData(result.items);
+          // console.log(data);
+          setLoading(false);
+        } else {
+          console.error('Failed to fetch data');
+          setLoading(false);
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        setLoading(false);
+      }
+    };
   
     useEffect(() => {
       fetchData();
@@ -220,7 +256,7 @@ export default function Items() {
             </div>
           </div>
           <div className="ml-15 flex flex-col mt-5">
-            <MasterTable columns={columns} data={data} setData={setData} fetchSearch={fetchSearch} EditdataApi={EditdataApi}/>
+            <MasterTable columns={columns} data={data} setData={setData} fetchSearch={fetchSearch} EditdataApi={EditdataApi} isfilter={true} label='Filter' handleSaveFilters={handleItemFilter}/>
           </div>
         </div>
   

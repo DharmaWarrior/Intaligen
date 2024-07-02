@@ -51,6 +51,7 @@ export default function Productionchartsnew() {
               charts={charts}
               ordersData={ordersData}
               categories={categories}
+              fetchCharts={fetchCharts}
           />
       </div>
   </div>

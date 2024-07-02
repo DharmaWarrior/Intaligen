@@ -6,7 +6,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
 import Search from './Search'
 
-const AddForm = ({ open, handleClose, handleFormSubmit, fetchData, formFields, title }) => {
+const AddForm = ({ open, handleClose, handleFormSubmit, formFields, title }) => {
   const initialFormData = formFields.reduce((acc, field) => {
     acc[field.name] = field.type === 'checkbox' ? false : '';
     return acc;

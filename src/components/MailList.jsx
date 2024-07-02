@@ -9,33 +9,9 @@ import { Separator } from "./../../components/ui/separator";
 
 export function MailList({ items, handleSelectMail, onSelectMail, selectedMail, onStatusChange, fetchOrders }) {
   
-  // const handleSelectMail = async (item) => {
-  //   try {
-  //     let token = localStorage.getItem("usersdatatoken");
-  //     const response = await fetch('/api/order_info', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //         'Authorization': 'Bearer ' + token,
-  //       },
-  //       body: JSON.stringify({ order_id: item.order.id }),
-  //     });
-
-  //     if (response.status === 302) {
-  //       const data = await response.json();
-  //       onSelectMail({ ...data, orderId: item.order.id }); 
-        
-  //     } else {
-  //       alert('Failed to fetch order info');
-  //     }
-  //   } catch (error) {
-  //     console.error('Error fetching order info:', error);
-  //     alert('Error fetching order info');
-  //   }
-  // };
 
   return (
-    <ScrollArea className="h-[500px]">
+    <ScrollArea className="h-[545px]">
       <div className="flex flex-col gap-2 p-4 pt-0">
         {items.length > 0 ? (
           items.map((item) => (

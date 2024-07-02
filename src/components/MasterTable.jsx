@@ -16,12 +16,56 @@ import { Link } from 'react-router-dom';
 import { ScrollArea } from './../../components/ui/scroll-area';
 import Filter from './Filter';
 
-export default function TableItemss({ columns, data, setData, fetchSearch, EditdataApi, addbutton }) {
+export default function MasterTable({ columns, data, isfilter, label, kFilter,handleSaveFilters, EditdataApi, addbutton }) {
   const { logindata } = React.useContext(LoginContext);
   const [loading, setLoading] = React.useState(true);
   const [editModes, setEditModes] = React.useState({});
   const [editableRowData, setEditableRowData] = React.useState({});
   const [searchTerm, setSearchTerm] = React.useState('');
+
+
+  const availableCategories = [
+    [
+        4,
+        "RAW MATERIAL"
+    ],
+    [
+        5,
+        "PACKING MATERIAL"
+    ],
+    [
+        3,
+        "EXPORT"
+    ],
+    [
+        7,
+        "RAJASTHAN"
+    ],
+    [
+        1,
+        "QWERTY"
+    ],
+    [
+        15,
+        "ABC"
+    ],
+    [
+        16,
+        "WORKER-TYPE1"
+    ],
+    [
+        2,
+        "Worker -type-2"
+    ],
+    [
+        6,
+        "MACHINE-type-1"
+    ],
+    [
+        17,
+        "MACHINE TYPE 2"
+    ]
+];
 
   const handleEditClick = (rowIndex) => {
     setEditModes(prevEditModes => ({
@@ -68,14 +112,14 @@ export default function TableItemss({ columns, data, setData, fetchSearch, Editd
   };
 
   const handleSearch = () => {
-    fetchSearch(searchTerm);
+    console.log("4");
   };
 
   return (
     <>
       <div className="mt-2 flex flex-col">
         <div className="mb-4 flex gap-2">
-          <Filter />
+        {isfilter && <Filter label={label} availableCategories={availableCategories} kFilter={kFilter} handleSaveFilter={handleSaveFilters}/>}
           <input
             type="text"
             placeholder="Search..."

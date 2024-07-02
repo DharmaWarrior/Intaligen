@@ -17,6 +17,7 @@ const Inventory = () => {
   
   const [lookupData, setLookupData] = useState([]);
   const [recentData, setRecentData] = useState([]);
+  const [categoriesData, setCategoriesData] = useState([]);
 
   const availableCategories = [
     [
@@ -128,10 +129,114 @@ const fetchRecent = async () => {
     }
   };
 
+const fetchCategories = async () => {
+    try {
+      let token = localStorage.getItem("usersdatatoken");
+      if(!token) {
+        console.log("Token not found");
+      }
+      
+      const response = await fetch("/api/inventory", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + token,
+        },
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        setCategoriesData(result.categories);
+
+      } else {
+        console.error('Failed to fetch data');
+        setLoading(false);
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      setLoading(false);
+    }
+  };
+
+const handleLookupFilter = async (filterData) => {
+    try {
+      let token = localStorage.getItem("usersdatatoken");
+      if(!token) {
+        console.log("Token not found");
+      }
+      
+      const response = await fetch("/api/inventory_lookup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + token,
+        },
+        body: JSON.stringify({
+          "k": 25,
+          "data_type": "ACTIVE",
+          "item_filter": "yes",
+          "filters": filterData
+      })
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        setLookupData(result);
+      } else {
+        console.error('Failed to fetch data');
+        setLoading(false);
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      setLoading(false);
+    }
+  };
+
+
+const handleRecentFilter = async (filterData) => {
+    try {
+      let token = localStorage.getItem("usersdatatoken");
+      if(!token) {
+        console.log("Token not found");
+      }
+      console.log(filterData, "filterData");
+      const response = await fetch("/api/inventory_ledger", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + token,
+        },
+        body: JSON.stringify({
+          "k": filterData.kValue,
+          "data_type": "ACTIVE",
+          "item_filter": "yes",
+          "filters": {
+            "filters_array" : filterData.filters_array,
+            "filter_type" : filterData.filter_type,
+          }
+      })
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        setRecentData(result);
+      } else {
+        console.error('Failed to fetch data');
+        setLoading(false);
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     fetchLookup();
     fetchRecent();
+    fetchCategories();
   }, []);
+
+  
 
 
   const columns1 = [
@@ -509,13 +614,13 @@ const fetchRecent = async () => {
             </TabsList>
           </div>
           <TabsContent value="item_lookup" className="m-0 border border-x-y-emerald-50 card custom-scroll">
-            <DataTable data={lookupData} columns={columns1} addbutton={buttons1} availableCategories={availableCategories}/>
+            <DataTable data={lookupData} columns={columns1} addbutton={buttons1} label="Filter" isfilter={true} availableCategories={categoriesData} handleSaveFilters={handleLookupFilter}/>
           </TabsContent>
           <TabsContent value="recent_activity" className="m-0 border border-x-y-emerald-50 card custom-scroll">
-            <DataTable data={recentData} columns={columns2} availableCategories={availableCategories}/>
+            <DataTable data={recentData} columns={columns2} label="Filter" isfilter={true} kFilter={true} availableCategories={categoriesData} handleSaveFilters={handleRecentFilter}/>
           </TabsContent>
           <TabsContent value="physical_reconciliation" className="m-0 border border-x-y-emerald-50 card custom-scroll">
-            <DataTable data={lookupData} columns={columns3} addbutton={buttons2} Savebutton={true} availableCategories={availableCategories}/>
+            <DataTable data={lookupData} columns={columns3} addbutton={buttons2} Savebutton={true} label="Filter" isfilter={true} availableCategories={categoriesData} handleSaveFilters={handleLookupFilter}/>
           </TabsContent>
         </Tabs>
       </div>

@@ -20,6 +20,8 @@ export function ChartDisplay({ ordersData, tabData, stockData, categories }) {
     const [selectedOrder, setSelectedOrder] = useState(null);
     const [finishedTabData, setFinishedTabData] = useState(tabData);
     const [semiFinishedTabData, setSemiFinishedTabData] = useState(tabData);
+    const [byCategoryOrderData, setByCategoryOrderData] = useState([]);
+    const [byCategoryStockData, setByCategoryStockData] = useState([]);
 
 
     const fetchProductionSummary = async (orderId) => {
@@ -89,288 +91,381 @@ export function ChartDisplay({ ordersData, tabData, stockData, categories }) {
       }
   }, [selectedOrder]);
 
+  useEffect(() => {
+    setFinishedTabData(tabData);
+    setSemiFinishedTabData(tabData);
+  }, [ordersData]);
+
   const handleOrderChange = (event) => {
     setSelectedOrder(event.target.value);
 };
+
+  const handleOrderFilters = async (filterData) => {
+    
+    
+    const requestBody = {
+        k: 15,
+        is_materials: "NO",
+        is_semifinished: "YES",
+        is_finished: "YES",
+        item_filter: "yes",
+        filters: filterData,
+        order_filter: selectedOrder ? "yes" : "no",
+        order_id: selectedOrder ? selectedOrder : null,
+    };
+    console.log("Yeh hai Request : " ,requestBody);
+
+    try {
+      let token = localStorage.getItem("usersdatatoken");
+      if(!token) {
+        console.log("Token not found");
+      }
+      
+      const response = await fetch("/api/productionsummary_api", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + token,
+        },
+        body: JSON.stringify(requestBody)
+      });
+
+      if (response.ok) {
+        const filterData = await response.json();
+        setByCategoryOrderData(filterData);
+      } else {
+        console.error('Failed to fetch data');
+        setLoading(false);
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      setLoading(false);
+    }
+};
+
+  const handleStockFilters = async (filterData) => {
+    
+    
+    const requestBody = {
+        k: 15,
+        is_materials: "NO",
+        is_semifinished: "YES",
+        is_finished: "YES",
+        item_filter: "yes",
+        filters: filterData,
+        order_filter: "no",
+        order_id: null,
+    };
+    console.log("Yeh hai Request : " ,requestBody);
+
+    try {
+      let token = localStorage.getItem("usersdatatoken");
+      if(!token) {
+        console.log("Token not found");
+      }
+      
+      const response = await fetch("/api/productionsummary_api", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + token,
+        },
+        body: JSON.stringify(requestBody)
+      });
+
+      if (response.ok) {
+        const filterData = await response.json();
+        setByCategoryStockData(filterData);
+      } else {
+        console.error('Failed to fetch data');
+        setLoading(false);
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      setLoading(false);
+    }
+};
+
+    
     
 
-    const columnOrder = [
-        {
-          id: "select",
-          header: ({ table }) => (
-            <Checkbox
-              checked={
-                table.getIsAllPageRowsSelected() ||
-                (table.getIsSomePageRowsSelected() && "indeterminate")
-              }
-              onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-              aria-label="Select all"
-            />
-          ),
-          cell: ({ row }) => (
-            <Checkbox
-              checked={row.getIsSelected()}
-              onCheckedChange={(value) => row.toggleSelected(!!value)}
-              aria-label="Select row"
-            />
-          ),
-          enableSorting: false,
-          enableHiding: false,
-        },
-        {
-          accessorKey: "Item Name",
-          heading: "Item Name",
-          header: ({ column }) => (
-            <Button
-              variant="ghost"
-              onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-            >
-              Name <ArrowUpDown className="ml-2 h-4 w-4" />
-            </Button>
-          ),
-          cell: ({ row }) => <div>{row.getValue("Item Name")}</div>,
-        },
-        {
-          accessorKey: "Item Unit",
-          heading: "Item Unit",
-          header: ({ column }) => (
-            <Button
-              variant="ghost"
-              onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-            >
-              Unit <ArrowUpDown className="ml-2 h-4 w-4" />
-            </Button>
-          ),
-          cell: ({ row }) => <div>{row.getValue("Item Unit")}</div>,
-        },
-        {
-          accessorKey: "Order_Quantity",
-          heading: "Order Quantity",
-          header: ({ column }) => (
-            <Button
-              variant="ghost"
-              onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-            >
-              Demand <ArrowUpDown className="ml-2 h-4 w-4" />
-            </Button>
-          ),
-          cell: ({ row }) => <div>{row.getValue("Order_Quantity")}</div>,
-        },
-        {
-          accessorKey: "Stock_Quantity",
-          heading: "Stock Quantity",
-          header: ({ column }) => (
-            <Button
-              variant="ghost"
-              onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-            >
-              Stock <ArrowUpDown className="ml-2 h-4 w-4" />
-            </Button>
-          ),
-          cell: ({ row }) => <div>{row.getValue("Stock_Quantity")}</div>,
-        },
-        {
-          accessorKey: "Alloted_Quantity",
-          heading: "Alloted Quantity",
-          header: ({ column }) => (
-            <Button
-              variant="ghost"
-              onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-            >
-              Alloted <ArrowUpDown className="ml-2 h-4 w-4" />
-            </Button>
-          ),
-          cell: ({ row }) => <div>{row.getValue("Alloted_Quantity")}</div>,
-        },
-        {
-          accessorKey: "Progress_Quantity",
-          heading: "Progress Quantity",
-          header: ({ column }) => (
-            <Button
-              variant="ghost"
-              onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-            >
-              Progress <ArrowUpDown className="ml-2 h-4 w-4" />
-            </Button>
-          ),
-          cell: ({ row }) => <div>{row.getValue("Progress_Quantity")}</div>,
-        },
-        {
-          accessorKey: "Max Possible",
-          heading: "Max Possible",
-          header: ({ column }) => (
-            <Button
-              variant="ghost"
-              onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-            >
-              Max PSBL <ArrowUpDown className="ml-2 h-4 w-4" />
-            </Button>
-          ),
-          cell: ({ row }) => <div>{row.getValue("Max Possible")}</div>,
-        },
-        {
-          id: "actions",
-          enableHiding: false,
-          cell: ({ row }) => {
-            const item = row.original;
-      
-            return (
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="h-8 w-8 p-0">
-                    <span className="sr-only">Open menu</span>
-                    <MoreHorizontal className="h-4 w-4" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  <DropdownMenuItem>View item details</DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            );
-          },
-        },
-      ];
-
-    const columnStock = [
-        {
-          id: "select",
-          header: ({ table }) => (
-            <Checkbox
-              checked={
-                table.getIsAllPageRowsSelected() ||
-                (table.getIsSomePageRowsSelected() && "indeterminate")
-              }
-              onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-              aria-label="Select all"
-            />
-          ),
-          cell: ({ row }) => (
-            <Checkbox
-              checked={row.getIsSelected()}
-              onCheckedChange={(value) => row.toggleSelected(!!value)}
-              aria-label="Select row"
-            />
-          ),
-          enableSorting: false,
-          enableHiding: false,
-        },
-        {
-          accessorKey: "Item Name",
-          heading: "Item Name",
-          header: ({ column }) => (
-            <Button
-              variant="ghost"
-              onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-            >
-              Name <ArrowUpDown className="ml-2 h-4 w-4" />
-            </Button>
-          ),
-          cell: ({ row }) => <div>{row.getValue("Item Name")}</div>,
-        },
-        {
-          accessorKey: "Item Unit",
-          heading: "Item Unit",
-          header: ({ column }) => (
-            <Button
-              variant="ghost"
-              onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-            >
-              Unit <ArrowUpDown className="ml-2 h-4 w-4" />
-            </Button>
-          ),
-          cell: ({ row }) => <div>{row.getValue("Item Unit")}</div>,
-        },
-        {
-          accessorKey: "demand",
-          heading: "Demand",
-          header: ({ column }) => (
-            <Button
-              variant="ghost"
-              onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-            >
-              Demand <ArrowUpDown className="ml-2 h-4 w-4" />
-            </Button>
-          ),
-          cell: ({ row }) => <div>{row.getValue("demand")}</div>,
-        },
-        {
-          accessorKey: "Stock_Quantity",
-          heading: "Stock Quantity",
-          header: ({ column }) => (
-            <Button
-              variant="ghost"
-              onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-            >
-              Stock <ArrowUpDown className="ml-2 h-4 w-4" />
-            </Button>
-          ),
-          cell: ({ row }) => <div>{row.getValue("Stock_Quantity")}</div>,
-        },
-        {
-          accessorKey: "Alloted_Quantity",
-          heading: "Alloted Quantity",
-          header: ({ column }) => (
-            <Button
-              variant="ghost"
-              onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-            >
-              Alloted <ArrowUpDown className="ml-2 h-4 w-4" />
-            </Button>
-          ),
-          cell: ({ row }) => <div>{row.getValue("Alloted_Quantity")}</div>,
-        },
-        {
-          accessorKey: "Progress_Quantity",
-          heading: "Progress Quantity",
-          header: ({ column }) => (
-            <Button
-              variant="ghost"
-              onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-            >
-              Progress <ArrowUpDown className="ml-2 h-4 w-4" />
-            </Button>
-          ),
-          cell: ({ row }) => <div>{row.getValue("Progress_Quantity")}</div>,
-        },
-        {
-          accessorKey: "Max Possible",
-          heading: "Max Possible",
-          header: ({ column }) => (
-            <Button
-              variant="ghost"
-              onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-            >
-              Max PSBL <ArrowUpDown className="ml-2 h-4 w-4" />
-            </Button>
-          ),
-          cell: ({ row }) => <div>{row.getValue("Max Possible")}</div>,
-        },
-        {
-          id: "actions",
-          enableHiding: false,
-          cell: ({ row }) => {
-            const item = row.original;
-      
-            return (
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="h-8 w-8 p-0">
-                    <span className="sr-only">Open menu</span>
-                    <MoreHorizontal className="h-4 w-4" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  <DropdownMenuItem>View item details</DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            );
-          },
-        },
-      ];
+  const columnOrder = [
+      {
+        id: "select",
+        header: ({ table }) => (
+          <Checkbox
+            checked={
+              table.getIsAllPageRowsSelected() ||
+              (table.getIsSomePageRowsSelected() && "indeterminate")
+            }
+            onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+            aria-label="Select all"
+          />
+        ),
+        cell: ({ row }) => (
+          <Checkbox
+            checked={row.getIsSelected()}
+            onCheckedChange={(value) => row.toggleSelected(!!value)}
+            aria-label="Select row"
+          />
+        ),
+        enableSorting: false,
+        enableHiding: false,
+      },
+      {
+        accessorKey: "Item Name",
+        heading: "Item Name",
+        header: ({ column }) => (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Name <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        ),
+        cell: ({ row }) => <div>{row.getValue("Item Name")}</div>,
+      },
+      {
+        accessorKey: "Item Unit",
+        heading: "Item Unit",
+        header: ({ column }) => (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Unit <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        ),
+        cell: ({ row }) => <div>{row.getValue("Item Unit")}</div>,
+      },
+      {
+        accessorKey: "Order_Quantity",
+        heading: "Order Quantity",
+        header: ({ column }) => (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Demand <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        ),
+        cell: ({ row }) => <div>{row.getValue("Order_Quantity")}</div>,
+      },
+      {
+        accessorKey: "Stock_Quantity",
+        heading: "Stock Quantity",
+        header: ({ column }) => (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Stock <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        ),
+        cell: ({ row }) => <div>{row.getValue("Stock_Quantity")}</div>,
+      },
+      {
+        accessorKey: "Alloted_Quantity",
+        heading: "Alloted Quantity",
+        header: ({ column }) => (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Alloted <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        ),
+        cell: ({ row }) => <div>{row.getValue("Alloted_Quantity")}</div>,
+      },
+      {
+        accessorKey: "Progress_Quantity",
+        heading: "Progress Quantity",
+        header: ({ column }) => (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Progress <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        ),
+        cell: ({ row }) => <div>{row.getValue("Progress_Quantity")}</div>,
+      },
+      {
+        accessorKey: "Max Possible",
+        heading: "Max Possible",
+        header: ({ column }) => (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Max PSBL <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        ),
+        cell: ({ row }) => <div>{row.getValue("Max Possible")}</div>,
+      },
+      {
+        id: "actions",
+        enableHiding: false,
+        cell: ({ row }) => {
+          const item = row.original;
     
-      const buttons1 = React.useMemo(() => [
-        { "Header": "EXPORT STOCKLIST", "icon" : FileUp},
-      ]);
+          return (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="h-8 w-8 p-0">
+                  <span className="sr-only">Open menu</span>
+                  <MoreHorizontal className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem>View item details</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          );
+        },
+      },
+    ];
+
+  const columnStock = [
+      {
+        id: "select",
+        header: ({ table }) => (
+          <Checkbox
+            checked={
+              table.getIsAllPageRowsSelected() ||
+              (table.getIsSomePageRowsSelected() && "indeterminate")
+            }
+            onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+            aria-label="Select all"
+          />
+        ),
+        cell: ({ row }) => (
+          <Checkbox
+            checked={row.getIsSelected()}
+            onCheckedChange={(value) => row.toggleSelected(!!value)}
+            aria-label="Select row"
+          />
+        ),
+        enableSorting: false,
+        enableHiding: false,
+      },
+      {
+        accessorKey: "Item Name",
+        heading: "Item Name",
+        header: ({ column }) => (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Name <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        ),
+        cell: ({ row }) => <div>{row.getValue("Item Name")}</div>,
+      },
+      {
+        accessorKey: "Item Unit",
+        heading: "Item Unit",
+        header: ({ column }) => (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Unit <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        ),
+        cell: ({ row }) => <div>{row.getValue("Item Unit")}</div>,
+      },
+      {
+        accessorKey: "demand",
+        heading: "Demand",
+        header: ({ column }) => (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Demand <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        ),
+        cell: ({ row }) => <div>{row.getValue("demand")}</div>,
+      },
+      {
+        accessorKey: "Stock_Quantity",
+        heading: "Stock Quantity",
+        header: ({ column }) => (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Stock <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        ),
+        cell: ({ row }) => <div>{row.getValue("Stock_Quantity")}</div>,
+      },
+      {
+        accessorKey: "Alloted_Quantity",
+        heading: "Alloted Quantity",
+        header: ({ column }) => (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Alloted <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        ),
+        cell: ({ row }) => <div>{row.getValue("Alloted_Quantity")}</div>,
+      },
+      {
+        accessorKey: "Progress_Quantity",
+        heading: "Progress Quantity",
+        header: ({ column }) => (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Progress <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        ),
+        cell: ({ row }) => <div>{row.getValue("Progress_Quantity")}</div>,
+      },
+      {
+        accessorKey: "Max Possible",
+        heading: "Max Possible",
+        header: ({ column }) => (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Max PSBL <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        ),
+        cell: ({ row }) => <div>{row.getValue("Max Possible")}</div>,
+      },
+      {
+        id: "actions",
+        enableHiding: false,
+        cell: ({ row }) => {
+          const item = row.original;
+    
+          return (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="h-8 w-8 p-0">
+                  <span className="sr-only">Open menu</span>
+                  <MoreHorizontal className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem>View item details</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          );
+        },
+      },
+    ];
+
+    const buttons1 = React.useMemo(() => [
+      { "Header": "EXPORT STOCKLIST", "icon" : FileUp},
+    ]);
     
     return (
     <div className="flex h-full flex-col">
@@ -438,23 +533,15 @@ export function ChartDisplay({ ordersData, tabData, stockData, categories }) {
                                 By Category
                                 </button>
                             </div>
-                            {activeTab === 'by-category' && (
-                                <Tooltip>
-                                  <TooltipTrigger asChild>
-                                    <Button variant="ghost" size="icon" >
-                                      <Search className="h-5 w-5" />
-                                      <span className="sr-only">Search By Category</span>
-                                    </Button>
-                                  </TooltipTrigger>
-                                  <TooltipContent>Search By Category</TooltipContent>
-                                </Tooltip>
-                            )}
                         </div>
                         {activeTab === 'finished' && (
-                            <DataTable data={finishedTabData} columns={columnOrder} addbutton={buttons1} availableCategories={categories} />
+                            <DataTable data={finishedTabData} columns={columnOrder} addbutton={buttons1}  />
                         )}
                         {activeTab === 'semi-finished' && (
-                            <DataTable data={semiFinishedTabData} columns={columnOrder} addbutton={buttons1} availableCategories={categories}/>
+                            <DataTable data={semiFinishedTabData} columns={columnOrder} addbutton={buttons1}/>
+                        )}
+                        {activeTab === 'by-category' && (
+                            <DataTable data={byCategoryOrderData} columns={columnOrder} addbutton={buttons1} isfilter={true} availableCategories={categories} label='Search By Category' handleSaveFilters={handleOrderFilters}/>
                         )}
                     </div>
                 </div>
@@ -478,17 +565,12 @@ export function ChartDisplay({ ordersData, tabData, stockData, categories }) {
                                 By Category
                                 </button>
                             </div>
-                            {activeTab === 'products'&& (
-                                <Button variant="ghost">
-                                    EXPORT
-                                </Button>
-                            )}
-                            {activeTab === 'by-category' && (
-                                <Button variant="ghost">Search By Category</Button>
-                            )}
                         </div>
                         {activeTab === 'products' && (
-                            <DataTable data={stockData} columns={columnStock} addbutton={buttons1} availableCategories={categories}/>
+                            <DataTable data={stockData} columns={columnStock} addbutton={buttons1}/>
+                        )}
+                        {activeTab === 'by-category' && (
+                            <DataTable data={byCategoryStockData} columns={columnOrder} addbutton={buttons1} isfilter={true} availableCategories={categories} label='Search By Category' handleSaveFilters={handleStockFilters}/>
                         )}
                     </div>
                 </div>

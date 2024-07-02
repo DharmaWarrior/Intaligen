@@ -20,7 +20,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "../components/ui/toolti
 export default function Chart({
     charts,
     categories,
-    fetchOrders,
+    fetchCharts,
     defaultLayout = [65, 33, 59],
     ordersData,
 }) {
@@ -119,23 +119,23 @@ export default function Chart({
     console.log(formData);
     try {
         let token = localStorage.getItem("usersdatatoken");
-        const response = await fetch('/api/addorder', {
+        const response = await fetch('/api/addprodchart', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + token,
         },
         body: JSON.stringify({
-            new_order_cust_id: formData.customer_id,
-            new_order_note: formData.order_note,
-            new_order_desp_date: formData.dispatch_date,
+            "chart_note": formData.order_note,
+            "date2": formData.dispatch_date,
         }),
-        });
+    });
 
         if (response.ok) {
-        setDialogOpen(false);
+            setDialogOpen(false);
+            fetchCharts();
         } else {
-        alert('Failed to add order');
+            alert('Failed to add order');
         }
     } catch (error) {
         console.error('Error adding order:', error);
@@ -191,15 +191,14 @@ export default function Chart({
 
         <ResizableHandle withHandle className="custom-resizable-handle"/>
             <ResizablePanel defaultSize={defaultLayout[2]} minSize={59}>
-                <ChartDisplay ordersData={ordersData} tabData={tabData} stockData={stockData} categories={categories}/>
+                <ChartDisplay ordersData={ordersData} tabData={tabData} stockData={stockData}  categories={categories}/>
             </ResizablePanel>
         </ResizablePanelGroup>
 
         <AddForm
             open={dialogOpen}
             handleClose={handleDialogClose}
-            handleFormSubmit={handleFormSubmit}
-            fetchData={fetchOrders} // Pass the fetchOrders function to refresh the list after adding order
+            handleFormSubmit={handleFormSubmit} // Pass the fetchOrders function to refresh the list after adding order
             formFields={formFields}
             title="Add New Chart"
         />
